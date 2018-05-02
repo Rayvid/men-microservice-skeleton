@@ -1,0 +1,34 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "TBD",
+        "version": "1.0",
+        "title": "lympo.io-wallet"
+    },
+    "host": "wallet.lympo.io",
+    "basePath": "/",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Dashboard and entry points to the system",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response"
+                    }
+                }
+            },
+            "x-summary": "Provides dashboard and entry points to the system"
+        }
+    },
+    "definitions": {}
+}
