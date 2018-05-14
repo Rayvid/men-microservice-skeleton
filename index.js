@@ -13,15 +13,7 @@ const app = express();
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerIndexJson));
 
-app.use(morgan('dev', {
-  skip: (req, res) => res.statusCode < 400,
-  stream: process.stderr,
-}));
-
-app.use(morgan('dev', {
-  skip: (req, res) => res.statusCode >= 400,
-  stream: process.stdout,
-}));
+app.use(morgan('combined', { stream: logger.stream }));
 
 app.get('/', (req, res) => {
   logger.debug('Debug statement');
@@ -29,13 +21,13 @@ app.get('/', (req, res) => {
 });
 
 app.use((req, res) => {
-  logger.error('Page not found.');
+  logger.error(`${404} - ${'Page not found.'} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
   res.status(404).json({ message: 'Page not found.' });
 });
 
-app.use((error, req, res) => {
-  logger.error(error);
-  res.status(500).json({ message: 'Internal Server Error.' });
+app.use((err, req, res) => {
+  logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+  res.status(err.status || 500).json({ message: err.message });
 });
 
 app.listen(config.get('listen_on_port'), () => {
