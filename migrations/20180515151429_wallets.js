@@ -2,8 +2,10 @@
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('wallets', (table) => {
         table.uuid('id').notNullable().primary();
+        table.integer('status').comment('1 - open, 2 - closed ... add more on will').notNullable().defaultTo(1);
         table.string('ownership_info', 65535).comment('JSON').notNullable();
-        table.timestamps();
+        table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.timestamp('updated_at');
     }).then(function () {
         return knex('wallets')
             .insert({

@@ -8,7 +8,7 @@ module.exports = {
       filename: config.get('sqlite_db_file')
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: 'migrations'
     }
   },
 
