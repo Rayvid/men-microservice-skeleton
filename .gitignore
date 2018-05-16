@@ -1,3 +1,8 @@
+nodemon.json
+
+# ElasticSearch
+esdata
+
 # Logs
 logs
 *.log

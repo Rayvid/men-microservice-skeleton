@@ -1,26 +1,36 @@
 const winston = require('winston');
-require('winston-daily-rotate-file');
+const ElasticSearch = require('winston-elasticsearch');
 const path = require('path');
 const fs = require('fs');
+const config = require('../../config');
+require('winston-daily-rotate-file');
 
-const logDir = path.join(__dirname, process.env.LOG_DIR || 'logs');
+const logDir = path.join(__dirname, config.logger.dir);
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
 
 const options = {
   file: {
-    level: process.env.LOG_LEVEL || 'info',
-    filename: `${logDir}/${process.env.LOG_FILE_NAME || 'combined.log'}`,
+    level: config.logger.level.file,
+    filename: `${logDir}/${config.logger.fileName}`,
     handleExceptions: true,
     json: true,
-    datePattern: 'YYYY-MM-DD-HH',
+    datePattern: 'YYYY-MM-DD',
     maxSize: '5m',
     maxFiles: '5d',
     colorize: false,
   },
+  elastic: {
+    level: config.logger.level.elastic,
+    messageType: '_doc',
+    clientOpts: { host: config.elastic.host },
+    handleExceptions: true,
+    json: true,
+    colorize: false,
+  },
   console: {
-    level: 'debug',
+    level: config.logger.level.console,
     handleExceptions: true,
     json: false,
     colorize: true,
@@ -30,6 +40,7 @@ const options = {
 const logger = new winston.Logger({
   transports: [
     new winston.transports.DailyRotateFile(options.file),
+    new ElasticSearch(options.elastic),
     new winston.transports.Console(options.console),
   ],
   exitOnError: false,

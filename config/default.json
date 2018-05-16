@@ -1,4 +1,0 @@
-{
-    "listen_on_port": "80",
-    "sqlite_db_file": "./db/wallet.db"
-}
