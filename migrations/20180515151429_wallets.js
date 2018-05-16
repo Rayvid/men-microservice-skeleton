@@ -12,7 +12,7 @@ exports.up = function (knex, Promise) {
             .insert({
                 id: 'd6cb9bfb-61fb-4851-9344-c842f2cd6873',
                 balance: '1000000000.000000000000000000', // 18 decimal places is kinda standard in cryptoworld
-                metadata: '{"account_type": "Master lympo wallet", "reference_account_id": null}'
+                metadata: '{"blockchain_address": 0, "account_type": "Master lympo wallet", "reference_account_id": null}'
             });
     }).then(function () {
         return knex.schema.table('transactions', function (table) {
