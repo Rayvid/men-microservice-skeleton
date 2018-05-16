@@ -3,14 +3,16 @@ exports.up = function (knex, Promise) {
     return knex.schema.createTable('wallets', (table) => {
         table.uuid('id').notNullable().primary();
         table.integer('status').comment('1 - open, 2 - closed ... add more on will').notNullable().defaultTo(1);
-        table.string('ownership_info', 65535).comment('JSON').notNullable();
+        table.string('balance', 100).notNullable();
+        table.string('metadata', 65535).comment('JSON').notNullable();
         table.timestamp('created_at').defaultTo(knex.fn.now());
         table.timestamp('updated_at');
     }).then(function () {
         return knex('wallets')
             .insert({
                 id: 'd6cb9bfb-61fb-4851-9344-c842f2cd6873',
-                ownership_info: '{"account_type": "Master lympo wallet", "reference_account_id": null}'
+                balance: '1000000000.000000000000000000', // 18 decimal places is kinda standard in cryptoworld
+                metadata: '{"account_type": "Master lympo wallet", "reference_account_id": null}'
             });
     }).then(function () {
         return knex.schema.table('transactions', function (table) {
