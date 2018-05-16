@@ -9,7 +9,7 @@ COPY package*.json /app/
 # Next sed statements are needed to be able to fetch other github repos during CI
 RUN  sed -i -- 's/https:\/\/bitbucket.org\//git@bitbucket.org:/g' package.json
 RUN  sed -i -- 's/git+https/git+ssh/g' package-lock.json
-RUN npm install --unsafe-perm --only=production
+RUN npm install --unsafe-perm
 COPY . .
 
 EXPOSE 3000

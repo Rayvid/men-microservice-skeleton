@@ -1,0 +1,12 @@
+version: '2'
+services:
+  api:
+    build: .
+    volumes:
+      - .:/app/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - lympo-main-store
+  lympo-main-store:
+    image: lympo/main-store:master

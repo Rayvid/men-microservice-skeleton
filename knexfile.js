@@ -4,20 +4,12 @@ module.exports = {
 
   development: {
     client: 'sqlite3',
-    connection: {
-      filename: config.get('sqlite_db_file')
-    },
-    migrations: {
-      tableName: 'migrations'
-    }
+    connection: { filename: config.get('sqlite_db_file') },
+    migrations: { tableName: 'migrations' },
   },
 
-  staging: {
+  staging: {},
 
-  },
-
-  production: {
-
-  }
+  production: {},
 
 };
