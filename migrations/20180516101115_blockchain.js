@@ -31,7 +31,14 @@ exports.up = function(knex, Promise) {
                 address: '20',
                 amount: '1000000000.00000000000000000', // 18 decimal places is kinda standard in cryptoworld
                 payload: '{info: "God issues money to master"}'
-            });
+            })
+            .insert({
+                address_from: '0',
+                address_to:  '0', 
+                address: '40',
+                amount: '0',
+                metadata: '{role_restriction: "superuser"}'
+            });;
     });
 };
 
