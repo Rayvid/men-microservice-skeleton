@@ -37,12 +37,16 @@ const options = {
   },
 };
 
+const transports = [
+  new winston.transports.DailyRotateFile(options.file),
+  new winston.transports.Console(options.console),
+];
+if (config.elastic.host) {
+  transports.push(new ElasticSearch(options.elastic));
+}
+
 const logger = new winston.Logger({
-  transports: [
-    new winston.transports.DailyRotateFile(options.file),
-    new ElasticSearch(options.elastic),
-    new winston.transports.Console(options.console),
-  ],
+  transports,
   exitOnError: false,
 });
 

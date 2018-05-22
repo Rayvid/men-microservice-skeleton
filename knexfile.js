@@ -1,10 +1,8 @@
-const config = require('./src/config');
-
 module.exports = {
 
   development: {
     client: 'sqlite3',
-    connection: { filename: config.db.sqliteDbFile },
+    connection: { filename: './db/wallet.db' },
     migrations: { tableName: 'knex_migrations' },
   },
 
