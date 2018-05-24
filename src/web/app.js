@@ -28,6 +28,6 @@ app.use((err, req, res) => {
   res.status(err.status || 500).json({ message: err.message });
 });
 
-app.listen(config.server.port, () => {
-  log.info(`App listening on ${config.server.port}, pid = ${process.pid}`);
+app.listen(config.server.listen_on_port, () => {
+  log.info(`App listening on ${config.server.listen_on_port}, pid = ${process.pid}`);
 });
