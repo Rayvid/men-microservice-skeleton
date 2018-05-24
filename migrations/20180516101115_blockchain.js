@@ -38,7 +38,7 @@ exports.up = function(knex, Promise) {
                 address: '40',
                 amount: '0',
                 metadata: '{role_restriction: "superuser"}'
-            });;
+            });
     });
 };
 

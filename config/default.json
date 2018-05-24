@@ -1,0 +1,24 @@
+{
+    "server": {
+        "env_name": "development",
+        "port": 3000
+    },
+    "logger": {
+        "dir": "logs",
+        "file_name": "combined.log",
+        "level": {
+            "file": "info",
+            "elastic": "info",
+            "console": "info"
+        }
+    },
+    "elastic": {
+        "host": "http://elastic"
+    },
+    "db": {
+        "wallet_file": "./db/wallet.db"
+    },
+    "api": {
+        "version": 1
+    }
+}

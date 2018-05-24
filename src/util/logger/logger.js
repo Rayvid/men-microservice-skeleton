@@ -2,7 +2,7 @@ const winston = require('winston');
 const ElasticSearch = require('winston-elasticsearch');
 const path = require('path');
 const fs = require('fs');
-const config = require('../../config');
+const config = require('../../../config');
 require('winston-daily-rotate-file');
 
 const logDir = path.join(__dirname, config.logger.dir);
