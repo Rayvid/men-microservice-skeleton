@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const config = require('../../../config');
 
-const logDir = path.join(__dirname, config.logger.dir);
+const logDir = path.join(__dirname, '/', config.logger.dir);
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
@@ -11,7 +11,7 @@ if (!fs.existsSync(logDir)) {
 const options = {
   file: {
     level: config.logger.level.file,
-    filename: `${logDir}/${config.logger.fileName}`,
+    filename: `${logDir}/${config.logger.file_name}`,
     handleExceptions: true,
     json: true,
     datePattern: 'YYYY-MM-DD',
