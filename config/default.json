@@ -13,7 +13,6 @@
         }
     },
     "elastic": {
-        "host": "http://elastic"
     },
     "db": {
         "wallet_file": "./db/wallet.db"

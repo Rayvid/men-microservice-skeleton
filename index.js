@@ -1,2 +1,1 @@
-require('./src/web');
-// require('./src/web').init();
+require('./src');
