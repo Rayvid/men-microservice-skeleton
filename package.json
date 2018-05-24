@@ -4,7 +4,8 @@
   "description": "Lympo wallet microservice",
   "main": "index.js",
   "scripts": {
-    "start": "(node ./node_modules/eslint/bin/eslint.js .) & nodemon index.js",
+    "start": "(node ./node_modules/eslint/bin/eslint.js .) & node index.js",
+    "dev": "(node ./node_modules/eslint/bin/eslint.js .) & nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,15 +21,17 @@
   "license": "SEE LICENCE IN lympo.com",
   "homepage": "https://bitbucket.org/latgala/lympo.io-wallet#readme",
   "dependencies": {
-    "config": "^1.30.0",
-    "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "joi": "^13.3.0",
     "knex": "^0.14.6",
+    "lodash": "^4.17.10",
     "morgan": "^1.9.0",
     "sqlite3": "^4.0.0",
     "swagger-ui-express": "^3.0.8",
     "winston": "^2.4.2",
-    "winston-daily-rotate-file": "^3.1.4"
+    "winston-daily-rotate-file": "^3.1.4",
+    "winston-elasticsearch": "^0.6.0",
+    "config": "^1.30.0"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
