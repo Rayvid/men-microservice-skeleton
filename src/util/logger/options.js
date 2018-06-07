@@ -11,7 +11,7 @@ if (!fs.existsSync(logDir)) {
 const options = {
   file: {
     level: config.logger.level.file,
-    filename: `${logDir}/${config.logger.file_name}`,
+    filename: `${logDir}/${config.logger.fileName}`,
     handleExceptions: true,
     json: true,
     datePattern: 'YYYY-MM-DD',

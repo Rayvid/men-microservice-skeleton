@@ -1,11 +1,11 @@
 {
     "server": {
-        "env_name": "NODE_ENV",
-        "listen_on_port": "LISTEN_ON_PORT"
+        "envName": "NODE_ENV",
+        "listenOnPort": "LISTEN_ON_PORT"
     },
     "logger": {
         "dir": "LOG_DIR",
-        "file_name": "LOG_FILE_NAME",
+        "fileName": "LOG_FILE_NAME",
         "level": {
             "file": "LOG_LEVEL_FILE",
             "elastic": "LOG_LEVEL_ELASTIC",
@@ -16,9 +16,6 @@
         "host": "ELASTIC_SEARCH_HOST"
     },
     "db": {
-        "wallet_file": "SQLITE_DB_FILE"
-    },
-    "api": {
-        "version": "API_VERSION"
+        "walletFile": "SQLITE_DB_FILE"
     }
 }

@@ -1,11 +1,11 @@
 {
     "server": {
-        "env_name": "development",
-        "listen_on_port": 3000
+        "envName": "development",
+        "listenOnPort": 3000
     },
     "logger": {
         "dir": "logs",
-        "file_name": "combined.log",
+        "fileName": "combined.log",
         "level": {
             "file": "info",
             "elastic": "info",
@@ -15,9 +15,6 @@
     "elastic": {
     },
     "db": {
-        "wallet_file": "./db/wallet.db"
-    },
-    "api": {
-        "version": 1
+        "walletFile": "./db/wallet.db"
     }
 }

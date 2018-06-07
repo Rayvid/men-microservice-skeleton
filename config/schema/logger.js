@@ -1,9 +1,9 @@
 const joi = require('joi');
 
 module.exports = joi.object({
-  log_dir: joi.string()
+  dir: joi.string()
     .default('logs'),
-  log_file_name: joi.string()
+  fileName: joi.string()
     .default('combined.log'),
   level: joi.object({
     file: joi.string()

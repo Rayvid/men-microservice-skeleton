@@ -1,6 +1,6 @@
 const joi = require('joi');
 
 module.exports = joi.object({
-  wallet_file: joi.string()
+  walletFile: joi.string()
     .required(),
 }).unknown().required();
