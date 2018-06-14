@@ -1,0 +1,21 @@
+version: '2'
+services:
+  your_service_name:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        ENV: development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - lympo-main-store
+    env_file:
+      - ../.env
+    environment:
+      - MONGODB_URL=mongodb://lympo-main-store/{dbName}
+    volumes:
+      - ..:/app
+      - /app/node_modules
+  lympo-main-store:
+    image: lympo/main-store:master

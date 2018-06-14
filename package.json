@@ -4,6 +4,10 @@
   "description": "Lympo wallet microservice",
   "main": "index.js",
   "scripts": {
+    "start": "(node ./node_modules/eslint/bin/eslint.js .) & node index.js",
+    "dev": "(node ./node_modules/eslint/bin/eslint.js .) & nodemon index.js",
+    "docker:production": "(export NODE_ENV=production || set NODE_ENV=production) && npm start",
+    "docker:development": "(export NODE_ENV=development || set NODE_ENV=development) && npm run dev -- -L",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,10 +24,28 @@
   "homepage": "https://bitbucket.org/latgala/lympo.io-wallet#readme",
   "dependencies": {
     "config": "^1.30.0",
-    "dotenv": "^5.0.1",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "joi": "^13.3.0",
     "knex": "^0.14.6",
+    "lodash": "^4.17.10",
+    "lympo-mainstore": "git+https://bitbucket.org/latgala/mainstore.git",
+    "mongoose": "^5.1.5",
+    "morgan": "^1.9.0",
+    "npm": "^6.1.0",
     "sqlite3": "^4.0.0",
-    "swagger-ui-express": "^3.0.8"
+    "swagger-ui-express": "^3.0.8",
+    "winston": "^2.4.2",
+    "winston-daily-rotate-file": "^3.1.4",
+    "winston-elasticsearch": "^0.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "nodemon": "^1.17.3"
   }
 }

@@ -1,3 +1,22 @@
 {
-    "listen_on_port": "LISTEN_ON_PORT"
+    "server": {
+        "envName": "NODE_ENV",
+        "listenOnPort": "LISTEN_ON_PORT"
+    },
+    "logger": {
+        "dir": "LOG_DIR",
+        "fileName": "LOG_FILE_NAME",
+        "level": {
+            "file": "LOG_LEVEL_FILE",
+            "elastic": "LOG_LEVEL_ELASTIC",
+            "console": "LOG_LEVEL_CONSOLE"
+        }
+    },
+    "elastic": {
+        "host": "ELASTIC_SEARCH_HOST"
+    },
+    "db": {
+        "walletFile": "SQLITE_DB_FILE",
+        "mongoUrl": "MONGODB_URL"
+    }
 }

@@ -1,4 +1,21 @@
 {
-    "listen_on_port": "80",
-    "sqlite_db_file": "./db/wallet.db"
+    "server": {
+        "envName": "development",
+        "listenOnPort": 80
+    },
+    "logger": {
+        "dir": "logs",
+        "fileName": "combined.log",
+        "level": {
+            "file": "info",
+            "elastic": "info",
+            "console": "info"
+        }
+    },
+    "elastic": {
+    },
+    "db": {
+        "walletFile": "./db/wallet.db",
+        "mongoUrl": "mongodb://localhost/{dbName}"
+    }
 }
