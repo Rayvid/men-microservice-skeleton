@@ -16,6 +16,7 @@
         "host": "ELASTIC_SEARCH_HOST"
     },
     "db": {
-        "walletFile": "SQLITE_DB_FILE"
+        "walletFile": "SQLITE_DB_FILE",
+        "mongoUrl": "MONGODB_URL"
     }
 }

@@ -1,1 +1,2 @@
-require('./web/app');
+const modelInitializer = require('./model');
+require('./web')([modelInitializer]);

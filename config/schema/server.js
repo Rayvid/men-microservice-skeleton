@@ -5,6 +5,6 @@ module.exports = joi.object({
     .allow(['development', 'test', 'production'])
     .default('development'),
   listenOnPort: joi.number()
-    .default(3000),
+    .default(80),
 }).unknown().required();
 

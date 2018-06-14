@@ -1,7 +1,7 @@
 {
     "server": {
         "envName": "development",
-        "listenOnPort": 3000
+        "listenOnPort": 80
     },
     "logger": {
         "dir": "logs",
@@ -15,6 +15,7 @@
     "elastic": {
     },
     "db": {
-        "walletFile": "./db/wallet.db"
+        "walletFile": "./db/wallet.db",
+        "mongoUrl": "mongodb://localhost/{dbName}"
     }
 }
