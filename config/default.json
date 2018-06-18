@@ -15,7 +15,6 @@
     "elastic": {
     },
     "db": {
-        "walletFile": "./db/wallet.db",
         "mongoUrl": "mongodb://localhost/{dbName}"
     }
 }

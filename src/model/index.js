@@ -23,7 +23,7 @@ module.exports = (app) => {
       mongoose
         .connect(config.get('db').mongoUrl.replace('{dbName}', database)) // Use one connection string for all DBs for now
         .catch((err) => {
-          log.fatal(`Mongo connection problems - ${err.message}`);
+          log.error(`Mongo connection problems - ${err.message}`);
           process.exit(1); // Not much else we can do just restart in hopes to recover
         });
       connectedDatabases[database] = mongoose.connection;
