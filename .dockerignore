@@ -1,2 +1,2 @@
 node_modules
-util/logger/logs/
+src/util/logger/logs/

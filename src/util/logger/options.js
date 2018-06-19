@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const config = require('../../../config');
 
-const logDir = path.join(__dirname, '/', config.logger.dir);
+const logDir = path.join(__dirname, config.logger.dir);
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
