@@ -27,7 +27,9 @@ module.exports = (middlewares = []) => {
     next(); // Anyway 404, just will not spam our error logs
   });
 
-  app.use((err, req, res) => {
+  /* eslint-disable no-unused-vars */
+  app.use((err, req, res, next) => {
+  /* eslint-enable no-unused-vars */
     log.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 
     let errorObj = null;
