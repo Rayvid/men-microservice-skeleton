@@ -1,21 +1,25 @@
-image: lympo/build-expect:latest
+image: docker:stable
+services:
+  - docker:dind
 before_script:
-    - export IMAGE_NAME=lympo/microservice-skeleton
-    - npm config set registry https://$NPM_URL
-    - |
-        /usr/bin/expect <<EOD
-        spawn npm adduser
-        expect {
-            "Username:" {send "$NPM_USERNAME\r"; exp_continue}
-            "Password:" {send "$NPM_PASSWORD\r"; exp_continue}
-            "Email: (this IS public)" {send "$NPM_EMAIL\r"; exp_continue}
-        }
-        EOD
+  - apk update
+  - apk add nodejs-npm expect
+  - export IMAGE_NAME=lympo/microservice-skeleton
+  - npm config set registry https://$NPM_URL
+  - |
+      /usr/bin/expect <<EOD
+      spawn npm adduser
+      expect {
+          "Username:" {send "$NPM_USERNAME\r"; exp_continue}
+          "Password:" {send "$NPM_PASSWORD\r"; exp_continue}
+          "Email: (this IS public)" {send "$NPM_EMAIL\r"; exp_continue}
+      }
+      EOD
 
 stages:
-    - pre_test
-    - deploy
-    - post_test
+  - pre_test
+  - deploy
+  - post_test
 
 docker_build:
   stage: pre_test
@@ -23,7 +27,7 @@ docker_build:
     refs:
       - branches
   script:
-    - docker build -f docker/Dockerfile -t $IMAGE_NAME:latest --build-arg NPMRC_CONTENT="$(cat ~/.npmrc)" .
+    - docker build -f Dockerfile -t $IMAGE_NAME:latest --build-arg NPMRC_CONTENT="$(cat ~/.npmrc)" .
 
 # thats example of deploy if you are building shared lib
 # npm_publish:
