@@ -1,27 +1,26 @@
 {
-  "name": "lympo-wallet",
+  "name": "lympo-microservice-skeleton",
   "version": "1.0.0",
-  "description": "Lympo wallet microservice",
+  "description": "Lympo microservice skeleton example",
   "main": "index.js",
   "scripts": {
     "start": "(node ./node_modules/eslint/bin/eslint.js .) & node index.js",
     "dev": "(node ./node_modules/eslint/bin/eslint.js .) & nodemon index.js",
     "docker:production": "(export NODE_ENV=production || set NODE_ENV=production) && npm start",
     "docker:development": "(export NODE_ENV=development || set NODE_ENV=development) && npm run dev -- -L",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No test specified yet\" && exit 0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://Rayvid@bitbucket.org/latgala/lympo.io-wallet.git"
+    "url": "https://gitlab.com/lympo-io/microservice-skeleton"
   },
   "keywords": [
     "lympo",
-    "wallet",
     "microservice"
   ],
   "author": "Lympo",
   "license": "SEE LICENCE IN lympo.com",
-  "homepage": "https://bitbucket.org/latgala/lympo.io-wallet#readme",
+  "homepage": "https://gitlab.com/lympo-io/microservice-skeleton",
   "dependencies": {
     "config": "^1.30.0",
     "dotenv": "^6.0.0",

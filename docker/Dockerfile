@@ -1,5 +1,8 @@
 FROM node:9.11
 
+ARG NPMRC_CONTENT="registry=https://npm.lympo.io/\r//npm.lympo.io/:_authToken=override_this_arg_in_host"
+
+RUN echo "$NPMRC_CONTENT" > ~/.npmrc
 WORKDIR /app
 COPY package*.json /app/
 
