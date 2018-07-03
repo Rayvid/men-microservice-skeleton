@@ -8,6 +8,7 @@
     "dev": "(node ./node_modules/eslint/bin/eslint.js .) & nodemon index.js",
     "docker:production": "(export NODE_ENV=production || set NODE_ENV=production) && npm start",
     "docker:development": "(export NODE_ENV=development || set NODE_ENV=development) && npm run dev -- -L",
+    "lint": "eslint .",
     "test": "echo \"No test specified yet\" && exit 0"
   },
   "repository": {
