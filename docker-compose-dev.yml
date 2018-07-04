@@ -10,10 +10,9 @@ services:
       - "3000:3000"
     depends_on:
       - lympo-main-store
-    env_file:
-      - .env
     environment:
       - MONGODB_URL=mongodb://lympo-main-store/{dbName}
+      - ENV_FILE=dev.env
     volumes:
       - .:/app
       - /app/node_modules
