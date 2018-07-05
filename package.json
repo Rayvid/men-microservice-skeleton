@@ -4,7 +4,7 @@
   "description": "Lympo microservice skeleton example",
   "main": "index.js",
   "scripts": {
-    "start": "eslint . & node index.js",
+    "start": "node index.js",
     "dev": "eslint . & nodemon index.js",
     "docker:production": "(export NODE_ENV=production || set NODE_ENV=production) && npm start",
     "docker:development": "(export NODE_ENV=development || set NODE_ENV=development) && npm run dev -- -L",
