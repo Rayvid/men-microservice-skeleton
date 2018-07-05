@@ -5,7 +5,7 @@ stages:
     - pre_test
     - build
 
-test:
+lint:
  image: node:9-alpine
  stage: pre_test
  script:
@@ -14,7 +14,7 @@ test:
     - npm install
     - npm run lint
 
-lint:
+test:
  image: node:9-alpine
  stage: pre_test
  script:
