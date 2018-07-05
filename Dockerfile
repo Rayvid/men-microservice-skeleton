@@ -16,4 +16,4 @@ FROM node:9.11-alpine
 WORKDIR /app
 COPY --from=0 /app .
 EXPOSE 3000
-CMD npm run docker:$NODE_ENV
+CMD ["sh", "-c", "npm run docker:${NODE_ENV}"]
