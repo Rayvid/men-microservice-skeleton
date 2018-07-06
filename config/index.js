@@ -1,3 +1,5 @@
+require('./env');
+
 const config = require('config');
 const joi = require('joi');
 const server = require('./schema/server');
