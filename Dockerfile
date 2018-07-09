@@ -13,7 +13,6 @@ RUN npm install --unsafe-perm
 COPY . .
 
 FROM node:9.11-alpine
-ENV NODE_ENV=$ENV
 WORKDIR /app
 COPY --from=0 /app .
 EXPOSE 3000
