@@ -1,6 +1,6 @@
 FROM node:9.11-alpine
 
-ARG ENV=production
+ARG NODE_ENV=production
 ENV NODE_ENV=$ENV
 ARG NPMRC_CONTENT="registry=https://npm.lympo.io/\n//npm.lympo.io/:_authToken=override_this_arg_in_host"
 
@@ -13,6 +13,7 @@ RUN npm install --unsafe-perm
 COPY . .
 
 FROM node:9.11-alpine
+ENV NODE_ENV=$ENV
 WORKDIR /app
 COPY --from=0 /app .
 EXPOSE 3000
