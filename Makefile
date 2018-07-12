@@ -2,6 +2,9 @@ SHELL:=/bin/bash
 
 -include .makerc
 
+build:
+	-docker-compose -f compose.dev.yml build
+
 up:
 	-docker-compose -f compose.dev.yml up app-wallet-api
 

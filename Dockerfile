@@ -4,7 +4,7 @@ ARG NODE_ENV=production
 ENV NODE_ENV=$ENV
 ARG NPMRC_CONTENT="registry=https://npm.lympo.io/\n//npm.lympo.io/:_authToken=override_this_arg_in_host"
 
-RUN echo -e "$NPMRC_CONTENT" > ~/.npmrc
+RUN printf "$NPMRC_CONTENT" > ~/.npmrc
 WORKDIR /app
 COPY package*.json /app/
 
