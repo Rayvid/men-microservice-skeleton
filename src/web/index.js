@@ -7,6 +7,9 @@ const log = require('../util').logger;
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
 
+/** Routes */
+const Routes = require('./routes');
+
 const app = express();
 
 module.exports = (middlewares = []) => {
@@ -15,10 +18,11 @@ module.exports = (middlewares = []) => {
 
   app.use(morgan('combined', { stream: log.stream }));
 
-  app.get('/', (req, res) => {
-    log.debug('Debug statement');
-    res.json({ message: `${Object.keys(res.locals.getModels()).length} models found in Users database` });
-  });
+  /**
+   * Application routes
+   */
+  app.get('/', Routes.rootRoute);
+  app.get('/health', Routes.healthCheckRoute);
 
   app.use((req, res, next) => {
     if (req.url !== '/favicon.ico' && req.url !== '/robots.txt') {
