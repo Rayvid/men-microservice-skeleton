@@ -21,7 +21,6 @@ module.exports = (middlewares = []) => {
   /**
    * Application routes
    */
-  app.get('/', Routes.rootRoute);
   app.get('/health', Routes.healthCheckRoute);
 
   app.use((req, res, next) => {
