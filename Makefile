@@ -6,9 +6,9 @@ build:
 	-docker-compose -f compose.dev.yml build
 
 up:
-	-docker-compose -f compose.dev.yml up app-wallet-api
+	-docker-compose -f compose.dev.yml up
 
-login: 
+login:
 	cat ~/.gitlab | docker login registry.gitlab.com --username $(GITLAB_USER) --password-stdin
 
 clean:
