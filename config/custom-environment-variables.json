@@ -17,6 +17,13 @@
     },
     "db": {
         "walletFile": "SQLITE_DB_FILE",
-        "mongoUrl": "MONGODB_URL"
+        "mongo": {
+            "schema": "MONGO_SCHEMA",
+            "host": "MONGO_HOST",
+            "user": "MONGO_USER",
+            "password": "MONGO_PASSWORD",
+            "port": "MONGO_PORT",
+            "database": "MONGO_DATABASE"
+        }
     }
 }

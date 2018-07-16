@@ -15,6 +15,13 @@
     "elastic": {
     },
     "db": {
-        "mongoUrl": "mongodb://localhost/{dbName}"
+        "mongo": {
+            "schema": "mongodb",
+            "host": "localhost",
+            "user": "user",
+            "password": "password",
+            "port": 27017,
+            "database": "database"
+        }
     }
 }
