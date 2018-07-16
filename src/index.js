@@ -1,2 +1,1 @@
-const modelInitializer = require('./model');
-require('./web')([modelInitializer]);
+require('./web')();
