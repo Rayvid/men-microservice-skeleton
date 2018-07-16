@@ -1,2 +1,3 @@
 const modelInitializer = require('./model');
-require('./web')([modelInitializer]);
+const bodyParser = require('body-parser');
+require('./web')([app => app.use(bodyParser.json()), modelInitializer]);

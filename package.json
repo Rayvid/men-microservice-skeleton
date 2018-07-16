@@ -23,6 +23,7 @@
   "license": "SEE LICENCE IN lympo.com",
   "homepage": "https://gitlab.com/lympo-io/microservice-skeleton",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "config": "^1.30.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
