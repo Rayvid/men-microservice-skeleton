@@ -1,6 +1,6 @@
 FROM node:9.11-alpine
 
-ARG NODE_ENV=production
+ARG ENV=production
 ENV NODE_ENV=$ENV
 ARG NPMRC_CONTENT="registry=https://npm.lympo.io/\n//npm.lympo.io/:_authToken=override_this_arg_in_host"
 
