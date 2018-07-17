@@ -7,6 +7,4 @@ const secretPath = path.resolve(secretEnv);
 
 if (fs.existsSync(secretPath)) {
   dotenv.config({ path: secretPath });
-} else if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'production') {
-  dotenv.config({ path: path.resolve('dev.env') });
 }
