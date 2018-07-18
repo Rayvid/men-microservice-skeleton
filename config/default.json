@@ -18,10 +18,10 @@
         "mongo": {
             "schema": "mongodb",
             "host": "localhost",
-            "user": "user",
-            "password": "password",
+            "user": "",
+            "password": "",
             "port": 27017,
-            "database": "database"
+            "database": "{dbName}"
         }
     }
 }
