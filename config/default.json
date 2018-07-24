@@ -24,6 +24,6 @@
     }
   },
   "sentry": {
-    "dsn": "https://e245e6c7249a4b1c8a1b7e2e4f01da0d@sentry.io/1248181"
+    "dsn":
   }
 }
