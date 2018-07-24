@@ -10,5 +10,5 @@ module.exports = {
   server: joi.attempt(config.get('server'), server),
   elastic: joi.attempt(config.get('elastic'), elastic),
   logger: joi.attempt(config.get('logger'), logger),
-  sentry: joi.attempt(config.get('sentry'), sentry)
+  sentry: joi.attempt(config.get('sentry'), sentry),
 };
