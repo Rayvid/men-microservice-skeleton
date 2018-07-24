@@ -4,6 +4,8 @@ const express = require('express');
 const morgan = require('morgan');
 const log = require('../util').logger;
 
+const Raven = require('raven');
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
 
@@ -12,7 +14,15 @@ const Routes = require('./routes');
 
 const app = express();
 
+if (config.sentry.dsn) {
+  Raven.config(config.sentry.dsn).install();
+}
+
 module.exports = (middlewares = []) => {
+  if (config.sentry.dsn) {
+    app.use(Raven.requestHandler());
+  }
+
   middlewares.forEach(_ => _(app));
   app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
@@ -23,6 +33,11 @@ module.exports = (middlewares = []) => {
    */
   app.get('/health', Routes.healthCheckRoute);
 
+  // Error handling
+  if (config.sentry.dsn) {
+    app.use(Raven.errorHandler());
+  }
+
   app.use((req, res, next) => {
     if (req.url !== '/favicon.ico' && req.url !== '/robots.txt') {
       log.error(`${404} - ${'Page not found.'} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
@@ -32,7 +47,7 @@ module.exports = (middlewares = []) => {
 
   /* eslint-disable no-unused-vars */
   app.use((err, req, res, next) => {
-  /* eslint-enable no-unused-vars */
+    /* eslint-enable no-unused-vars */
     log.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 
     let errorObj = null;
