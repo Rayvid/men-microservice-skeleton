@@ -20,7 +20,8 @@
       "user": "",
       "password": "",
       "port": 27017,
-      "database": "{dbName}"
+      "database": "{dbName}",
+      "params": ""
     }
   },
   "sentry": {

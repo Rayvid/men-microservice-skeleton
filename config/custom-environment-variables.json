@@ -23,7 +23,8 @@
       "user": "MONGO_USER",
       "password": "MONGO_PASSWORD",
       "port": "MONGO_PORT",
-      "database": "MONGO_DATABASE"
+      "database": "MONGO_DATABASE",
+      "params": "MONGO_PARAMS"
     }
   },
   "sentry": {
