@@ -1,29 +1,33 @@
 {
-    "server": {
-        "envName": "NODE_ENV",
-        "listenOnPort": "LISTEN_ON_PORT"
-    },
-    "logger": {
-        "dir": "LOG_DIR",
-        "fileName": "LOG_FILE_NAME",
-        "level": {
-            "file": "LOG_LEVEL_FILE",
-            "elastic": "LOG_LEVEL_ELASTIC",
-            "console": "LOG_LEVEL_CONSOLE"
-        }
-    },
-    "elastic": {
-        "host": "ELASTIC_SEARCH_HOST"
-    },
-    "db": {
-        "walletFile": "SQLITE_DB_FILE",
-        "mongo": {
-            "schema": "MONGO_SCHEMA",
-            "host": "MONGO_HOST",
-            "user": "MONGO_USER",
-            "password": "MONGO_PASSWORD",
-            "port": "MONGO_PORT",
-            "database": "MONGO_DATABASE"
-        }
+  "server": {
+    "envName": "NODE_ENV",
+    "listenOnPort": "LISTEN_ON_PORT"
+  },
+  "logger": {
+    "dir": "LOG_DIR",
+    "fileName": "LOG_FILE_NAME",
+    "level": {
+      "file": "LOG_LEVEL_FILE",
+      "elastic": "LOG_LEVEL_ELASTIC",
+      "console": "LOG_LEVEL_CONSOLE"
     }
+  },
+  "elastic": {
+    "host": "ELASTIC_SEARCH_HOST"
+  },
+  "db": {
+    "walletFile": "SQLITE_DB_FILE",
+    "mongo": {
+      "schema": "MONGO_SCHEMA",
+      "host": "MONGO_HOST",
+      "user": "MONGO_USER",
+      "password": "MONGO_PASSWORD",
+      "port": "MONGO_PORT",
+      "database": "MONGO_DATABASE",
+      "params": "MONGO_PARAMS"
+    }
+  },
+  "sentry": {
+    "dsn": "SENTRY_DSN"
+  }
 }

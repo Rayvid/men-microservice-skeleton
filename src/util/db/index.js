@@ -9,10 +9,12 @@ const mongoConfig = config.get('db.mongo');
  * @param {Object} mongoConfig MongoDB connection credentials from config
  */
 const generateConnectionUrl = (dbName) => {
-  const auth = (mongoConfig.user && mongoConfig.password) ? `${mongoConfig.user}:${mongoConfig.password}@` : '';
-  const port = (mongoConfig.port) ? `:${mongoConfig.port}` : '';
-  const database = `/${(dbName || mongoConfig.database)}`;
-  return `${mongoConfig.schema}://${auth}${mongoConfig.host}${port}${database}`;
+  const auth =
+    mongoConfig.user && mongoConfig.password ? `${mongoConfig.user}:${mongoConfig.password}@` : '';
+  const port = mongoConfig.port ? `:${mongoConfig.port}` : '';
+  const database = `/${dbName || mongoConfig.database}`;
+  const params = `${mongoConfig.params}`;
+  return `${mongoConfig.schema}://${auth}${mongoConfig.host}${port}${database}${params}`;
 };
 
 /**
@@ -25,7 +27,8 @@ const connectedDatabases = {};
 const dbConnectionFactory = async database =>
   new Promise((resolve, reject) => {
     if (!connectedDatabases[database]) {
-      mongoose.createConnection(generateConnectionUrl(database))
+      mongoose
+        .createConnection(generateConnectionUrl(database))
         .then((con) => {
           connectedDatabases[database] = con;
           resolve(con);
