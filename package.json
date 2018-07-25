@@ -27,6 +27,7 @@
     "config": "^1.30.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "express-async-errors": "^3.0.0",
     "joi": "^13.3.0",
     "knex": "^0.14.6",
     "lodash": "^4.17.10",

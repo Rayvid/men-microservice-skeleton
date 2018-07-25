@@ -1,6 +1,7 @@
 const config = require('../../config');
 const log = require('../util').logger;
 const express = require('express');
+require('express-async-errors');
 const Raven = require('raven');
 const routes = require('./routes');
 
