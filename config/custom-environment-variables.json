@@ -12,9 +12,6 @@
       "console": "LOG_LEVEL_CONSOLE"
     }
   },
-  "elastic": {
-    "host": "ELASTIC_SEARCH_HOST"
-  },
   "db": {
     "walletFile": "SQLITE_DB_FILE",
     "mongo": {

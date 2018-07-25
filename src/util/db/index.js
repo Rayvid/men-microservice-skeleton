@@ -28,6 +28,7 @@ const dbConnectionFactory = async database =>
   new Promise((resolve, reject) => {
     if (!connectedDatabases[database]) {
       mongoose
+        // TODO pooling - single connection per replica wont hold
         .createConnection(generateConnectionUrl(database))
         .then((con) => {
           connectedDatabases[database] = con;

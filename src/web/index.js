@@ -1,49 +1,44 @@
 const config = require('../../config');
-const express = require('express');
-
-const morgan = require('morgan');
 const log = require('../util').logger;
-
-const Raven = require('raven');
+const express = require('express');
+const raven = require('raven');
+const routes = require('./routes');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
 
-/** Routes */
-const Routes = require('./routes');
-
 const app = express();
 
 if (config.sentry.dsn) {
-  Raven.config(config.sentry.dsn).install();
+  raven.config(config.sentry.dsn).install();
 }
 
 module.exports = (middlewares = []) => {
   if (config.sentry.dsn) {
-    app.use(Raven.requestHandler());
+    app.use(raven.requestHandler());
   }
 
-  middlewares.forEach(_ => _(app));
+  // TODO move swagger init into special folder
+  // - usually its more complicated, than just to include single JSON
   app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
-
-  app.use(morgan('combined', { stream: log.stream }));
+  middlewares.forEach(_ => _(app));
 
   /**
    * Application routes
    */
-  app.get('/health', Routes.healthCheckRoute);
-
-  // Error handling
-  if (config.sentry.dsn) {
-    app.use(Raven.errorHandler());
-  }
+  app.get('/health', routes.healthCheckRoute);
 
   app.use((req, res, next) => {
     if (req.url !== '/favicon.ico' && req.url !== '/robots.txt') {
       log.error(`${404} - ${'Page not found.'} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
     }
-    next(); // Anyway 404, just will not spam our error logs
+    next(); // Anyway 404, just lets not spam our error logs by throwing exception
   });
+
+  // Error handling
+  if (config.sentry.dsn) {
+    app.use(raven.errorHandler());
+  }
 
   /* eslint-disable no-unused-vars */
   app.use((err, req, res, next) => {
