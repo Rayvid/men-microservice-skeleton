@@ -1,7 +1,7 @@
 const config = require('../../config');
 const log = require('../util').logger;
 const express = require('express');
-const raven = require('raven');
+const Raven = require('raven');
 const routes = require('./routes');
 
 const swaggerUi = require('swagger-ui-express');
@@ -10,12 +10,12 @@ const swaggerDoc = require('./swagger.json');
 const app = express();
 
 if (config.sentry.dsn) {
-  raven.config(config.sentry.dsn).install();
+  Raven.config(config.sentry.dsn).install();
 }
 
 module.exports = (middlewares = []) => {
   if (config.sentry.dsn) {
-    app.use(raven.requestHandler());
+    app.use(Raven.requestHandler());
   }
 
   // TODO move swagger init into special folder
@@ -37,7 +37,7 @@ module.exports = (middlewares = []) => {
 
   // Error handling
   if (config.sentry.dsn) {
-    app.use(raven.errorHandler());
+    app.use(Raven.errorHandler());
   }
 
   /* eslint-disable no-unused-vars */
