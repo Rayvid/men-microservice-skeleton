@@ -18,7 +18,7 @@
       "host": "localhost",
       "user": "",
       "password": "",
-      "port": 27017,
+      "port": "",
       "database": "{dbName}",
       "params": ""
     }
