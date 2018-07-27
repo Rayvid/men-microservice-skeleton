@@ -28,9 +28,13 @@ module.exports = (middlewares = []) => {
 
   app.use(morgan('combined', { stream: log.stream }));
 
-  /**
-   * Application routes
-   */
+  // Application routes
+
+  app.get('/fake', async (req, res) => {
+    res.status(500);
+    throw new Error('Fake error!');
+  });
+
   app.get('/health', Routes.healthCheckRoute);
 
   // Error handling
