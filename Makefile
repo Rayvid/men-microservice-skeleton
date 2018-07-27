@@ -6,7 +6,7 @@ up:
 	-docker-compose -f compose.dev.yml up
 
 build:
-	-docker-compose -f compose.dev.yml rm --force && docker-compose -f compose.dev.yml build
+	-docker-compose -f compose.dev.yml rm --force ; docker-compose -f compose.dev.yml build
 
 login:
 	cat ~/.gitlab | docker login registry.gitlab.com --username $(GITLAB_USER) --password-stdin
