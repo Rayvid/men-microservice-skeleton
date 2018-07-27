@@ -24,7 +24,6 @@ module.exports = (middlewares = []) => {
   app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
   middlewares.forEach(_ => _(app));
 
-<<<<<<< HEAD
   // Application routes
 
   app.get('/fake', async (req, res) => {
@@ -32,14 +31,12 @@ module.exports = (middlewares = []) => {
     throw new Error('Fake error!');
   });
 
-  app.get('/health', Routes.healthCheckRoute);
+  app.get('/health', routes.healthCheckRoute);
 
   // Error handling
   if (config.sentry.dsn) {
     app.use(Raven.errorHandler());
   }
-  app.get('/health', routes.healthCheckRoute);
->>>>>>> master
 
   app.use((req, res, next) => {
     if (req.url !== '/favicon.ico' && req.url !== '/robots.txt') {
