@@ -30,11 +30,6 @@ middlewares.beforeHandler.forEach(_ => _(app));
 app.get('/health', routes.healthCheck);
 app.get('/health/sentry', routes.sentryPing);
 
-// Error handling
-if (config.sentry.dsn) {
-  app.use(Raven.errorHandler());
-}
-
 app.use((req, res, next) => {
   if (req.url !== '/favicon.ico' && req.url !== '/robots.txt') {
     log.error(`${404} - ${'Page not found.'} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
