@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const config = require('config');
+const config = require('../../../config');
 const lympoMainStoreInitializer = require('lympo-mainstore');
 
-const mongoConfig = config.get('db.mongo');
+const mongoConfig = config.mongo;
 
 /**
  * Generates a mongo connection url from partials
@@ -10,11 +10,13 @@ const mongoConfig = config.get('db.mongo');
  */
 const generateConnectionUrl = (dbName) => {
   const auth =
-    mongoConfig.user && mongoConfig.password ? `${mongoConfig.user}:${mongoConfig.password}@` : '';
+    (mongoConfig.user && mongoConfig.user !== ''
+      && mongoConfig.password && mongoConfig.password !== '')
+      ? `${mongoConfig.user}:${mongoConfig.password}@` : '';
   const port = mongoConfig.port ? `:${mongoConfig.port}` : '';
   const database = `/${dbName || mongoConfig.database}`;
-  const params = mongoConfig.params ? `${mongoConfig.params}` : '';
-  return `${mongoConfig.schema}://${auth}${mongoConfig.host}${port}${database}?${params}`;
+  const params = (mongoConfig.params && mongoConfig.params !== '') ? `?${mongoConfig.params}` : '';
+  return `${mongoConfig.schema}://${auth}${mongoConfig.host}${port}${database}${params}`;
 };
 
 /**
@@ -49,6 +51,8 @@ const getModels = async (database = 'Users') => {
   if (!models[database]) {
     switch (database) {
       default:
+        // TODO main store approach is obsolete
+        // will introduce local repository folder for reference
         models[database] = lympoMainStoreInitializer(dbConnection);
         break;
     }
