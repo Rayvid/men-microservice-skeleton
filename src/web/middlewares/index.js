@@ -1,6 +1,6 @@
 const log = require('../../util').logger;
 const morgan = require('morgan');
-const modelInitializer = require('../../model');
+const modelInitializer = require('./modelInitializer');
 const bodyParser = require('body-parser');
 const errorHandler = require('../middlewares/error.js');
 

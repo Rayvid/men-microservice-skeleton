@@ -1,4 +1,4 @@
-const db = require('../util/db');
+const db = require('../../util/db');
 
 module.exports = (app) => {
   // To not even initialize db wheres its not needed, models are lazy, populated by getModels
