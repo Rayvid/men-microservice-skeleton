@@ -9,6 +9,7 @@ WORKDIR /app
 COPY package*.json /app/
 
 RUN npm install --unsafe-perm
+RUN npm rebuild bcrypt --build-from-source
 COPY . .
 
 FROM node:9.11-alpine
