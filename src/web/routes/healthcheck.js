@@ -1,15 +1,20 @@
 // Uncomment if you need Mongo connectivity check
-// const log = require('../../util').logger;
+// const exceptions = require('../../exceptions');
 
-module.exports = async (req, res) => {
-  // Uncomment if you need Mongo connectivity check
-  // try {
-  //   await res.locals.getModels();
-  // } catch (err) {
-  //   log.error('Service unhealthy!', err);
-  //   res.status(500).json({ status: 'unhealthy' });
-  //   return;
-  // }
+module.exports = {
+  healthCheck: async (req, res) => {
+    // Uncomment if you need Mongo connectivity check
+    // try {
+    //   await res.locals.getModels();
+    // } catch (err) {
+    //   throw new exceptions.Exception({ message: 'Health check failed', innerError: err });
+    // }
 
-  res.status(200).json({ status: 'healthy' });
+    res.status(200).json({ status: 'healthy' });
+  },
+  /* eslint-disable no-unused-vars */
+  sentryPing: async (req, res) => {
+    /* eslint-enable no-unused-vars */
+    throw new Error('Pinging sentry');
+  },
 };

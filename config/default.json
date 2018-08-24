@@ -1,27 +1,29 @@
 {
-    "server": {
-        "envName": "development",
-        "listenOnPort": 80
-    },
-    "logger": {
-        "dir": "logs",
-        "fileName": "combined.log",
-        "level": {
-            "file": "info",
-            "elastic": "info",
-            "console": "info"
-        }
-    },
-    "elastic": {
-    },
-    "db": {
-        "mongo": {
-            "schema": "mongodb",
-            "host": "localhost",
-            "user": "",
-            "password": "",
-            "port": 27017,
-            "database": "{dbName}"
-        }
+  "server": {
+    "envName": "development",
+    "listenOnPort": 80
+  },
+  "logger": {
+    "dir": "logs",
+    "fileName": "combined.log",
+    "level": {
+      "file": "info",
+      "elastic": "info",
+      "console": "info"
     }
+  },
+  "db": {
+    "mongo": {
+      "schema": "mongodb",
+      "host": "localhost",
+      "user": "",
+      "password": "",
+      "port": "",
+      "database": "{dbName}",
+      "params": ""
+    }
+  },
+  "sentry": {
+    "dsn": ""
+  }
 }

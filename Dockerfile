@@ -1,4 +1,4 @@
-FROM node:9.11-alpine
+FROM node:9.11
 
 ARG ENV=production
 ENV NODE_ENV=$ENV
@@ -8,8 +8,8 @@ RUN printf "$NPMRC_CONTENT" > ~/.npmrc
 WORKDIR /app
 COPY package*.json /app/
 
-RUN apk --update add git alpine-sdk python python-dev
 RUN npm install --unsafe-perm
+RUN npm rebuild bcrypt --build-from-source
 COPY . .
 
 FROM node:9.11-alpine

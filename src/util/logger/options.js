@@ -11,7 +11,7 @@ if (!fs.existsSync(logDir)) {
 const options = {
   file: {
     level: config.logger.level.file,
-    filename: `${logDir}/${config.logger.fileName}`,
+    filename: path.join(logDir, config.logger.fileName),
     handleExceptions: true,
     json: true,
     datePattern: 'YYYY-MM-DD',
@@ -22,7 +22,7 @@ const options = {
   elastic: {
     level: config.logger.level.elastic,
     messageType: '_doc',
-    clientOpts: { host: config.elastic.host },
+    clientOpts: { host: (config.elastic) ? config.elastic.host : undefined },
     handleExceptions: true,
     json: true,
     colorize: false,

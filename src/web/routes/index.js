@@ -1,3 +1,6 @@
-const healthCheckRoute = require('./healthcheck');
+const healthCheckRoutes = require('./healthcheck');
 
-module.exports = { healthCheckRoute };
+module.exports = {
+  healthCheck: healthCheckRoutes.healthCheck,
+  sentryPing: healthCheckRoutes.sentryPing,
+};
