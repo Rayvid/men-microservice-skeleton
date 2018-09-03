@@ -29,6 +29,7 @@ middlewares.beforeHandler.forEach(_ => _(app));
 // Application routes
 app.get('/health', routes.healthCheck);
 app.get('/health/sentry', routes.sentryPing);
+app.get('/version', routes.versionCheck)
 
 app.use((req, res, next) => {
   if (req.url !== '/favicon.ico' && req.url !== '/robots.txt') {
