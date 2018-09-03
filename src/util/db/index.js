@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('../../../config');
-const lympoMainStoreInitializer = require('lympo-mainstore');
+const model = require('../../model');
 
 const mongoConfig = config.mongo;
 
@@ -46,14 +46,14 @@ const dbConnectionFactory = async database =>
  * Mongoose models management - get models for connection
  */
 const models = {};
-const getModels = async (database = 'Users') => {
+const getModels = async (database = 'SportsApps') => {
   const dbConnection = await dbConnectionFactory(database);
   if (!models[database]) {
     switch (database) {
+      // There you can separate models initialization by database,
+      // or just keep default if you are using single DB - which is recommended
       default:
-        // TODO main store approach is obsolete
-        // will introduce local repository folder for reference
-        models[database] = lympoMainStoreInitializer(dbConnection);
+        models[database] = model(dbConnection);
         break;
     }
   }
