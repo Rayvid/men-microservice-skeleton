@@ -1,4 +1,5 @@
 nodemon.json
+prod.env.secrets
 
 # ElasticSearch
 esdata
