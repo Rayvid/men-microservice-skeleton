@@ -31,4 +31,4 @@ const schema = new Schema({
   },
 }, { collection: 'sportsAppUserIntegrations' });
 
-module.exports = connection => connection.model('SportsAppUserIntegration', schema);
+module.exports = schema;
