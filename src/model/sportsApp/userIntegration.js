@@ -4,7 +4,7 @@ const integrationInitializer = require('./integration');
 module.exports = (dbConnection) => {
   const models = schemaInitializer.getModels(dbConnection);
   const SportsAppUserIntegrationConstructor =
-    models.sportsAppUserIntegrationModel;
+    models.sportsAppUserIntegrationModel();
   const integrationModel = integrationInitializer(dbConnection);
 
   return {

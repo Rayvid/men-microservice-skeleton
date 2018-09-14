@@ -5,7 +5,7 @@ module.exports = {
   sportsAppIntegrationSchema,
   sportsAppUserIntegrationSchema,
   getModels: dbConnection => ({
-    sportsAppIntegrationModel: sportsAppIntegrationSchema(dbConnection),
-    sportsAppUserIntegrationModel: sportsAppUserIntegrationSchema(dbConnection),
+    sportsAppIntegrationModel: () => dbConnection.model('SportsAppIntegration', sportsAppIntegrationSchema),
+    sportsAppUserIntegrationModel: () => dbConnection.model('SportsAppUserIntegration', sportsAppUserIntegrationSchema),
   }),
 };
