@@ -31,7 +31,8 @@ build:
  except:
     - master
  script:
-     - sed '/version/c\  \"version\"\: \"${CI_COMMIT_SHA}\"' package.json
+     - >
+       sed "/version/c\  \"version\"\: \"${CI_COMMIT_SHA}\"" package.json
      - docker build --tag ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg NPMRC_CONTENT="$NPMRC_CONTENT" .
 
 push:
@@ -42,7 +43,8 @@ push:
  script:
      - docker pull $CONTAINER_IMAGE:latest || true
      - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-     - sed '/version/c\  \"version\"\: \"${CI_COMMIT_SHA}\"' package.json
+     - >
+       sed "/version/c\  \"version\"\: \"${CI_COMMIT_SHA}\"" package.json
      - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg NPMRC_CONTENT="$NPMRC_CONTENT" .
      - docker push ${CI_REGISTRY_IMAGE}:latest
      - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
