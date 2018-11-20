@@ -1,24 +1,21 @@
 const log = require('../../util').logger;
 
-/* eslint-disable no-unused-vars */
-module.exports = (err, req, res, next) => {
-  /* eslint-enable no-unused-vars */
-  log.error(
-    `${err.status || err.statusCode || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`,
-    [ // This is to log error in one batch (avoid making multiple log.error calls)
-      // (becomes important when sending to networked sinks)
-      (err.fields) ? `fields: ${JSON.stringify(err.fields)}` : undefined,
-      err.stack,
-    ].reduce((result, _) => result + ((_) ? `\n${_}` : '')),
-  );
+// eslint-disable-next-line no-unused-vars
+module.exports = (error, req, res, next) => {
+  const errorObj = {
+    message: error.message,
+    fields: error.fields,
+    stack: process.env.NODE_ENV !== 'production' ? error.stack : undefined,
+  };
 
-  const errorObj = { message: err.message };
-  res.status(err.status || err.statusCode || 500);
-  if (err.stack && process.env.NODE_ENV !== 'production') {
-    errorObj.stack = err.stack;
-  }
-
-  res.json(errorObj);
-
-  // No next call - we already started output, so no meaningfull continuation possible
+  const reqInfo = `${req.originalUrl} - ${req.method} - ${req.ip}`;
+  log.error({
+    status: error.status || 500,
+    message: errorObj.message,
+    reqInfo,
+    fields: errorObj.fields,
+    stack: error.stack,
+  });
+  res.status(error.status || 500).json(errorObj);
 };
+

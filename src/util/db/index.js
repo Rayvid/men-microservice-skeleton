@@ -1,9 +1,7 @@
+const config = require('config');
 const mongoose = require('mongoose');
-const config = require('../../../config');
-const model = require('../../model');
-const exception = require('../../exceptions');
 
-const mongoConfig = config.mongo;
+const mongoConfig = config.get('db.mongo');
 
 /**
  * Generates a mongo connection url from partials
@@ -14,7 +12,11 @@ const generateConnectionUrl = (dbName) => {
     (mongoConfig.user && mongoConfig.user !== ''
       && mongoConfig.password && mongoConfig.password !== '')
       ? `${mongoConfig.user}:${mongoConfig.password}@` : '';
-  const port = mongoConfig.port ? `:${mongoConfig.port}` : '';
+  const port =
+    mongoConfig.schema.indexOf('srv') === -1 // No port for srv
+      && mongoConfig.port
+      ? `:${mongoConfig.port}`
+      : '';
   const database = `/${dbName || mongoConfig.database}`;
   const params = (mongoConfig.params && mongoConfig.params !== '') ? `?${mongoConfig.params}` : '';
   return `${mongoConfig.schema}://${auth}${mongoConfig.host}${port}${database}${params}`;
@@ -23,55 +25,51 @@ const generateConnectionUrl = (dbName) => {
 /**
  * Mongoose connection management
  *
- * Connection factory with reusability of existing instances\
+ * Connection factory with reusability of existing instances
  * @throws {MongoError} On connection issues
  */
+const maxPoolSize = 5; // TODO some elasticity maybe
 const connectedDatabases = {};
+const roundRobinResolve = (database, resolve) => {
+  connectedDatabases[database].lastPoolItemUsed += 1;
+  if (connectedDatabases[database].lastPoolItemUsed === maxPoolSize) {
+    connectedDatabases[database].lastPoolItemUsed = 0;
+  }
+
+  resolve(connectedDatabases[database]
+    .connections[connectedDatabases[database].lastPoolItemUsed]);
+};
+
 const dbConnectionFactory = async database =>
   new Promise((resolve, reject) => {
-    if (!connectedDatabases[database]) {
+    if (!connectedDatabases[database]
+      || connectedDatabases[database].connections.length < maxPoolSize) {
       mongoose
-        // TODO pooling - single connection per replica wont hold
         .createConnection(generateConnectionUrl(database))
         .then((con) => {
-          connectedDatabases[database] = con;
-          resolve(con);
+          if (!connectedDatabases[database]) {
+            connectedDatabases[database] = {
+              connections: [con],
+              lastPoolItemUsed: -1,
+            };
+          } else {
+            connectedDatabases[database].connections.push(con);
+          }
+
+          // Creating synthetic .dbName propery, appears .name is not reliable
+          connectedDatabases[database]
+            .connections[connectedDatabases[database].connections.length - 1]
+            .dbName = database;
+
+          roundRobinResolve(database, resolve);
         })
         .catch(reject);
     } else {
-      resolve(connectedDatabases[database]);
+      roundRobinResolve(database, resolve);
     }
   });
 
-/**
- * Mongoose models management - get models for connection
- */
-const models = {};
-const getModels = async (database = 'SportsApps') => {
-  if (!database) {
-    throw new exception.Exception('Invalid database name');
-  }
 
-  // Get constructed model
-  const databaseModel = models[database];
-  if (databaseModel) {
-    return databaseModel;
-  }
+const getConnection = async database => dbConnectionFactory(database);
 
-  // Initialize model on first use
-  const dbConnection = await dbConnectionFactory(database);
-  switch (database) {
-    // Replace name when using another database
-    // Add case statement for different initializations
-    case 'SportsApps': {
-      const sportsAppsModel = model(dbConnection);
-      models[database] = sportsAppsModel;
-      return sportsAppsModel;
-    }
-
-    default:
-      throw new exception.Exception('database model initializer not defined');
-  }
-};
-
-module.exports = { connectedDatabases, dbConnectionFactory, getModels, models };
+module.exports = { getConnection };

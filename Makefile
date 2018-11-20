@@ -6,6 +6,7 @@ up:
 	docker-compose -f compose.dev.yml up
 
 build:
+	-docker-compose -f compose.dev.yml stop
 	-docker-compose -f compose.dev.yml rm --force
 	docker-compose -f compose.dev.yml build --no-cache
 

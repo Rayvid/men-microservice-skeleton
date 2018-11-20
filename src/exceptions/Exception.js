@@ -21,7 +21,7 @@ class Exception extends Error {
     if (params && !params.stack) {
       constructorParameters = params;
     }
-    super(constructorParameters.message);
+    super(constructorParameters.message || defaultParams.message);
 
     // Capturing stack trace and excluding constructor call from it.
     // This requires some explanation i believe:
@@ -52,11 +52,18 @@ class Exception extends Error {
     // Most commonly it will be HTTP status,
     // but can be any other convention dictated by library throwing it
     this.statusCode = constructorParameters.statusCode || defaultParams.statusCode;
-    this.fields = constructorParameters.fields;
+    this.status = this.statusCode; // For backwards compatibility
+
+    // To bubble fields too from originated exception
+    this.fields = constructorParameters.fields || params.fields;
   }
 
   inspect() {
-    return this.stack || `${this.name}: ${this.message}`;
+    return {
+      name: `${this.name}: ${this.message}`,
+      stack: this.stack,
+      fields: this.fields,
+    };
   }
 }
 

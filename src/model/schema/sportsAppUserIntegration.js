@@ -2,7 +2,7 @@ const { Schema } = require('mongoose');
 
 const schema = new Schema({
   userId: {
-    type: Schema.Types.ObjectId,
+    type: String, // uuid
     required: true,
   },
   integrationId: {
@@ -31,4 +31,4 @@ const schema = new Schema({
   },
 }, { collection: 'sportsAppUserIntegrations' });
 
-module.exports = schema;
+module.exports = connection => connection.model('SportsAppUserIntegration', schema);

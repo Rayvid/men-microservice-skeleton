@@ -1,9 +1,11 @@
-const schemaInitializer = require('../schema');
+const schema = require('../schema');
 
 module.exports = dbConnection => ({
-  getIntegration: async integrationName =>
-    schemaInitializer
-      .getModels(dbConnection)
-      .sportsAppIntegrationModel()
-      .findOne({ providerName: integrationName }),
+  getIntegration: async (integrationName, lean = true) => {
+    const result = schema
+      .sportsAppIntegrationSchema(dbConnection)
+      .findOne({ provider: integrationName });
+
+    return (lean) ? result.lean() : result;
+  },
 });

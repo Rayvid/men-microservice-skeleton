@@ -3,9 +3,9 @@
     "info": {
         "description": "TBD",
         "version": "1.0",
-        "title": "lympo.io-wallet"
+        "title": "lympo.io-skeleton"
     },
-    "host": "wallet.lympo.io",
+    "host": "prod.lympo.io",
     "basePath": "/",
     "schemes": [
         "https"

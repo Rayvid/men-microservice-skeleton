@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "eslint . & nodemon index.js",
+    "dev": "eslint . & nodemon --inspect=0.0.0.0:9229 index.js",
     "docker:production": "(export NODE_ENV=production || set NODE_ENV=production) && npm start",
     "docker:development": "(export NODE_ENV=development || set NODE_ENV=development) && npm run dev -- -L",
     "lint": "eslint .",
@@ -26,20 +26,17 @@
     "body-parser": "^1.18.3",
     "config": "^1.30.0",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "express-async-errors": "^3.0.0",
     "joi": "^13.3.0",
     "knex": "^0.14.6",
     "lodash": "^4.17.10",
-    "mongoose": "^5.2.9",
-    "morgan": "^1.9.0",
-    "npm": "^6.1.0",
+    "mongoose": "^5.3.12",
+    "morgan": "^1.9.1",
     "raven": "^2.6.3",
-    "sqlite3": "^4.0.0",
     "swagger-ui-express": "^3.0.8",
-    "winston": "^2.4.2",
-    "winston-daily-rotate-file": "^3.1.4",
-    "winston-elasticsearch": "^0.6.0"
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.5.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -48,6 +45,6 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.18.6"
   }
 }
