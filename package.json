@@ -1,7 +1,7 @@
 {
-  "name": "lympo-microservice-skeleton",
+  "name": "men-microservice-skeleton",
   "version": "1.0.0",
-  "description": "Lympo microservice skeleton example",
+  "description": "Men microservice skeleton example",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -13,15 +13,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/lympo-io/microservice-skeleton"
+    "url": "https://github.com/Rayvid/men-microservice-skeleton"
   },
   "keywords": [
-    "lympo",
+    "men",
     "microservice"
   ],
   "author": "Lympo",
-  "license": "SEE LICENCE IN lympo.com",
-  "homepage": "https://gitlab.com/lympo-io/microservice-skeleton",
+  "license": "MIT",
+  "homepage": "https://github.com/Rayvid/men-microservice-skeleton",
   "dependencies": {
     "body-parser": "^1.18.3",
     "config": "^1.30.0",
