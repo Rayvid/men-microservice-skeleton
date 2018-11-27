@@ -1,34 +1,47 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "description": "TBD",
-        "version": "1.0",
-        "title": "lympo.io-skeleton"
-    },
-    "host": "prod.lympo.io",
-    "basePath": "/",
-    "schemes": [
-        "https"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
-    "paths": {
-        "/": {
-            "get": {
-                "summary": "Dashboard and entry points to the system",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response"
-                    }
-                }
-            },
-            "x-summary": "Provides dashboard and entry points to the system"
+  "swagger": "2.0",
+  "info": {
+    "description": "TBD",
+    "version": "1.0",
+    "title": "lympo.io-skeleton"
+  },
+  "host": "prod.lympo.io",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "jwt": {
+      "description": "Bearer &lt;base64 encoded jwt&gt;",
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  },
+  "security": [
+    {
+      "jwt": "Bearer <base64 encoded jwt>"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Dashboard and entry points to the system",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
         }
-    },
-    "definitions": {}
+      },
+      "x-summary": "Provides dashboard and entry points to the system"
+    }
+  },
+  "definitions": {}
 }
