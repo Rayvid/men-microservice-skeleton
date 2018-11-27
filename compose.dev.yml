@@ -1,0 +1,24 @@
+version: '2'
+services:
+  your_service_name:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENV: development
+        NPMRC_CONTENT: "//registry.npmjs.org/:_authToken=private_repo_token_goes_there"
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    depends_on:
+      - mongo
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./dev.env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/logs # Some problems with this to host - permission problems overriding folder, etc. If you need to test it badly - just remove, but generally better to keep it inside container
+  mongo:
+    image: mongo
