@@ -1,7 +1,7 @@
 {
-  "name": "men-microservice-skeleton",
+  "name": "lympo-microservice-skeleton",
   "version": "1.0.0",
-  "description": "Men microservice skeleton example",
+  "description": "Lympo microservice skeleton example",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -13,15 +13,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Rayvid/men-microservice-skeleton"
+    "url": "https://gitlab.com/lympo-io/microservice-skeleton"
   },
   "keywords": [
-    "men",
+    "lympo",
     "microservice"
   ],
   "author": "Lympo",
-  "license": "MIT",
-  "homepage": "https://github.com/Rayvid/men-microservice-skeleton",
+  "license": "SEE LICENCE IN lympo.com",
+  "homepage": "https://gitlab.com/lympo-io/microservice-skeleton",
   "dependencies": {
     "body-parser": "^1.18.3",
     "config": "^1.30.0",
@@ -39,12 +39,12 @@
     "winston-daily-rotate-file": "^3.5.1"
   },
   "devDependencies": {
+    "nodemon": "^1.18.7",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
-    "nodemon": "^1.18.6"
+    "eslint-plugin-react": "^7.7.0"
   }
 }
