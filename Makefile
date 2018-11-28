@@ -1,7 +1,5 @@
 SHELL:=/bin/bash
 
--include .makerc
-
 up:
 	docker-compose -f compose.dev.yml up
 
