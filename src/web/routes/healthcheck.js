@@ -12,7 +12,7 @@ module.exports = {
     //     stravaId: (await (await res.locals.getModels()).getStravaIntegration())._id,
     //   };
     // } catch (err) {
-    //   throw new exceptions.Exception({ message: 'Health check failed', innerError: err, fields: [{id:1}] });
+    //   throw new exceptions.Exception({ message: 'Health check failed', innerError: err });
     // }
     //
 

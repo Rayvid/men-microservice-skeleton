@@ -24,6 +24,10 @@ Mongoose underhood, but connection initialization approach tweaked to support mu
 
 Sentry will see entire exception path when used provided Exception classes (or inherited ones)
 
+## Gitlab CI read
+
+Bind mservice version to commit hash automatically, lint, test
+
 ## Logging built in
 
 Based on winston, extended to support provided Exception classes (or inherited ones) which allows you to see full exception trace and bubble `fields` (usefull in server based validation scenarios)

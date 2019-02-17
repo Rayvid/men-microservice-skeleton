@@ -6,20 +6,18 @@ stages:
     - build
 
 lint:
- image: node:9-alpine
+ image: node:10.13
  stage: pre_test
  script:
     - echo -e "$NPMRC_CONTENT" > ~/.npmrc
-    - apk --update add git alpine-sdk python python-dev
     - npm install
     - npm run lint
 
 test:
- image: node:9-alpine
+ image: node:10.13
  stage: pre_test
  script:
     - echo -e "$NPMRC_CONTENT" > ~/.npmrc
-    - apk --update add git alpine-sdk python python-dev
     - npm install
     - npm test
 
@@ -45,6 +43,6 @@ push:
      - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
      - >
        sed "/version/c\  \"version\"\: \"${CI_COMMIT_SHA}\"" package.json
-     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg NPMRC_CONTENT="$NPMRC_CONTENT" .
+     - docker build --cache-from ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg NPMRC_CONTENT="$NPMRC_CONTENT" .
      - docker push ${CI_REGISTRY_IMAGE}:latest
      - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
