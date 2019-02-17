@@ -36,7 +36,7 @@ Based on winston, extended to support provided Exception classes (or inherited o
 
 ### Launch locally
 
-`make build up`
+`make build up`, navigate to http://localhost:3000/swagger/
 You might think its not windows friendly, but original author mostly uses it on windows with mingw. so it definitely is. On Mac/Linux though its very recomended to remove  `-- -L` from nodemon
 
 ### Debug locally
