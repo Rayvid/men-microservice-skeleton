@@ -2,11 +2,44 @@
 
 Sample micro service skeleton, basically for any MEN stack project
 
+## Code style this project is compatible with
+
+{
+    "extends": "eslint-config-airbnb",
+    "rules": {
+        "object-curly-newline": ["error", {
+            "ObjectPattern": {"multiline": true}
+        }]
+    }
+}
+Maybe someone will make standard fork :)?
+
+## Mongo as DAL
+
+Mongoose underhood, but connection initialization approach tweaked to support multidatabase in single microservice and be lazy to microservice to start faster
+
+## Sentry friendly
+
+Sentry will see entire exception path when used provided Exception classes (or inherited ones)
+
+## Logging built in
+
+Based on winston, extended to support provided Exception classes (or inherited ones) which allows you to see full exception trace and bubble `fields` (usefull in server based validation scenarios)
+
 ## DOCKER
 
 ### Launch locally
 
 `make build up`
+You might think its not windows friendly, but author mostly uses it on windows with mingw. so it definitely is. On Mac though its very recomended to remove  `-- -L` from nodemon
+
+### Debug locally
+
+Standard vscode docker attach to node will work just fine
+
+### `npm start`
+
+Yes it does work, you can even start w/o having database up, thanks to lazy db connection creation approach
 
 ## CONFIGURATION
 

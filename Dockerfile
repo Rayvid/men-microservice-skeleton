@@ -8,8 +8,6 @@ WORKDIR /usr/src/app
 COPY package*.json /usr/src/app/
 
 RUN npm install --unsafe-perm
-# Building bcrypt otherwise having binary compatibility issues with alpine sometimes
-RUN npm rebuild bcrypt --build-from-source
 COPY . .
 
 FROM node:10.13-alpine

@@ -15,6 +15,7 @@
   "db": {
     "walletFile": "SQLITE_DB_FILE",
     "mongo": {
+      "fullConnString": "MONGO_FULL_CONN_STRING",
       "schema": "MONGO_SCHEMA",
       "host": "MONGO_HOST",
       "user": "MONGO_USER",

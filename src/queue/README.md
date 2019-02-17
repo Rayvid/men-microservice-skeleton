@@ -1,1 +1,0 @@
-Placeholder for background tasks proccessing queue, recommended way to implement background processing tasks we agreed between ourselves - https://github.com/bee-queue/bee-queue

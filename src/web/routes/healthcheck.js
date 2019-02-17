@@ -3,14 +3,20 @@ const exceptions = require('../../exceptions');
 
 module.exports = {
   healthCheck: async (req, res) => {
-    // Sample of Mongo connectivity check
+    // eslint-disable-next-line prefer-const
+    let result = { status: 'healthy' };
+    // Sample of Mongo connectivity check, if will fail on your mongo, its just to give idea
     // try {
-    //   (await (await res.locals.getModels()).getStravaIntegration()).provider.toString();
+    //   result = {
+    //     status: 'healthy',
+    //     stravaId: (await (await res.locals.getModels()).getStravaIntegration())._id,
+    //   };
     // } catch (err) {
-    //   throw new exceptions.Exception({ message: 'Health check failed', innerError: err });
+    //   throw new exceptions.Exception({ message: 'Health check failed', innerError: err, fields: [{id:1}] });
     // }
+    //
 
-    res.status(200).json({ status: 'healthy' });
+    res.status(200).json(result);
   },
   /* eslint-disable no-unused-vars */
   sentryPing: async (req, res) => {

@@ -1,3 +1,3 @@
-const sportsAppModelInitializer = require('./sportsApp');
+const sportsAppRepositoryInitializer = require('./sportsAppRepository');
 
-module.exports = dbConnection => sportsAppModelInitializer(dbConnection);
+module.exports = dbConnection => sportsAppRepositoryInitializer(dbConnection);

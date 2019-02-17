@@ -1,24 +1,24 @@
 // This file is all about defining and running http server instance
 // Some infrastructure code leak there is ok, just try to keep it minimum
-const config = require('../../config');
-const log = require('../util').logger;
-const express = require('express');
-require('express-async-errors');
-const Raven = require('raven');
-const routes = require('./routes');
-
+const Sentry = require('@sentry/node');
 const middlewares = require('./middlewares');
 const swaggerUi = require('swagger-ui-express');
+const express = require('express');
+require('express-async-errors');
+
+const config = require('../../config');
+const log = require('../util').logger;
+const routes = require('./routes');
 const swaggerDoc = require('./swagger.json');
 
 const app = express();
 
 if (config.sentry.dsn) {
-  Raven.config(config.sentry.dsn).install();
+  Sentry.init({ dsn: config.sentry.dsn });
 }
 
 if (config.sentry.dsn) {
-  app.use(Raven.requestHandler());
+  app.use(Sentry.Handlers.requestHandler());
 }
 
 // TODO move swagger init into special folder
@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 
 // Error handling
 if (config.sentry.dsn) {
-  app.use(Raven.errorHandler());
+  app.use(Sentry.Handlers.errorHandler());
 }
 app.use(middlewares.errorSink);
 

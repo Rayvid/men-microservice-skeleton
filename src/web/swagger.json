@@ -3,11 +3,12 @@
   "info": {
     "description": "TBD",
     "version": "1.0",
-    "title": "lympo.io-skeleton"
+    "title": "men-skeleton"
   },
-  "host": "prod.lympo.io",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
+    "http",
     "https"
   ],
   "consumes": [
@@ -30,9 +31,9 @@
     }
   ],
   "paths": {
-    "/": {
+    "/health": {
       "get": {
-        "summary": "Dashboard and entry points to the system",
+        "summary": "Healtcheck",
         "parameters": [],
         "responses": {
           "200": {
@@ -40,7 +41,19 @@
           }
         }
       },
-      "x-summary": "Provides dashboard and entry points to the system"
+      "x-summary": "Healthcheck (for loadbalancer or other http based heartbeat)"
+    },
+    "/version": {
+      "get": {
+        "summary": "Version",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "x-summary": "To fetch current microservice version (bound to git commit hash)"
     }
   },
   "definitions": {}

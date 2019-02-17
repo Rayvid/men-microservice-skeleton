@@ -42,8 +42,14 @@ class Exception extends Error {
     Error.captureStackTrace(this, this.constructor);
     if (params && params.stack) {
       this.stack += `\n${params.stack}`;
+      if (params.message) {
+        this.cause = params; // 4 Sentry to see it
+      }
     } else if (constructorParameters.innerError && constructorParameters.innerError.stack) {
       this.stack += `\n${constructorParameters.innerError.stack}`;
+      if (constructorParameters.innerError.message) {
+        this.cause = constructorParameters.innerError; // 4 Sentry to see it
+      }
     }
 
     // Saving namespace for exception type comparison (Comparing types itself is tricky in Node)
@@ -52,18 +58,18 @@ class Exception extends Error {
     // Most commonly it will be HTTP status,
     // but can be any other convention dictated by library throwing it
     this.statusCode = constructorParameters.statusCode || defaultParams.statusCode;
-    this.status = this.statusCode; // For backwards compatibility
 
     // To bubble fields too from originated exception
     this.fields = constructorParameters.fields || params.fields;
   }
 
   inspect() {
-    return {
+    // TODO good idea tu have beutified
+    return JSON.toString({
       name: `${this.name}: ${this.message}`,
       stack: this.stack,
       fields: this.fields,
-    };
+    });
   }
 }
 

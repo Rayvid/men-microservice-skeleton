@@ -1,13 +1,15 @@
-const config = require('config');
+const { mongo: mongoConfig } = require('../../../config');
 const mongoose = require('mongoose');
-
-const mongoConfig = config.get('db.mongo');
 
 /**
  * Generates a mongo connection url from partials
  * @param {Object} mongoConfig MongoDB connection credentials from config
  */
 const generateConnectionUrl = (dbName) => {
+  if (mongoConfig.fullConnString) {
+    return mongoConfig.fullConnString.replace('{dbName}', dbName);
+  }
+
   const auth =
     (mongoConfig.user && mongoConfig.user !== ''
       && mongoConfig.password && mongoConfig.password !== '')
@@ -23,12 +25,12 @@ const generateConnectionUrl = (dbName) => {
 };
 
 /**
- * Mongoose connection management
+ * Mongoose connection management - default one does not support multidatabase
  *
- * Connection factory with reusability of existing instances
+ * Connection factory with built-in connection pooling per database
  * @throws {MongoError} On connection issues
  */
-const maxPoolSize = 5; // TODO some elasticity maybe
+const maxPoolSize = 3; // TODO some elasticity maybe
 const connectedDatabases = {};
 const roundRobinResolve = (database, resolve) => {
   connectedDatabases[database].lastPoolItemUsed += 1;
@@ -44,9 +46,15 @@ const dbConnectionFactory = async database =>
   new Promise((resolve, reject) => {
     if (!connectedDatabases[database]
       || connectedDatabases[database].connections.length < maxPoolSize) {
+      // Relying on mongoose/mongo driver to reestablish connection on error
       mongoose
-        .createConnection(generateConnectionUrl(database))
-        .then((con) => {
+        .createConnection(generateConnectionUrl(database), {
+          useNewUrlParser: true,
+          db: { readPreference: 'secondaryPreferred' },
+          keepAlive: true,
+          keepAliveInitialDelay: 30000,
+          noDelay: true,
+        }).then((con) => {
           if (!connectedDatabases[database]) {
             connectedDatabases[database] = {
               connections: [con],

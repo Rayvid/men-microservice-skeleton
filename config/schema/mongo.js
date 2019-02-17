@@ -1,6 +1,7 @@
 const joi = require('joi');
 
 module.exports = joi.object({
+  fullConnString: joi.string().allow('').default(''),
   schema: joi.string().required(),
   host: joi.string().required(),
   user: joi.string().allow('').default(''),

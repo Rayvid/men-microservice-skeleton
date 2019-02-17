@@ -1,4 +1,4 @@
-version: '2'
+version: '3.1'
 services:
   your_service_name:
     build:
@@ -19,6 +19,6 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-      - /usr/src/app/logs # Some problems with this to host - permission problems overriding folder, etc. If you need to test it badly - just remove, but generally better to keep it inside container
+      - /usr/src/app/logs # Some problems with this folder mapped to host - permission problems overriding folder, etc. If you need to test it badly - just remove this line, but generally better to keep it inside container
   mongo:
-    image: mongo
+    image: mongo:4.0

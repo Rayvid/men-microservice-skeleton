@@ -15,4 +15,9 @@ const schema = new Schema(
   { collection: 'sportsAppIntegrations' },
 );
 
-module.exports = connection => connection.model('SportsAppIntegration', schema);
+module.exports = {
+  schema,
+  // TODO wrap mongoose model with our own,
+  // to include more extensive logging, compatible Exceptions, etc
+  getActiveSchema: connection => connection.model('SportsAppIntegration', schema),
+};

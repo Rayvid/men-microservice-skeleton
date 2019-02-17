@@ -1,5 +1,14 @@
 const log = require('../../util').logger;
 
+const parseForwardedFor = (value) => {
+  if (!value) {
+    return undefined;
+  }
+
+  const commaIndex = value.indexOf(',');
+  return commaIndex === -1 ? value : value.substr(0, commaIndex);
+};
+
 // eslint-disable-next-line no-unused-vars
 module.exports = (error, req, res, next) => {
   const errorObj = {
@@ -8,14 +17,15 @@ module.exports = (error, req, res, next) => {
     stack: process.env.NODE_ENV !== 'production' ? error.stack : undefined,
   };
 
-  const reqInfo = `${req.originalUrl} - ${req.method} - ${req.ip}`;
+  const reqInfo = `${req.originalUrl} - ${req.method}`
+    + ` - ${parseForwardedFor(req.headers['x-forwarded-for']) || req.connection.remoteAddress}`;
   log.error({
-    status: error.status || 500,
+    status: error.statusCode || 500,
     message: errorObj.message,
     reqInfo,
     fields: errorObj.fields,
     stack: error.stack,
   });
-  res.status(error.status || 500).json(errorObj);
+  res.status(error.statusCode || 500).json(errorObj);
 };
 

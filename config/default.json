@@ -14,8 +14,9 @@
   },
   "db": {
     "mongo": {
+      "fullConnString": "",
       "schema": "mongodb",
-      "host": "localhost",
+      "host": "mongo",
       "user": "",
       "password": "",
       "port": "",
