@@ -4,6 +4,7 @@ Sample micro service skeleton, basically for any MEN stack project
 
 ## Code style this project is compatible with
 
+```
 {
     "extends": "eslint-config-airbnb",
     "rules": {
@@ -12,6 +13,7 @@ Sample micro service skeleton, basically for any MEN stack project
         }]
     }
 }
+```
 Maybe someone will make standard fork :)?
 
 ## Mongo as DAL
@@ -37,7 +39,7 @@ You might think its not windows friendly, but author mostly uses it on windows w
 
 Standard vscode docker attach to node will work just fine
 
-### `npm start`
+### `npm start` w/o docker
 
 Yes it does work, you can even start w/o having database up, thanks to lazy db connection creation approach
 
