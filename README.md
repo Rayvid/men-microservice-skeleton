@@ -1,6 +1,6 @@
-# microservice-skeleton
+# No transpiler MEN microservice skeleton
 
-Sample micro service skeleton, basically for any MEN stack project
+Sample of simple micro service skeleton. It slowly evolved during few years of my own experience of solving similar problems in multiple projects, with multiple teams. So outsourcing it to shortcut others and hopefully get some contributions we all will benefit from.
 
 ## Code style this project is compatible with
 
@@ -33,11 +33,11 @@ Based on winston, extended to support provided Exception classes (or inherited o
 ### Launch locally
 
 `make build up`
-You might think its not windows friendly, but author mostly uses it on windows with mingw. so it definitely is. On Mac though its very recomended to remove  `-- -L` from nodemon
+You might think its not windows friendly, but original author mostly uses it on windows with mingw. so it definitely is. On Mac/Linux though its very recomended to remove  `-- -L` from nodemon
 
 ### Debug locally
 
-Standard vscode docker attach to node will work just fine
+Standard vscode `Docker: Attach to Node` will work just fine
 
 ### `npm start` w/o docker
 
