@@ -1,6 +1,12 @@
 # No transpiler MEN microservice skeleton
 
-Sample of simple micro service skeleton. It slowly evolved during few years of my own experience of solving similar problems in multiple projects, with multiple teams. So outsourcing it to shortcut others and hopefully get some contributions we all will benefit from.
+Simple micro service skeleton. It slowly evolved as a result of my own experience of solving similar problems in multiple projects, with multiple teams. So outsourcing it to shortcut others and hopefully get some contributions we all will benefit from.
+
+## Modules vs infrastructure code duplication
+
+Some code can be moved to modules and in future definitely will be. On other hand some infra code duplication in microservices is ok. It allows you to finetune particular behaviour w/o making logic branch in the module.
+
+Of course thats bit lame excuse for keeping lets say multidatabase mongoose connection factory not in the module, but thats really fine to bootstrap express app in each microservice individually, even if that bootstrap code matches 100% 
 
 ## Code style this project is compatible with
 
@@ -37,7 +43,8 @@ Based on winston, extended to support provided Exception classes (or inherited o
 ### Launch locally
 
 `make build up`, navigate to http://localhost:3000/swagger/
-You might think its not windows friendly, but original author mostly uses it on windows with mingw. so it definitely is. On Mac/Linux though its very recomended to remove  `-- -L` from nodemon
+
+You might think its not windows friendly, i am developing mostly using it on windows with mingw. So it definitely is. On Mac/Linux though its very recomended to remove  `-- -L` from nodemon
 
 ### Debug locally
 
