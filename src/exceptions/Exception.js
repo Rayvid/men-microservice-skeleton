@@ -64,8 +64,8 @@ class Exception extends Error {
   }
 
   inspect() {
-    // TODO good idea tu have beutified
-    return JSON.toString({
+    // TODO good idea to have beautification option
+    return JSON.stringify({
       name: `${this.name}: ${this.message}`,
       stack: this.stack,
       fields: this.fields,
