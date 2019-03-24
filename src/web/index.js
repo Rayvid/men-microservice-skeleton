@@ -7,7 +7,7 @@ const express = require('express');
 require('express-async-errors');
 
 const config = require('../../config');
-const log = require('../util').logger;
+const { logger: log } = require('../util');
 const routes = require('./routes');
 const swaggerDoc = require('./swagger.json');
 
@@ -31,12 +31,7 @@ app.get('/health', routes.healthCheck);
 app.get('/health/sentry', routes.sentryPing);
 app.get('/version', routes.versionCheck);
 
-app.use((req, res, next) => {
-  if (req.url !== '/favicon.ico' && req.url !== '/robots.txt') {
-    log.error(`${404} - ${'Page not found.'} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
-  }
-  next(); // Anyway 404, just lets not spam our error logs by throwing exception
-});
+app.use(middlewares.notFound);
 
 // Error handling
 if (config.sentry.dsn) {

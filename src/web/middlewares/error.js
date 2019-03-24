@@ -1,13 +1,4 @@
-const log = require('../../util').logger;
-
-const parseForwardedFor = (value) => {
-  if (!value) {
-    return undefined;
-  }
-
-  const commaIndex = value.indexOf(',');
-  return commaIndex === -1 ? value : value.substr(0, commaIndex);
-};
+const { logger: log, parseForwardedFor } = require('../../util');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (error, req, res, next) => {
@@ -28,4 +19,3 @@ module.exports = (error, req, res, next) => {
   });
   res.status(error.statusCode || 500).json(errorObj);
 };
-

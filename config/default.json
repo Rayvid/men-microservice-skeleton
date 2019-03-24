@@ -7,7 +7,8 @@
     "dir": "logs",
     "fileName": "combined.log",
     "level": {
-      "file": "info",
+      "__comment__": "File level set higher to not consume disk too much",
+      "file": "warn",
       "elastic": "info",
       "console": "info"
     }

@@ -1,10 +1,10 @@
 const winston = require('winston');
 const defaultOptions = require('./options');
-require('winston-daily-rotate-file');
+const DailyRotateFile = require('winston-daily-rotate-file');
 
 const init = (options = defaultOptions) => {
   const transports = [
-    new winston.transports.DailyRotateFile(options.file),
+    new DailyRotateFile(options.file),
     new winston.transports.Console(options.console),
   ];
   // seems deprecated forever
@@ -17,6 +17,8 @@ const init = (options = defaultOptions) => {
       winston.format.colorize(),
       winston.format.timestamp(),
       winston.format.printf(info =>
+        /* Logic is actually quite simple - if message is string try to check object itself
+          if it has exception fields. If it does not - just output message */
         // eslint-disable-next-line no-nested-ternary
         `${info.timestamp} ${info.level}: ${typeof info.message !== 'string'
           ? info.message.inspect
@@ -31,12 +33,6 @@ const init = (options = defaultOptions) => {
     ),
     exitOnError: false,
   });
-
-  logger.stream = {
-    write: (message) => {
-      logger.info(message);
-    },
-  };
 
   return logger;
 };

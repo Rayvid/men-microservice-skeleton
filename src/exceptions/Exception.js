@@ -60,16 +60,18 @@ class Exception extends Error {
     this.statusCode = constructorParameters.statusCode || defaultParams.statusCode;
 
     // To bubble fields too from originated exception
-    this.fields = constructorParameters.fields || params.fields;
+    this.fields = constructorParameters.fields
+      || (constructorParameters.innerError && constructorParameters.innerError.fields);
   }
 
   inspect() {
     // TODO good idea to have beautification option
-    return JSON.stringify({
-      name: `${this.name}: ${this.message}`,
-      stack: this.stack,
-      fields: this.fields,
-    });
+    const errKey = (this.stack && this.stack.indexOf(this.message) < 0)
+      ? JSON.stringify(`${this.name}+${this.message}`)
+      : JSON.stringify(this.name);
+    const result = { fields: this.fields };
+    result[errKey] = this.stack || '<no stacktrace>';
+    return JSON.stringify(result);
   }
 }
 

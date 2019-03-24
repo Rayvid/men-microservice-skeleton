@@ -19,5 +19,5 @@ module.exports = {
   schema,
   // TODO wrap mongoose model with our own,
   // to include more extensive logging, compatible Exceptions, etc
-  getActiveSchema: connection => connection.model('SportsAppIntegration', schema),
+  getActiveSchema: connection => connection.model('sportsAppIntegrations', schema),
 };

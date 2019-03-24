@@ -1,13 +1,15 @@
-const log = require('../../util').logger;
-const morgan = require('morgan');
+const { logger: log } = require('../../util');
+const expressWinston = require('express-winston');
 const modelInitializer = require('./modelInitializer');
 const bodyParser = require('body-parser');
 const errorHandler = require('./error.js');
+const notFoundHandler = require('./404.js');
 
 module.exports = {
   beforeHandler: [
-    app => app.use(morgan('combined', { stream: log.stream })),
+    app => app.use(expressWinston.logger(log)),
     app => app.use(bodyParser.json({ limit: '10mb' })),
     modelInitializer],
+  notFound: notFoundHandler,
   errorSink: errorHandler,
 };
