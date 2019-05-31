@@ -1,5 +1,6 @@
 const pino = require('pino');
 const path = require('path');
+const fs = require('fs');
 const config = require('../../../config');
 const defaultOptions = require('./options');
 
