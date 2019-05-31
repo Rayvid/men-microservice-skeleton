@@ -11,7 +11,7 @@ if (!fs.existsSync(logDir)) {
 
 const init = (options = defaultOptions) => {
 
-  const logger = pino(options, pino.destination(path.join(logDir, "combined.log")));
+  const logger = pino(options, pino.destination(path.join(logDir, config.logger.fileName)));
 
   return logger;
 };
