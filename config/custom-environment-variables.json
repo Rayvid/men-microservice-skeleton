@@ -22,7 +22,8 @@
       "password": "MONGO_PASSWORD",
       "port": "MONGO_PORT",
       "database": "MONGO_DATABASE",
-      "params": "MONGO_PARAMS"
+      "params": "MONGO_PARAMS",
+      "poolSize": "MONGO_POOL_SIZE"
     }
   },
   "sentry": {

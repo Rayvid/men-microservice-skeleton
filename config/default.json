@@ -22,7 +22,8 @@
       "password": "",
       "port": "",
       "database": "{dbName}",
-      "params": ""
+      "params": "",
+      "poolSize": 5
     }
   },
   "sentry": {

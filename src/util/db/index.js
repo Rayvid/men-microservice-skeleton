@@ -30,52 +30,36 @@ const generateConnectionUrl = (dbName) => {
  * Connection factory with built-in connection pooling per database
  * @throws {MongoError} On connection issues
  */
-const maxPoolSize = 3; // TODO some elasticity maybe
-const connectedDatabases = {};
-const roundRobinResolve = (database, resolve) => {
-  connectedDatabases[database].lastPoolItemUsed += 1;
-  if (connectedDatabases[database].lastPoolItemUsed === maxPoolSize) {
-    connectedDatabases[database].lastPoolItemUsed = 0;
-  }
-
-  resolve(connectedDatabases[database]
-    .connections[connectedDatabases[database].lastPoolItemUsed]);
+const options = {
+  keepAlive: true,
+  keepAliveInitialDelay: 30000,
+  poolSize: (mongoConfig.poolSize && parseInt(mongoConfig.poolSize, 10)) || 5,
 };
 
-const dbConnectionFactory = async database =>
-  new Promise((resolve, reject) => {
-    if (!connectedDatabases[database]
-      || connectedDatabases[database].connections.length < maxPoolSize) {
-      // Relying on mongoose/mongo driver to reestablish connection on error
-      mongoose
-        .createConnection(generateConnectionUrl(database), {
-          useNewUrlParser: true,
-          db: { readPreference: 'secondaryPreferred' },
-          keepAlive: true,
-          keepAliveInitialDelay: 30000,
-          noDelay: true,
-        }).then((con) => {
-          if (!connectedDatabases[database]) {
-            connectedDatabases[database] = {
-              connections: [con],
-              lastPoolItemUsed: -1,
-            };
-          } else {
-            connectedDatabases[database].connections.push(con);
-          }
+const connections = {};
 
-          // Creating synthetic .dbName propery, appears .name is not reliable
-          connectedDatabases[database]
-            .connections[connectedDatabases[database].connections.length - 1]
-            .dbName = database;
+const gracefulExit =
+  () =>
+    Object
+      .values(connections)
+      .map(connection => connection.close && connection.close(() => process.exit(0)));
 
-          roundRobinResolve(database, resolve);
-        })
-        .catch(reject);
-    } else {
-      roundRobinResolve(database, resolve);
-    }
-  });
+// If the Node process ends, close the Mongoose connection
+process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
+
+const dbConnectionFactory = async (database) => {
+  let connection = connections[database];
+
+  if (typeof connection === 'undefined' || connection === null) {
+    connection = await mongoose
+      .createConnection(generateConnectionUrl(database), options);
+    connection.dbName = database;
+
+    connections[database] = connection;
+  }
+
+  return connection;
+};
 
 
 const getConnection = async database => dbConnectionFactory(database);
