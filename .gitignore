@@ -1,18 +1,12 @@
 nodemon.json
-prod.env.secrets
 
 # ElasticSearch
 esdata
 
 # Logs
-logs
-*.log
+*.log*
 _ttd_log_/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 logs/
-src/util/logger/logs/
 
 # Runtime data
 pids

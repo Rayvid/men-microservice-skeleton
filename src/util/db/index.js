@@ -53,6 +53,8 @@ const dbConnectionFactory = async (database) => {
   if (typeof connection === 'undefined' || connection === null) {
     connection = await mongoose
       .createConnection(generateConnectionUrl(database), options);
+    
+      // Creating synthetic .dbName propery, appears .name is not reliable in some scenarios
     connection.dbName = database;
 
     connections[database] = connection;
