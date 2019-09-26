@@ -1,14 +1,12 @@
 # No transpiler (M)EN microservice skeleton
 
-Simple Node.js based micro service skeleton. Mongo initialization is lazy, so can be used w/o mongo.
+Simple Node.js based micro service skeleton. Mongo initialization is lazy, so can be used w/o actual mongo server running.
 
-It slowly evolved as a result of my own experience of solving similar problems in multiple projects, with teams of very different skill level (nothing v advanced there). So outsourcing it to shortcut others and hopefully get some contributions we all will benefit from
+It slowly evolved as a result of my own experience of solving similar problems in multiple projects, with teams of very different skill level. So I am outsourcing it to shortcut others and hopefully to get some contributions we all will benefit from
 
 ## Modules vs infrastructure code duplication
 
 Some code can be moved to modules and in future definitely will be. On other hand some infra code duplication in microservices is ok. It allows you to finetune particular behaviour w/o making logic branch in the module.
-
-Of course thats bit lame excuse for keeping, lets say, multidatabase mongoose connection factory in the utils folder, on other hand it is really fine to bootstrap express app in each microservice individually, even if that bootstrap code matches 100%
 
 ## Code style this project is compatible with
 
@@ -22,11 +20,11 @@ Of course thats bit lame excuse for keeping, lets say, multidatabase mongoose co
     }
 }
 ```
-Maybe someone will make standard fork :)?
+Maybe someone will make standard fork, not everybody loves semicolons :)?
 
 ## Mongo as data store
 
-Mongoose used as ORM, but connection initialization approach tweaked to support multidatabase in single microservice and be lazy to microservice to start faster and skeleton be usefull when mongo isn't used
+Mongoose used as ORM, but connection initialization approach tweaked to support multidatabase in single microservice and to be lazy - to microservice to start faster and this skeleton to be usefull when mongo isn't actually used
 
 ## Sentry friendly
 
@@ -38,7 +36,7 @@ Binding mservice version to commit hash. lint, test steps
 
 ## Logging built in
 
-Based on winston, extended to support provided Exception classes (or inherited ones) which allows you to see full exception trace and bubble `fields` (usefull in server based validation scenarios)
+Based on winston, extended to support provided Exception classes (or inherited ones) which allows you to see full exception trace and bubble `fields` property (usefull in server based validation scenarios for example)
 
 ## Docker
 
@@ -46,7 +44,7 @@ Based on winston, extended to support provided Exception classes (or inherited o
 
 `make build up`, navigate to http://localhost:3000/swagger/
 
-You might think its not windows friendly, since using make. But i am developing mostly using it on windows with mingw, so it definitely is windows friendly. On Mac/Linux though its very recomended to remove  `-- -L` from nodemon
+You might think its not windows friendly, since using make. But i am developing mostly using it on windows with mingw, so it definitely is windows friendly. On Mac/Linux though its very recomended to remove  `-- -L` inside package.json (to save alot of CPU when running in dev mode)
 
 ### Debug locally
 
