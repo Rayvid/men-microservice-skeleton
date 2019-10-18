@@ -8,6 +8,7 @@ module.exports = class ModelException extends Exception {
       statusCode: 500,
       innerError: undefined,
       fields: undefined,
+      augmentStack: true
     },
   ) {
     super(params, defaultParams);
