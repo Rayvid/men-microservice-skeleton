@@ -28,5 +28,12 @@
   },
   "sentry": {
     "dsn": "SENTRY_DSN"
+  },
+  "oauth2" : {
+    "tokenHost": "APP_IDENTITY_TOKEN_HOST",
+    "tokenPath": "APP_IDENTITY_TOKEN_PATH",
+    "clientId": "APP_IDENTITY_CLIENT_ID",
+    "clientSecret": "APP_IDENTITY_CLIENT_SECRET",
+    "expirationWindowInMilliseconds": "APP_IDENTITY_EXPIRATION_WINDOW_IN_MILLISECONDS"
   }
 }

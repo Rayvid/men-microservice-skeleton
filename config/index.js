@@ -10,4 +10,5 @@ module.exports = {
   logger: joi.attempt(config.get('logger'), logger),
   sentry: config.get('sentry'),
   mongo: joi.attempt(config.get('db.mongo'), mongo),
+  oauth2: config.get('oauth2'),
 };

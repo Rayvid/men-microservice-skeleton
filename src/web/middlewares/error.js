@@ -17,5 +17,7 @@ module.exports = (error, req, res, next) => {
     fields: errorObj.fields,
     stack: error.stack,
   });
+
+  // TODO if accept text/html - output nice error screen
   res.status(error.statusCode || 500).json(errorObj);
 };

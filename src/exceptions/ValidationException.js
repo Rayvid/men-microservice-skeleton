@@ -1,11 +1,11 @@
 const Exception = require('./Exception');
 
-module.exports = class ModelException extends Exception {
+module.exports = class ValidationException extends Exception {
   constructor(
     params,
     defaultParams = {
-      message: 'Model exception',
-      statusCode: 500,
+      message: 'Parameter(s) not valid',
+      statusCode: 400,
     },
   ) {
     super(params, defaultParams);

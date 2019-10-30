@@ -1,7 +1,7 @@
 const pkgJson = require('../../package.json');
 
 // You are than welcome to extend this class to customize class name/default message/parameters
-// more adequately reflecting your error state
+// to more adequately reflect your error state
 class Exception extends Error {
   constructor(
     // To support patterns new Exception(err)
@@ -12,8 +12,8 @@ class Exception extends Error {
       message: 'Exception occured',
       statusCode: 500,
       innerError: undefined,
-      fields: undefined, // Server validation scenrios and similar, to show field specific issues
-      augmentStack: true // False will save resources if you use throw instead return (which isn't recommended)
+      fields: undefined, // Server validation scenarios and similar, to show field specific issues
+      doNotaugmentStack: false, // True will save resources if you use throw instead return
     },
   ) {
     let constructorParameters = defaultParams;
@@ -22,7 +22,7 @@ class Exception extends Error {
     }
     super(constructorParameters.message || defaultParams.message);
 
-    if (augmentStack) {
+    if (!constructorParameters.doNotaugmentStack) {
       // Capturing stack trace and excluding constructor call from it.
       // This requires some explanation i believe:
       // implementing exception bubbling trough async code is still
@@ -40,15 +40,11 @@ class Exception extends Error {
       //   originalPromise.then(_ => success(_)).catch(err => failure(new Exception(err)));
       // });
       Error.captureStackTrace(this, this.constructor);
-      if (params && params.stack) {
-        this.stack += `\n${params.stack}`;
-        if (params.message) {
-          this.cause = params; // 4 Sentry to see it
-        }
-      } else if (constructorParameters.innerError && constructorParameters.innerError.stack) {
-        this.stack += `\n${constructorParameters.innerError.stack}`;
-        if (constructorParameters.innerError.message) {
-          this.cause = constructorParameters.innerError; // 4 Sentry to see it
+      const innerError = params || constructorParameters.innerError || undefined;
+      if (innerError && innerError.stack) { // If constructed from exception
+        this.stack += `\n${innerError.stack}`; // Not a best way to augment error stack, but Node lags with this
+        if (innerError.message) {
+          this.cause = innerError; // 4 Sentry to see
         }
       }
     }
