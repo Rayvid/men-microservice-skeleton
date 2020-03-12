@@ -1,13 +1,14 @@
+const mongoose = require('mongoose');
 const schema = require('../schema');
 const integrationRepoInitializer = require('./integration');
 const { ModelException } = require('../../exceptions');
-const mongoose = require('mongoose');
 
 module.exports = (dbConnection) => {
   // Using mongoose constructor is mandatory when constructing mongoose objects.
   // It ensures schema validation logic is performed
-  const SportsAppUserIntegrationConstructor =
-    schema.sportsAppUserIntegrationSchema.getActiveSchema(dbConnection);
+  const SportsAppUserIntegrationConstructor = schema
+    .sportsAppUserIntegrationSchema
+    .connect(dbConnection);
   const integrationRepo = integrationRepoInitializer(dbConnection);
 
   return {
@@ -22,7 +23,8 @@ module.exports = (dbConnection) => {
         }
 
         const result = schema
-          .sportsAppUserIntegrationSchema(dbConnection)
+          .sportsAppUserIntegrationSchema
+          .connect(dbConnection)
           // eslint-disable-next-line no-underscore-dangle
           .findOne({ userId, integrationId: integration._id });
 
@@ -35,17 +37,17 @@ module.exports = (dbConnection) => {
         // just want to demonstrate thats possible usign mongoose to merge these two if badly needed
 
         const lastSyncTimestamp = Math.floor(new Date() / 1000);
-        const sportsAppUserIntegration =
-          new SportsAppUserIntegrationConstructor({
-            userId,
-            integrationId,
-            accessToken,
-            expiresIn,
-            refreshToken,
-            authPayload,
-            lastSyncTimestamp,
-          });
+        const sportsAppUserIntegration = new SportsAppUserIntegrationConstructor({
+          userId,
+          integrationId,
+          accessToken,
+          expiresIn,
+          refreshToken,
+          authPayload,
+          lastSyncTimestamp,
+        });
 
+        // TODO use some promisification lib instead custom code
         let promiseComplete;
         let promiseReject;
         const validationPromise = new Promise((complete, reject) => {
@@ -61,9 +63,7 @@ module.exports = (dbConnection) => {
         });
         await validationPromise;
 
-        // Funny working update pattern found on stack overflow. If do update straight
-        // with mongoose object, some error about 'unable to update _id' is raised
-        // so cloning and deleting _id before proceeding
+        // Deleting _id property, because it's enforced when you use mongoose model
         /* eslint-disable no-underscore-dangle */
         let objectToUpdate = {};
         objectToUpdate = Object.assign(objectToUpdate, sportsAppUserIntegration._doc);
@@ -71,7 +71,7 @@ module.exports = (dbConnection) => {
         /* eslint-enable no-underscore-dangle */
 
         return schema
-          .sportsAppUserIntegrationSchema.getActiveSchema(dbConnection)
+          .sportsAppUserIntegrationSchema.connect(dbConnection)
           .findOneAndUpdate({
             userId,
             integrationId: mongoose.Types.ObjectId(integrationId.toString()),

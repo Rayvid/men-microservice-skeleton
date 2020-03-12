@@ -17,4 +17,3 @@ module.exports = joi.object({
       .default('info'),
   }).unknown().required(),
 }).unknown().required();
-

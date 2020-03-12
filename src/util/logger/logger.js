@@ -1,6 +1,6 @@
 const winston = require('winston');
-const defaultOptions = require('./options');
 const DailyRotateFile = require('winston-daily-rotate-file');
+const defaultOptions = require('./options');
 
 const init = (options = defaultOptions) => {
   const transports = [
@@ -16,11 +16,11 @@ const init = (options = defaultOptions) => {
     format: winston.format.combine(
       winston.format.colorize(),
       winston.format.timestamp(),
-      winston.format.printf(info =>
+      winston.format.printf((info) =>
         /* Logic is actually quite simple - if message is string try to check object itself
           if it has exception fields. If it does not - just output message */
-        // eslint-disable-next-line no-nested-ternary
-        `${info.timestamp} ${info.level}: ${typeof info.message !== 'string'
+        // eslint-disable-next-line no-nested-ternary, implicit-arrow-linebreak
+        `${info.timestamp} ${info.level}: ${(typeof info.message !== 'string')
           ? info.message.inspect
             ? info.message.inspect()
             : JSON.stringify(info.message)
@@ -37,4 +37,4 @@ const init = (options = defaultOptions) => {
   return logger;
 };
 
-module.exports = options => init(options);
+module.exports = (options) => init(options);

@@ -1,4 +1,4 @@
-FROM node:10.13
+FROM node:12.13
 ARG ENV=production
 ENV NODE_ENV=$ENV
 ARG NPMRC_CONTENT="//registry.npmjs.org/:_authToken=override_this_arg_in_host"

@@ -1,9 +1,9 @@
 // This file is all about defining and running http server instance
 // Some infrastructure code leak there is ok, just try to keep it minimum
 const Sentry = require('@sentry/node');
-const middlewares = require('./middlewares');
-const swaggerUi = require('swagger-ui-express');
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const middlewares = require('./middlewares');
 require('express-async-errors');
 
 const config = require('../../config');
@@ -24,7 +24,7 @@ if (config.sentry.dsn) {
 // TODO move swagger init into special folder
 // - usually its more complicated, than just to include single JSON
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
-middlewares.beforeHandler.forEach(_ => _(app));
+middlewares.beforeHandler.forEach((_) => _(app));
 
 // Application routes
 app.get('/health', routes.healthCheck);

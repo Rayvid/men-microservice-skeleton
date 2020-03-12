@@ -1,5 +1,5 @@
-const { mongo: mongoConfig } = require('../../../config');
 const mongoose = require('mongoose');
+const { mongo: mongoConfig } = require('../../../config');
 
 /**
  * Generates a mongo connection url from partials
@@ -10,15 +10,13 @@ const generateConnectionUrl = (dbName) => {
     return mongoConfig.fullConnString.replace('{dbName}', dbName);
   }
 
-  const auth =
-    (mongoConfig.user && mongoConfig.user !== ''
-      && mongoConfig.password && mongoConfig.password !== '')
-      ? `${mongoConfig.user}:${mongoConfig.password}@` : '';
-  const port =
-    mongoConfig.schema.indexOf('srv') === -1 // No port for srv
-      && mongoConfig.port
-      ? `:${mongoConfig.port}`
-      : '';
+  const auth = (mongoConfig.user && mongoConfig.user !== ''
+    && mongoConfig.password && mongoConfig.password !== '')
+    ? `${mongoConfig.user}:${mongoConfig.password}@` : '';
+  const port = mongoConfig.schema.indexOf('srv') === -1 // No port for srv
+    && mongoConfig.port
+    ? `:${mongoConfig.port}`
+    : '';
   const database = `/${dbName || mongoConfig.database}`;
   const params = (mongoConfig.params && mongoConfig.params !== '') ? `?${mongoConfig.params}` : '';
   return `${mongoConfig.schema}://${auth}${mongoConfig.host}${port}${database}${params}`;
@@ -26,8 +24,6 @@ const generateConnectionUrl = (dbName) => {
 
 /**
  * Mongoose connection management - default one does not support multidatabase
- *
- * Connection factory with built-in connection pooling per database
  * @throws {MongoError} On connection issues
  */
 const options = {
@@ -38,11 +34,9 @@ const options = {
 
 const connections = {};
 
-const gracefulExit =
-  () =>
-    Object
-      .values(connections)
-      .map(connection => connection.close && connection.close(() => process.exit(0)));
+const gracefulExit = () => Object
+  .values(connections)
+  .map((connection) => connection.close && connection.close(() => process.exit(0)));
 
 // If the Node process ends, close the Mongoose connection
 process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
@@ -53,9 +47,6 @@ const dbConnectionFactory = async (database) => {
   if (typeof connection === 'undefined' || connection === null) {
     connection = await mongoose
       .createConnection(generateConnectionUrl(database), options);
-    
-      // Creating synthetic .dbName propery, appears .name is not reliable in some scenarios
-    connection.dbName = database;
 
     connections[database] = connection;
   }
@@ -64,6 +55,6 @@ const dbConnectionFactory = async (database) => {
 };
 
 
-const getConnection = async database => dbConnectionFactory(database);
+const getConnection = async (database) => dbConnectionFactory(database);
 
 module.exports = { getConnection };

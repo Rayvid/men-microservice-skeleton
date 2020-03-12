@@ -7,4 +7,3 @@ module.exports = joi.object({
   listenOnPort: joi.number()
     .default(80),
 }).unknown().required();
-
