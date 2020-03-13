@@ -53,7 +53,7 @@
           }
         }
       },
-      "x-summary": "To fetch current microservice version (bound to git commit hash)"
+      "x-summary": "To fetch current microservice version"
     }
   },
   "definitions": {}

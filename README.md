@@ -6,7 +6,7 @@ It slowly evolved as a result of my own experience of solving similar problems i
 
 ## Modules vs infrastructure code duplication
 
-Some code can be moved to modules and in future definitely will be. On other hand some infra code duplication in microservices is ok. It allows you to finetune particular behaviour w/o making logic branch in the module.
+Some infra code duplication in microservices is ok. It allows you to finetune particular behaviour w/o making logic branch in the module, but you should be moving independent reusable blocks into modules.
 
 ## Code style this project is compatible with
 
@@ -42,7 +42,7 @@ Based on winston, extended to support provided Exception classes (or inherited o
 
 ### Launch locally
 
-`make build up`, navigate to http://localhost:3000/swagger/
+`make build up`, navigate to http://localhost:3000/swagger/. By default it runs in nodemon mode and detects changes.
 
 You might think its not windows friendly, since using make. But i am developing mostly using it on windows with mingw, so it definitely is windows friendly. On Mac/Linux though its very recomended to remove  `-- -L` inside package.json (to save alot of CPU when running in dev mode).
 

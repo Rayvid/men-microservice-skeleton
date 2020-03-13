@@ -30,6 +30,9 @@ const options = {
   keepAlive: true,
   keepAliveInitialDelay: 30000,
   poolSize: (mongoConfig.poolSize && parseInt(mongoConfig.poolSize, 10)) || 5,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
 };
 
 const connections = {};

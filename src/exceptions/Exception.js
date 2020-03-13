@@ -18,7 +18,9 @@ class Exception extends Error {
   ) {
     let constructorParameters = defaultParams;
     if (params && !params.stack) {
-      constructorParameters = params;
+      constructorParameters = params; // Parameters must be object
+    } else if (params.stack) {
+      constructorParameters.innerError = params; // If constructed from exception alone
     }
     super(constructorParameters.message || defaultParams.message);
 
@@ -40,16 +42,16 @@ class Exception extends Error {
       //   originalPromise.then(_ => success(_)).catch(err => failure(new Exception(err)));
       // });
       Error.captureStackTrace(this, this.constructor);
-      const innerError = params || constructorParameters.innerError || undefined;
-      if (innerError && innerError.stack) { // If constructed from exception
-        this.stack += `\n${innerError.stack}`; // Not a best way to augment error stack, but Node lags with this
-        if (innerError.message) {
-          this.cause = innerError; // 4 Sentry to see
-        }
+      if (constructorParameters.innerError) {
+        this.stack += `\n${constructorParameters.innerError.stack}`;
       }
     }
 
-    // Saving namespace for exception type comparison (comparing types itself is tricky in Node)
+    if (constructorParameters.innerError) {
+      this.cause = constructorParameters.innerError; // 4 Sentry to see
+    }
+
+    // Saving namespace for exception type checking scenarios (comparing types itself is tricky in Node)
     this.name = `${pkgJson.name.toUpperCase()}.${this.constructor.name}`;
 
     // Most commonly it will be HTTP status,

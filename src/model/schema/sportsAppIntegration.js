@@ -5,6 +5,7 @@ const schema = new Schema(
     provider: {
       type: String,
       required: true,
+      unique: true, // This actually works only when mongoose autocreates DB
     },
     connectionParams: {
       type: Map,

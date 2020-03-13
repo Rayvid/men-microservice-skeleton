@@ -1,4 +1,5 @@
 const exceptions = require('../../exceptions');
+const { logger: log } = require('../../util');
 
 module.exports = {
   // eslint-disable-next-line no-unused-vars
@@ -9,7 +10,8 @@ module.exports = {
       try {
         await (await res.locals.getModels()).createIntegration({ provider: 'strava', connectionParams: { param1: '1', param2: '2' } });
       } catch (err) {
-        // It can fail if run multiple times - it is fine
+        // It can fail if run multiple times due uniqueness - it is fine
+        log.warn(err);
       }
 
       result = {
