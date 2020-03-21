@@ -62,7 +62,7 @@ Yes it does work, you can even start w/o having database up, thanks to lazy db c
 
 Configuration is set up in this order:
 - Reads machine/container specific environment variables
-- If and NODE_ENV is not production - reads `dev.env` in project root
+- If and `NODE_ENV` is not `production` - reads `dev.env` in project root
 - Attempts read environment file defined in `ENV_FILE` or `/run/secrets/env` if undefined
 - Runs `config` package picking up environment vars mapped in `config/custom-environment-variables.json`
 - Populates unset, default values from `config/default.json`
