@@ -1,12 +1,12 @@
 # No transpiler (M)EN microservice skeleton
 
-Simple Node.js based micro service skeleton. Mongo initialization is lazy, so can be used w/o actual mongo server running.
+Simple Node.js based micro service skeleton. Mongo initialization is lazy, on first call, so can be launched w/o mongo server running.
 
 It slowly evolved as a result of my own experience of solving similar problems in multiple projects, with teams of very different skill level. So I am outsourcing it to shortcut others and hopefully to get some contributions we all will benefit from.
 
 ## Modules vs infrastructure code duplication
 
-Some infra code duplication in microservices is ok. It allows you to finetune particular behaviour w/o making logic branch in the module, but you should be moving independent reusable blocks into modules.
+Some infra code duplication in microservices is ok. It allows you to finetune particular behaviour w/o making logic branch in the module, but you should be moving independent reusable blocks into the modules normally (potentially exceptions and some utils there moved into the modules in future).
 
 ## Code style this project is compatible with
 
@@ -24,7 +24,7 @@ Maybe someone will make standard fork, since not everybody loves semicolons :)?
 
 ## Mongo as data store
 
-Mongoose used as ORM, but connection initialization approach tweaked to support multidatabase in single microservice and to be lazy - to microservice to start faster and this skeleton to be usefull when mongo isn't actually used.
+Mongoose used as ORM, but connection initialization approach tweaked to support multidatabase in single microservice (yes i know, thats quite rare, but still - happens) and to be lazy - to microservice to start faster and this skeleton to be usefull when mongo isn't actually used.
 
 ## Sentry friendly
 
@@ -32,11 +32,15 @@ Sentry will see entire exception path when used provided Exception classes (or i
 
 ## Gitlab CI ready
 
-Binding mservice version to commit hash. lint, test steps.
+Autobind mservice version to commit hash, lint, test. Push artifact to gitlab image repository.
 
 ## Logging built in
 
 Based on winston, extended to support provided Exception classes (or inherited ones) which allows you to see full exception trace and bubble `fields` property (usefull in server based validation scenarios for example).
+
+## (Unit) tests
+
+Some sample global tests folder included to kickoff from there
 
 ## Docker
 
@@ -44,7 +48,7 @@ Based on winston, extended to support provided Exception classes (or inherited o
 
 `make build up`, navigate to http://localhost:3000/swagger/. By default it runs in nodemon mode and detects changes.
 
-You might think its not windows friendly, since using make. But i am developing mostly using it on windows with mingw, so it definitely is windows friendly. On Mac/Linux though its very recomended to remove  `-- -L` inside package.json (to save alot of CPU when running in dev mode).
+You might think its not windows friendly, since using make. But i am developing mostly using it on windows with mingw, so it definitely is windows friendly.
 
 ### Debug locally
 

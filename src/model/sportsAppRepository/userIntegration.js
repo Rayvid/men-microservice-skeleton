@@ -12,7 +12,7 @@ module.exports = (dbConnection) => {
   const integrationRepo = integrationRepoInitializer(dbConnection);
 
   return {
-    getUserAppIntegration:
+    getUserIntegration:
       // Lean is recommended
       // - saves alot of resources by returning plain object instead mongoose wrapper
       async (integrationName, userId, lean = true) => {

@@ -8,7 +8,7 @@ module.exports = (dbConnection) => {
   return {
     createIntegration: integrationModel.createIntegration,
     getStravaIntegration: integrationModel.getIntegration.bind(null, 'strava'),
-    getUserStravaIntegration: userIntegrationModel.getUserAppIntegration.bind(null, 'strava'),
+    getUserStravaIntegration: userIntegrationModel.getUserIntegration.bind(null, 'strava'),
     saveUserToken: userIntegrationModel.saveOrUpdateUserIntegration,
   };
 };

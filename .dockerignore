@@ -3,6 +3,5 @@ LICENSE
 VERSION
 README.md
 node_modules/
-docker/
+tests/
 logs/
-src/util/logger/logs/

@@ -1,7 +1,16 @@
-const { logger: log, parseForwardedFor } = require('../../util');
+const { logger: log } = require('../../util');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (error, req, res, next) => {
+  const parseForwardedFor = (value) => {
+    if (!value) {
+      return undefined;
+    }
+
+    const commaIndex = value.indexOf(',');
+    return commaIndex === -1 ? value : value.substr(0, commaIndex);
+  };
+
   const errorObj = {
     message: error.message,
     fields: error.fields,

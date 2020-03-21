@@ -51,7 +51,7 @@ class Exception extends Error {
       this.cause = constructorParameters.innerError; // 4 Sentry to see
     }
 
-    // Saving namespace for exception type checking scenarios (comparing types itself is tricky in Node)
+    // Saving namespace for exception type checking scenarios (comparing types is tricky in Node)
     this.name = `${pkgJson.name.toUpperCase()}.${this.constructor.name}`;
 
     // Most commonly it will be HTTP status,
@@ -61,16 +61,6 @@ class Exception extends Error {
     // To bubble fields too from originated exception
     this.fields = constructorParameters.fields
       || (constructorParameters.innerError && constructorParameters.innerError.fields);
-  }
-
-  inspect() {
-    // TODO good idea to have beautification option
-    const errKey = (this.stack && this.stack.indexOf(this.message) < 0)
-      ? JSON.stringify(`${this.name}+${this.message}`)
-      : JSON.stringify(this.name);
-    const result = { fields: this.fields };
-    result[errKey] = this.stack || '<no stacktrace>';
-    return JSON.stringify(result);
   }
 }
 

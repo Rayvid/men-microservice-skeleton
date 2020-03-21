@@ -1,6 +1,6 @@
 {
   "name": "men-microservice-skeleton",
-  "version": "1.0.0",
+  "version": "1.0.0-git-commit-hash",
   "description": "MEN Microservice skeleton",
   "main": "index.js",
   "scripts": {
@@ -8,9 +8,9 @@
     "__comment__": "Delay is needed to not crash each second time because 9229 busy",
     "dev": "nodemon --delay 2 --inspect=0.0.0.0:9229 index.js",
     "docker:production": "cross-env NODE_ENV=production npm start",
-    "docker:development": "cross-env NODE_ENV=development npm run dev -- -L",
+    "docker:development": "cross-env NODE_ENV=development npm run dev",
     "lint": "eslint .",
-    "test": "echo \"No test specified yet\" && exit 0"
+    "test": "cross-env NODE_ENV=test mocha \"./{,!(node_modules)/**/}*.test.js\""
   },
   "repository": {
     "type": "git",
@@ -41,12 +41,15 @@
     "winston-daily-rotate-file": "^3.10.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "nodemon": "^1.18.7"
+    "mocha": "^7.1.1",
+    "nodemon": "^2.0.2"
   }
 }
