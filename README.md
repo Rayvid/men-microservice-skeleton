@@ -48,7 +48,7 @@ Some sample global tests folder included to kickoff from there
 
 `make build up`, navigate to http://localhost:3000/swagger/. By default it runs in nodemon mode and detects changes.
 
-You might think its not windows friendly, since using make. But i am developing mostly using it on windows with mingw, so it definitely is windows friendly.
+On windows you can install make on windows using git bash and this instruction https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058.
 
 ### Debug locally
 
