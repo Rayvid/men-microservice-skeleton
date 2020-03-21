@@ -22,8 +22,8 @@
     "mern",
     "microservice"
   ],
-  "author": "Lympo",
-  "license": "SEE LICENCE IN lympo.com",
+  "author": "Rayvid",
+  "license": "SEE LICENSE IN JUSTTAKEANDUSEIT",
   "homepage": "https://github.com/Rayvid/men-microservice-skeleton",
   "dependencies": {
     "@sentry/node": "^5.7.1",
