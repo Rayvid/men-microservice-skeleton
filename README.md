@@ -40,7 +40,7 @@ Based on winston, extended to support provided Exception classes (or inherited o
 
 ## (Unit) tests
 
-Some sample global tests folder included to kickoff from there
+Some sample global tests folder included to kickoff easily from there. Mocha + chai FTW.
 
 ## Docker
 
