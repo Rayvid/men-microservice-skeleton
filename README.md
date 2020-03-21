@@ -28,7 +28,7 @@ Mongoose used as ORM, but connection initialization approach tweaked to support 
 
 ## Sentry friendly
 
-Sentry will see entire exception path when used provided Exception classes (or inherited ones).
+Sentry will see entire exception path when provided Exception classes, or inherited ones, are used.
 
 ## Gitlab CI ready
 
