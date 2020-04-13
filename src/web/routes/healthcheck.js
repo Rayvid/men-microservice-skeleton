@@ -6,7 +6,7 @@ module.exports = {
   healthCheck: async (req, res) => {
     // eslint-disable-next-line prefer-const
     let result = { status: 'healthy' };
-    let models = await res.locals.getModels();
+    const models = await res.locals.getModels();
     try {
       try {
         await models.createIntegration({ provider: 'strava', connectionParams: { param1: '1', param2: '2' } });
