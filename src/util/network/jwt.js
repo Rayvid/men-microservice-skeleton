@@ -44,14 +44,18 @@ module.exports = async (tokenRaw, scope) => {
       resolveHook = resolve;
       rejectHook = reject;
     });
-    jwt.verify(token.raw, publicKey, { ignoreExpiration: false, ignoreNotBefore: false }, (err, decoded) => {
-      if (err) {
-        rejectHook(err);
-      }
-      else {
-        resolveHook(decoded);
-      }
-    });
+    jwt.verify(
+      token.raw,
+      publicKey,
+      { ignoreExpiration: false, ignoreNotBefore: false },
+      (err, decoded) => {
+        if (err) {
+          rejectHook(err);
+        } else {
+          resolveHook(decoded);
+        }
+      },
+    );
 
     await promise;
 
@@ -60,10 +64,9 @@ module.exports = async (tokenRaw, scope) => {
     }
 
     return token;
-  }
-  catch (err) {
+  } catch (err) {
     throw new UnauthorizedException({
-      message: `Requests authorization header validation attempt failed`,
+      message: 'Requests authorization header validation attempt failed',
       innerError: err,
     });
   }

@@ -15,21 +15,21 @@ describe('Oauth2', () => {
     it('it should be able to fetch access token from auth0', async () => {
       // hardcoding some credentials generously served by auth0, for test purposes
       // You should always pass those trough environment!
-      await (validateAuthHeader('bearer ' + await oauth2ClientGetAccessToken(
+      await (validateAuthHeader(`bearer ${await oauth2ClientGetAccessToken(
         '2isgefBsD9SJ1o7vJZn1x6iC1tmRMwcA',
         'mdNv5pjLD6pFi6HzIDJbt8UgQf0vwCCWvKJ-3BDRdrs7lVI0-hvMWXbTSMtaKJmC',
         'test',
-      ), 'test'));
+      )}`, 'test'));
     });
 
     it('it should throw on invalid scope', async () => {
       // hardcoding some credentials generously served by auth0, for test purposes
       // You should always pass those trough environment!
-      validateAuthHeader('bearer ' + await oauth2ClientGetAccessToken(
+      validateAuthHeader(`bearer ${await oauth2ClientGetAccessToken(
         '2isgefBsD9SJ1o7vJZn1x6iC1tmRMwcA',
         'mdNv5pjLD6pFi6HzIDJbt8UgQf0vwCCWvKJ-3BDRdrs7lVI0-hvMWXbTSMtaKJmC',
         'test',
-      ), 'tset').should.be.rejectedWith(UnauthorizedException);
+      )}`, 'tset').should.be.rejectedWith(UnauthorizedException);
     });
   });
 });

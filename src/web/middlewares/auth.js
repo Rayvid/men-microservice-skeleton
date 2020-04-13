@@ -1,10 +1,6 @@
 const { UnauthorizedException } = require('../../exceptions');
 const { parseAndValidateJwt } = require('../../util/network');
 
-const validateAuth = async (scope, req, res) => {
-  res.locals.token = await validateAuthHeader(req.headers.authorization, scope);
-};
-
 async function validateAuthHeader(authorizationHeader, scope) {
   if (!authorizationHeader || authorizationHeader.length < 7) {
     throw new UnauthorizedException({ message: 'Authorization header too short (not set at all?)' });
@@ -17,6 +13,10 @@ async function validateAuthHeader(authorizationHeader, scope) {
 
   return parseAndValidateJwt(tokenRaw, scope);
 }
+
+const validateAuth = async (scope, req, res) => {
+  res.locals.token = await validateAuthHeader(req.headers.authorization, scope);
+};
 
 module.exports = {
   validateAuth,
