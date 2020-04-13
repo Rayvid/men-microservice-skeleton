@@ -12,4 +12,4 @@ FROM node:12.16
 WORKDIR /usr/src/app
 COPY --from=0 /usr/src/app .
 EXPOSE 3000
-CMD ["sh", "-c", "npm run docker:${NODE_ENV}"]
+CMD ["sh", "-c", "npm run docker:${NODE_ENV:-production}"]
