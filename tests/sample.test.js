@@ -3,9 +3,9 @@
 require('../config/env'); // Ensure its invoked before everything else, otherwise it becomes sequence dependant
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-require('chai').should();
 
 chai.use(chaiAsPromised);
+chai.should();
 
 describe('Array', () => {
   describe('#indexOf()', () => {

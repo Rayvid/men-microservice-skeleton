@@ -7,14 +7,14 @@ stages:
     - build
 
 lint:
- image: node:12.13
+ image: node:12.16
  stage: pre_test
  script:
     - npm install
     - npm run lint
 
 test:
- image: node:12.13
+ image: node:12.16
  stage: test
  script:
     - npm install
@@ -28,9 +28,10 @@ build:
  except:
     - master
  script:
+     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
      - >
        sed -i 's/git-commit-hash/'${CI_COMMIT_SHA}'/' package.json
-     - docker build --tag ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg NPMRC_CONTENT="$NPMRC_CONTENT" .
+     - docker build --cache-from ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg NPMRC_CONTENT="$NPMRC_CONTENT" .
      - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
 
 push:
@@ -39,10 +40,9 @@ push:
  only:
      - master
  script:
-     - docker pull $CONTAINER_IMAGE:latest || true
      - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
      - >
        sed -i 's/git-commit-hash/'${CI_COMMIT_SHA}'/' package.json
-     - docker build --cache-from ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} .
+     - docker build --cache-from ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:latest --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --build-arg NPMRC_CONTENT="$NPMRC_CONTENT" .
      - docker push ${CI_REGISTRY_IMAGE}:latest
      - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}

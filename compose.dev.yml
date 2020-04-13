@@ -5,15 +5,16 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        ENV: development
-        NPMRC_CONTENT: "//registry.npmjs.org/:_authToken=private_repo_token_goes_there"
+        ENV: "development"
+        NPMRC_CONTENT: "//registry.npmjs.org/:_authToken=af1e10d1-84f1-4aff-b42b-d1e74dd27f56"
     ports:
       - "3000:3000"
       - "9229:9229"
     depends_on:
       - mongo
+      - postgres
     environment:
-      - NODE_ENV=development
+      NODE_ENV: "development"
     env_file:
       - ./dev.env
     volumes:
@@ -21,4 +22,8 @@ services:
       - /usr/src/app/node_modules
       - /usr/src/app/logs # Some problems with this folder mapped to host - permission problems overriding folder, etc. If you need to test it badly - just remove this line, but generally better to keep it inside container
   mongo:
-    image: mongo:4.0
+    image: mongo:4.2
+  postgres:
+    image: postgres:12.2
+    environment:
+      POSTGRES_PASSWORD: "thisisdev"

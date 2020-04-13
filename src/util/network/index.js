@@ -1,7 +1,9 @@
 const simpleOauth2 = require('simple-oauth2');
 const { oauth2: oauth2Config } = require('../../../config');
+const jwt = require('./jwt');
 
 module.exports = {
+  parseAndValidateJwt: jwt,
   oauth2ClientGetAccessToken: async (clientId, clientSecret, scopes) => {
     const oauth2 = simpleOauth2.create({
       client: {
@@ -18,7 +20,7 @@ module.exports = {
       audience: oauth2Config.audience,
       scope: scopes,
     };
-    const result = await oauth2.clientCredentials.getToken(tokenConfig);
-    return oauth2.accessToken.create(result);
+
+    return (await oauth2.clientCredentials.getToken(tokenConfig)).access_token;
   },
 };

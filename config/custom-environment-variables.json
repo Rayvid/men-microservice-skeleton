@@ -29,8 +29,9 @@
     "dsn": "SENTRY_DSN"
   },
   "oauth2" : {
-    "tokenHost": "APP_IDENTITY_TOKEN_HOST",
-    "tokenPath": "APP_IDENTITY_TOKEN_PATH",
-    "audience": "APP_IDENTITY_AUDIENCE"
+    "tokenHost": "APP_OAUTH2_TOKEN_HOST",
+    "tokenPath": "APP_OAUTH2_TOKEN_PATH",
+    "audience": "APP_OAUTH2_AUDIENCE",
+    "jwksURI": "APP_OAUTH2_JWKS_URI"
   }
 }

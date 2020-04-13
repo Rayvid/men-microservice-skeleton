@@ -42,6 +42,14 @@ Based on winston, extended to support provided Exception classes (or inherited o
 
 Some sample global tests folder included to kickoff easily from there. Mocha + chai FTW.
 
+## JWT
+
+Both middleware to validate JWT and utility to get access token using client credentials flow, are present.
+
+Middlewares usage:
+* `validateAuth` - for just validating if JWT is issued by right authority, like `app.get('/version', middlewares.validateAuth, routes.versionCheck);`
+* `validateAuthScope(scope)` - for validating if JWT is issued by right authority and contains required scope, like `app.get('/version', middlewares.validateAuthScope('tooling:read.version'), routes.versionCheck);`
+
 ## Docker
 
 ### Launch locally

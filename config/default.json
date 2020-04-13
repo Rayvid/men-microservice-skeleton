@@ -30,8 +30,11 @@
     "dsn": ""
   },
   "oauth2" : {
+    "_": "To login to remote server",
     "tokenHost": "https://auth.yourhost",
     "tokenPath": "/oauth/token",
-    "audience": "https://github.com/Rayvid/men-microservice-skeleton"
+    "audience": "https://github.com/Rayvid/men-microservice-skeleton",
+    "__": "To verify incomnig requests",
+    "jwksURI": "https://auth.yourhost/jwks"
   }
 }

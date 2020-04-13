@@ -5,6 +5,9 @@ ENV NODE_ENV=$ENV
 WORKDIR /usr/src/app
 COPY package*.json /usr/src/app/
 
+ARG NPMRC_CONTENT="registry=https://npm.lympo.io/\n//npm.lympo.io/:_authToken=override_this_arg_in_host"
+RUN printf "$NPMRC_CONTENT" > ~/.npmrc
+
 RUN npm install --unsafe-perm
 COPY . .
 
