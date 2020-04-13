@@ -30,10 +30,8 @@
     "dsn": ""
   },
   "oauth2" : {
-    "tokenHost": "https://oidc.yourhost",
-    "tokenPath": "/oidc/token",
-    "clientId": "b20eb244ac920427.test_example.yourhost",
-    "clientSecret": "430dcd77f0316c0106571604fe3c223f295edac4a6c88e81845a9c0811eaa682",
-    "expirationWindowInMilliseconds": 0
+    "tokenHost": "https://auth.yourhost",
+    "tokenPath": "/oauth/token",
+    "audience": "https://github.com/Rayvid/men-microservice-skeleton"
   }
 }
