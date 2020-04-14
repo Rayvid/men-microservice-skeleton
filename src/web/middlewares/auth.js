@@ -1,5 +1,6 @@
 const { UnauthorizedException } = require('../../exceptions');
 const { parseAndValidateJwt } = require('../../util/network');
+const { logger: log } = require('../../util');
 
 async function validateAuthHeader(authorizationHeader, scope) {
   if (!authorizationHeader || authorizationHeader.length < 7) {
@@ -15,6 +16,12 @@ async function validateAuthHeader(authorizationHeader, scope) {
 }
 
 const validateAuth = async (scope, req, res, next) => {
+  if (process.env.NODE_ENV === 'development' && process.env.DEV_BYPASS_SCOPES && process.env.DEV_BYPASS_SCOPES.split(' ').includes(scope)) {
+    log.warn('Bypassing authorization header check - should not happen on prod!');
+    next();
+    return;
+  }
+
   res.locals.token = await validateAuthHeader(req.headers.authorization, scope);
   next();
 };

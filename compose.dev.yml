@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        ENV: "development"
+        ENV: "development" # for nodemon
         NPMRC_CONTENT: "//registry.npmjs.org/:_authToken=af1e10d1-84f1-4aff-b42b-d1e74dd27f56"
     ports:
       - "3000:3000"
@@ -14,7 +14,8 @@ services:
       - mongo
       - postgres
     environment:
-      NODE_ENV: "development"
+      NODE_ENV: "development" # to enable stacktraces and scope bypass
+      DEV_BYPASS_SCOPES: "confinements:read.all"
     env_file:
       - ./dev.env
     volumes:
