@@ -14,8 +14,9 @@ async function validateAuthHeader(authorizationHeader, scope) {
   return parseAndValidateJwt(tokenRaw, scope);
 }
 
-const validateAuth = async (scope, req, res) => {
+const validateAuth = async (scope, req, res, next) => {
   res.locals.token = await validateAuthHeader(req.headers.authorization, scope);
+  next();
 };
 
 module.exports = {

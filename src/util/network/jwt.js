@@ -66,7 +66,7 @@ module.exports = async (tokenRaw, scope) => {
     return token;
   } catch (err) {
     throw new UnauthorizedException({
-      message: 'Requests authorization header validation attempt failed',
+      message: 'Request authorization header validation attempt failed',
       innerError: err,
     });
   }
