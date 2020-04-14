@@ -15,7 +15,7 @@ services:
       - postgres
     environment:
       NODE_ENV: "development" # to enable stacktraces and scope bypass
-      DEV_BYPASS_SCOPES: "confinements:read.all"
+      DEV_BYPASS_SCOPES: "confinements:read.all" # lets invoke routes wo JWT - will work only in dev mode
     env_file:
       - ./dev.env
     volumes:

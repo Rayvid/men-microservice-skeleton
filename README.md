@@ -49,6 +49,7 @@ Both middleware to validate JWT and utility to get access token using client cre
 Middlewares usage:
 * `validateAuth` - for just validating if JWT is issued by right authority, like `app.get('/version', middlewares.validateAuth, routes.versionCheck);`
 * `validateAuthScope(scope)` - for validating if JWT is issued by right authority and contains required scope, like `app.get('/version', middlewares.validateAuthScope('tooling:read.version'), routes.versionCheck);`
+(theres way to bypass scopes check in dev mode, to speedup developement - check compose.dev.yml DEV_BYPASS_SCOPES env variable)
 
 ## Docker
 

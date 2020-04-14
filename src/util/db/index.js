@@ -22,10 +22,6 @@ const generateConnectionUrl = (dbName) => {
   return `${mongoConfig.schema}://${auth}${mongoConfig.host}${port}${database}${params}`;
 };
 
-/**
- * Mongoose connection management - default one does not support multidatabase
- * @throws {MongoError} On connection issues
- */
 const options = {
   keepAlive: true,
   keepAliveInitialDelay: 30000,
@@ -35,29 +31,25 @@ const options = {
   useCreateIndex: true,
 };
 
+// Mongoose connection management - default one does not support multidatabase
 const connections = {};
-
 const gracefulExit = () => Object
   .values(connections)
   .map((connection) => connection.close && connection.close(() => process.exit(0)));
-
-// If the Node process ends, close the Mongoose connection
+// If the Node process ends, close all the connections
 process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
 
-const dbConnectionFactory = async (database) => {
-  let connection = connections[database];
+module.exports = {
+  getConnection: async (database) => {
+    let connection = connections[database];
 
-  if (typeof connection === 'undefined' || connection === null) {
-    connection = await mongoose
-      .createConnection(generateConnectionUrl(database), options);
+    if (typeof connection === 'undefined' || connection === null) {
+      connection = await mongoose
+        .createConnection(generateConnectionUrl(database), options);
 
-    connections[database] = connection;
-  }
+      connections[database] = connection;
+    }
 
-  return connection;
+    return connection;
+  },
 };
-
-
-const getConnection = async (database) => dbConnectionFactory(database);
-
-module.exports = { getConnection };
