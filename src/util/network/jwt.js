@@ -1,3 +1,4 @@
+const _ = require('underscore');
 const jwksClient = require('jwks-rsa');
 const jwt = require('jsonwebtoken');
 const { UnauthorizedException } = require('../../exceptions');
@@ -62,7 +63,8 @@ module.exports = async (tokenRaw, scope) => {
 
     await promise;
 
-    if (scope && (!token.payload.scope || !token.payload.scope.split(' ').includes(scope))) {
+    if (scope && (!token.payload.scope
+      || _.intersection(scope.split(' '), token.payload.scope.split(' ')).length === 0)) {
       throw new UnauthorizedException({ message: `No access to scope - '${scope}'` });
     }
 
