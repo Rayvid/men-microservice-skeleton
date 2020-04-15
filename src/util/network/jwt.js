@@ -33,6 +33,9 @@ const readIdentityServerPubKey = async (header) => {
 
 module.exports = async (tokenRaw, scope) => {
   const token = jwt.decode(tokenRaw, { complete: true });
+  if (!token) {
+    throw new UnauthorizedException({ message: 'Invalid JWT' });
+  }
   token.raw = tokenRaw;
 
   // We expect token.header, token.payload and token.raw to be filled after this point
