@@ -1,3 +1,4 @@
+const _ = require('underscore');
 const { UnauthorizedException } = require('../../exceptions');
 const { parseAndValidateJwt } = require('../../util/network');
 const { logger: log } = require('../../util');
@@ -16,8 +17,16 @@ async function validateAuthHeader(authorizationHeader, scope) {
 }
 
 const validateAuth = async (scope, req, res, next) => {
-  if (process.env.NODE_ENV === 'development' && process.env.DEV_BYPASS_SCOPES && process.env.DEV_BYPASS_SCOPES.split(' ').includes(scope)) {
+  if (!req.headers.authorization
+    && process.env.NODE_ENV === 'development'
+    && process.env.DEV_BYPASS_SCOPES && _.intersection(scope.split(' '), process.env.DEV_BYPASS_SCOPES.split(' ')).length > 0) {
     log.warn('Bypassing authorization header check - should not happen on prod!');
+
+    if (process.env.DEV_ENFORCE_TOKEN_PAYLOAD) {
+      log.warn('Enforcing token payload - should not happen on prod!');
+      res.locals.token = { payload: JSON.parse(process.env.DEV_ENFORCE_TOKEN_PAYLOAD) };
+    }
+
     next();
     return;
   }
