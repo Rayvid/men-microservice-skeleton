@@ -1,6 +1,6 @@
-# No transpiler (M)EN microservice skeleton
+# No transpiler (M)EN microservice skeleton - fastest way to kickoff your microservice
 
-Simple Node.js based micro service skeleton. Mongo initialization is lazy, on first call, so can be launched w/o mongo server running.
+Simple Node.js based micro service skeleton. Really straightforward, just checkout and `docker-compose -f compose.dev.yml up`. Mongo initialization is lazy, on first call, so can be launched w/o actual mongo server running.
 
 It slowly evolved as a result of my own experience of solving similar problems in multiple projects, with teams of very different skill level. So I am outsourcing it to shortcut others and hopefully to get some contributions we all will benefit from.
 
