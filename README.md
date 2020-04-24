@@ -61,7 +61,7 @@ Middleware usage-cases:
 
 `make build up`, navigate to http://localhost:3000/swagger/. By default it runs in nodemon mode and detects changes.
 
-On windows you can install make on windows using git bash and this instruction https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058.
+On windows you can install make for git-bash/MinGW using this instruction https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058.
 
 ### Debug locally
 
