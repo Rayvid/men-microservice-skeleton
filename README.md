@@ -50,10 +50,10 @@ Some sample global tests folder included to kickoff easily from there. Mocha + c
 
 Both middleware to validate JWT and utility to get access token using client credentials flow, are present.
 
-Middlewares usage:
-* `validateAuth` - for just validating if JWT is issued by right authority, like `app.get('/version', middlewares.validateAuth, routes.versionCheck);`
-* `validateAuthScope(scope)` - for validating if JWT is issued by right authority and contains required scope, like `app.get('/version', middlewares.validateAuthScope('tooling:version.real'), routes.versionCheck);`
-(theres way to bypass scopes check in dev mode, to speedup developement - check compose.dev.yml DEV_BYPASS_SCOPES env variable)
+Middleware usage-cases:
+* `validateAuth` - to just validate if JWT is issued by right authority, like `app.get('/version', middlewares.validateAuth, routes.versionCheck);`
+* `validateAuthScope(scope)` - for validating if JWT is issued by right authority and contains required scope (or multiple, space separated, scopes), like `app.get('/version', middlewares.validateAuthScope('tooling:version.read'), routes.versionCheck);`
+(note: theres way to bypass scopes check in dev mode, to speedup developement - check compose.dev.yml DEV_BYPASS_SCOPES env variable)
 
 ## Docker
 
