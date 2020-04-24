@@ -20,11 +20,15 @@ Some infra code duplication in microservices is ok. It allows you to finetune pa
     }
 }
 ```
-Maybe someone will make standard fork, since not everybody loves semicolons :)?
+I know, not everybody loves semicolons, sorry about that ;)
 
 ## Mongo as data store
 
 Mongoose used as ORM, but connection initialization approach tweaked to support multidatabase in single microservice (yes i know, thats quite rare, but still - happens) and to be lazy - to microservice to start faster and this skeleton to be usefull when mongo isn't actually used.
+
+## Exception, not error
+
+I know it's a complicated topic, but I think the support of inner exceptions (wrapping) and bubbling `fields` property from innermost exception to outermost (e.g. mongo fails validation and throws with `fields` containing validation errors, controller wraps with additional info and rethrows, frontend pickups fields and translates into error messages), comes vhandy in high level scenarios, for low level stuff - use error's. 
 
 ## Sentry friendly
 
@@ -36,7 +40,7 @@ Autobind mservice version to commit hash, lint, test. Push artifact to gitlab im
 
 ## Logging built in
 
-Based on winston, extended to support provided Exception classes (or inherited ones) which allows you to see full exception trace and bubble `fields` property (usefull in server based validation scenarios for example).
+Based on winston, extended to support provided Exception classes (or inherited ones) which allows you to see full exception trace.
 
 ## (Unit) tests
 
