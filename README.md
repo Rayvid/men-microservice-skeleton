@@ -1,6 +1,6 @@
-# No transpiler (M)EN microservice skeleton
+# No transpiler (M)EN microservice skeleton - fastest way to kickoff your microservice
 
-Simple Node.js based micro service skeleton. Mongo initialization is lazy, on first call, so can be launched w/o mongo server running.
+Simple Node.js based micro service skeleton. Really straightforward, just checkout and `docker-compose -f compose.dev.yml up`. Mongo initialization is lazy, on first call, so can be launched w/o actual mongo server running.
 
 It slowly evolved as a result of my own experience of solving similar problems in multiple projects, with teams of very different skill level. So I am outsourcing it to shortcut others and hopefully to get some contributions we all will benefit from.
 
@@ -20,11 +20,15 @@ Some infra code duplication in microservices is ok. It allows you to finetune pa
     }
 }
 ```
-Maybe someone will make standard fork, since not everybody loves semicolons :)?
+I know, not everybody loves semicolons, sorry about that ;)
 
 ## Mongo as data store
 
 Mongoose used as ORM, but connection initialization approach tweaked to support multidatabase in single microservice (yes i know, thats quite rare, but still - happens) and to be lazy - to microservice to start faster and this skeleton to be usefull when mongo isn't actually used.
+
+## Exception, not error
+
+I know it's a complicated topic, but I think the support of inner exceptions (wrapping) and bubbling `fields` property from innermost exception to outermost (e.g. mongo fails validation and throws with `fields` containing validation errors, controller wraps with additional info and rethrows, frontend pickups fields and translates into error messages), comes vhandy in high level scenarios, for low level stuff - use error's. 
 
 ## Sentry friendly
 
@@ -36,7 +40,7 @@ Autobind mservice version to commit hash, lint, test. Push artifact to gitlab im
 
 ## Logging built in
 
-Based on winston, extended to support provided Exception classes (or inherited ones) which allows you to see full exception trace and bubble `fields` property (usefull in server based validation scenarios for example).
+Based on winston, extended to support provided Exception classes (or inherited ones) which allows you to see full exception trace.
 
 ## (Unit) tests
 
@@ -46,10 +50,10 @@ Some sample global tests folder included to kickoff easily from there. Mocha + c
 
 Both middleware to validate JWT and utility to get access token using client credentials flow, are present.
 
-Middlewares usage:
-* `validateAuth` - for just validating if JWT is issued by right authority, like `app.get('/version', middlewares.validateAuth, routes.versionCheck);`
-* `validateAuthScope(scope)` - for validating if JWT is issued by right authority and contains required scope, like `app.get('/version', middlewares.validateAuthScope('tooling:read.version'), routes.versionCheck);`
-(theres way to bypass scopes check in dev mode, to speedup developement - check compose.dev.yml DEV_BYPASS_SCOPES env variable)
+Middleware usage-cases:
+* `validateAuth` - to just validate if JWT is issued by right authority, like `app.get('/version', middlewares.validateAuth, routes.versionCheck);`
+* `validateAuthScope(scope)` - for validating if JWT is issued by right authority and contains required scope (or multiple, space separated, scopes), like `app.get('/version', middlewares.validateAuthScope('tooling:version.read'), routes.versionCheck);`
+(note: theres way to bypass scopes check in dev mode, to speedup developement - check compose.dev.yml DEV_BYPASS_SCOPES env variable)
 
 ## Docker
 
@@ -57,7 +61,7 @@ Middlewares usage:
 
 `make build up`, navigate to http://localhost:3000/swagger/. By default it runs in nodemon mode and detects changes.
 
-On windows you can install make on windows using git bash and this instruction https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058.
+On windows you can install make for git-bash/MinGW using this instruction https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058.
 
 ### Debug locally
 
@@ -69,12 +73,12 @@ Yes it does work, you can even start w/o having database up, thanks to lazy db c
 
 ## Configuration
 
-Configuration is set up in this order:
-- Reads machine/container specific environment variables
+Configuration is set up in this order (later steps overwrites whats set in earlier set, so environment vars overwrites everyting else):
+- Default values comes from `config/default.json`
 - If and `NODE_ENV` is not `production` - reads `dev.env` in project root
 - Attempts read environment file defined in `ENV_FILE` or `/run/secrets/env` if undefined
-- Runs `config` package picking up environment vars mapped in `config/custom-environment-variables.json`
-- Populates unset, default values from `config/default.json`
+- Picks up environment vars
+(note: env vars are mapped in `config/custom-environment-variables.json`)
 
 Handling configuration this way allows developers to update configuration independently and let deployment team override any of those using variety of methods.
 
