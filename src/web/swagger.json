@@ -37,7 +37,35 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Successful Response"
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "Invalid parameter (see fields for for validation errors)",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "401": {
+            "description": "Authorization information is missing or invalid",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "403": {
+            "description": "Permission denied",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "5XX": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {},
+              "text/plain": {}
+            }
           }
         }
       },
@@ -48,8 +76,38 @@
         "summary": "Version",
         "parameters": [],
         "responses": {
-          "200": {
-            "description": "Successful Response"
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {}
+              }
+            },
+            "400": {
+              "description": "Invalid parameter (see fields for for validation errors)",
+              "content": {
+                "application/json": {}
+              }
+            },
+            "401": {
+              "description": "Authorization information is missing or invalid",
+              "content": {
+                "application/json": {}
+              }
+            },
+            "403": {
+              "description": "Permission denied",
+              "content": {
+                "application/json": {}
+              }
+            },
+            "5XX": {
+              "description": "Unexpected error",
+              "content": {
+                "application/json": {},
+                "text/plain": {}
+              }
+            }
           }
         }
       },

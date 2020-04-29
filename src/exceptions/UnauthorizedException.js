@@ -5,7 +5,7 @@ module.exports = class UnauthorizedException extends Exception {
     params,
     defaultParams = {
       message: 'Unauthorized',
-      statusCode: 403,
+      statusCode: 401,
     },
   ) {
     super(params, defaultParams);

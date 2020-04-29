@@ -10,6 +10,7 @@ class Exception extends Error {
     params,
     defaultParams = {
       message: 'Exception occured',
+      description: undefined,
       statusCode: 500,
       innerError: undefined,
       fields: undefined, // Server validation scenarios and similar, to show field specific issues
@@ -54,9 +55,13 @@ class Exception extends Error {
     // Saving namespace for exception type checking scenarios (comparing types is tricky in Node)
     this.name = `${pkgJson.name.toUpperCase()}.${this.constructor.name}`;
 
-    // Most commonly it will be HTTP status,
+    // Most commonly it will be HTTP status code,
     // but can be any other convention dictated by library throwing it
     this.statusCode = constructorParameters.statusCode || defaultParams.statusCode;
+
+    // To bubble description from originated exception
+    this.description = constructorParameters.description
+      || (constructorParameters.innerError && constructorParameters.innerError.description);
 
     // To bubble fields too from originated exception
     this.fields = constructorParameters.fields

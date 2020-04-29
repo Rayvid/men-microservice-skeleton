@@ -5,10 +5,10 @@ const { logger: log } = require('../../util');
 
 async function validateAuthHeader(authorizationHeader, scope) {
   if (!authorizationHeader || authorizationHeader.length < 7) {
-    throw new UnauthorizedException({ message: 'Authorization header too short (not set at all?)' });
+    throw new UnauthorizedException({ message: 'Authorization failed', description: 'Authorization header too short (not set at all?)' });
   }
   if (authorizationHeader.substring(0, 7).toLowerCase() !== 'bearer ') {
-    throw new UnauthorizedException({ message: 'Token is not bearer' });
+    throw new UnauthorizedException({ message: 'Authorization failed', description: 'Token is not bearer' });
   }
 
   const tokenRaw = authorizationHeader.substring(7);

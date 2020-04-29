@@ -18,7 +18,7 @@ const readIdentityServerPubKey = async (header) => {
   });
 
   if (!header.kid) {
-    rejectHook(new Error('No kid in header'));
+    rejectHook(new Error('No kid is present in header'));
   }
 
   client.getSigningKey(header.kid, (err, key) => {
@@ -35,7 +35,7 @@ const readIdentityServerPubKey = async (header) => {
 module.exports = async (tokenRaw, scope) => {
   const token = jwt.decode(tokenRaw, { complete: true });
   if (!token) {
-    throw new UnauthorizedException({ message: 'Invalid JWT' });
+    throw new UnauthorizedException({ message: 'Authorization failed', description: 'Invalid JWT' });
   }
   token.raw = tokenRaw;
 
@@ -65,13 +65,14 @@ module.exports = async (tokenRaw, scope) => {
 
     if (scope && (!token.payload.scope
       || _.intersection(scope.split(' '), token.payload.scope.split(' ')).length === 0)) {
-      throw new UnauthorizedException({ message: `No access to scope - '${scope}'` });
+      throw new UnauthorizedException({ message: 'Access denied', description: `No access to scope - '${scope}'`, statusCode: 403 });
     }
 
     return token;
   } catch (err) {
     throw new UnauthorizedException({
       message: 'Request authorization header validation attempt failed',
+      description: err.message,
       innerError: err,
     });
   }
