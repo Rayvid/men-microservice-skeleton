@@ -5,7 +5,7 @@ ENV NODE_ENV=$ENV
 WORKDIR /usr/src/app
 COPY package*.json /usr/src/app/
 
-ARG NPMRC_CONTENT="//registry.npmjs.org/:_authToken=override_this_arg_in_host\n"
+ARG NPMRC_CONTENT="//registry.npmjs.org/:_authToken=pass_this_arg_if_need_to_access_private_packages\n"
 RUN printf "$NPMRC_CONTENT" > ~/.npmrc
 
 RUN npm install --unsafe-perm
