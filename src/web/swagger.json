@@ -1,33 +1,30 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "TBD",
+    "description": "No transpiler (M)EN microservice skeleton",
     "version": "1.0",
     "title": "men-skeleton"
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "schemes": [
-    "http",
-    "https"
-  ],
   "consumes": [
     "application/json"
   ],
   "produces": [
     "application/json"
   ],
-  "securityDefinitions": {
-    "jwt": {
-      "description": "Bearer &lt;base64 encoded jwt&gt;",
-      "type": "apiKey",
-      "in": "header",
-      "name": "Authorization"
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
   },
   "security": [
     {
-      "jwt": "Bearer <base64 encoded jwt>"
+      "bearerAuth": []
     }
   ],
   "paths": {

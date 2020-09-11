@@ -1,4 +1,4 @@
-const healthCheckRoutes = require('./healthcheck');
+const healthCheckRoutes = require('./healthCheck');
 const versionCheck = require('./versionCheck');
 
 module.exports = {

@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.5'
 services:
   your_service_name:
     build:
@@ -6,13 +6,12 @@ services:
       dockerfile: Dockerfile
       args:
         ENV: "development" # To install nodemon and other dev stuff
-        NPMRC_CONTENT: "//registry.npmjs.org/:_authToken=af1e10d1-84f1-4aff-b42b-d1e74dd27f56"
+        NPMRC_CONTENT: "//registry.npmjs.org/:_authToken=your_token_for_private_packages"
     ports:
       - "3000:3000"
       - "9229:9229"
     depends_on:
-      - mongo
-      - postgres
+      - mongodb
     environment:
       NODE_ENV: "development" # To enable dev.env, stacktraces and scope bypass
       DEV_BYPASS_SCOPES: "confinements:read.all confinements:read.dev"
@@ -23,9 +22,12 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
       - /usr/src/app/logs # Some problems with this folder mapped to host - permission problems overriding folder, etc. If you need to test it badly - just remove this line, but generally better to keep it inside container
-  mongo:
-    image: mongo:4.2
-  postgres:
-    image: postgres:12.2
-    environment:
-      POSTGRES_PASSWORD: "thisisdev"
+  mongodb:
+    image: mongo:4.4
+    # Uncomment to initiate replica set, if you know cleaner way to do this - please suggest
+    # healthcheck:
+    #     test: echo 'rs.initiate();cfg=rs.conf();cfg.members[0].host="mongodb:27017";rs.reconfig(cfg,{force:true})' | mongo --quiet || echo ok
+    #     start_period: 15s
+    #     timeout: 60s
+    #     retries: 1
+    # command: --replSet "rs0" --bind_ip localhost,mongodb,127.0.0.1

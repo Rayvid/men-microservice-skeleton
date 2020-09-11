@@ -6,7 +6,7 @@ It slowly evolved as a result of my own experience of solving similar problems i
 
 ## Modules vs infrastructure code duplication
 
-Some infra code duplication in microservices is ok. It allows you to finetune particular behaviour w/o making logic branch in the module, but you should be moving independent reusable blocks into the modules normally (potentially exceptions and some utils there moved into the modules in future).
+Some infra code duplication in microservices is ok. It allows you to finetune particular behaviour w/o making logic branch in the module, but you should be moving independent reusable blocks into the modules normally - so potentially exceptions and some utils moved from skeleton into the modules in the future.
 
 ## Code style this project is compatible with
 
@@ -28,11 +28,11 @@ Mongoose used as ORM, but connection initialization approach tweaked to support 
 
 ## Exception, not error
 
-I know it's a complicated topic, but I think the support of inner exceptions (wrapping) and bubbling `fields` property from innermost exception to outermost (e.g. mongo fails validation and throws with `fields` containing validation errors, controller wraps with additional info and rethrows, frontend pickups fields and translates into error messages), comes vhandy in high level scenarios, for low level stuff - use error's. 
+I know it's a complicated topic, but I think the support of inner exceptions (wrapping) and bubbling `fields` property from innermost exception to outermost (e.g. mongo fails validation and throws with `fields` containing validation errors, controller wraps with additional info and rethrows, frontend pickups fields and translates into error messages), comes vhandy in high level scenarios, for low level stuff - its totally fine (and in fact, more portable) to use error's.
 
 ## Sentry friendly
 
-Sentry will see entire exception path when provided Exception classes, or inherited ones, are used.
+Sentry will see entire exception path (nested exceptions too) when provided Exception classes, or inherited ones, are used.
 
 ## Gitlab CI ready
 
@@ -54,6 +54,10 @@ Middleware usage-cases:
 * `validateAuth` - to just validate if JWT is issued by right authority, like `app.get('/version', middlewares.validateAuth, routes.versionCheck);`
 * `validateAuthScope(scope)` - for validating if JWT is issued by right authority and contains required scope (or multiple, space separated, scopes), like `app.get('/version', middlewares.validateAuthScope('tooling:version.read'), routes.versionCheck);`
 (note: theres way to bypass scopes check in dev mode, to speedup developement - check compose.dev.yml DEV_BYPASS_SCOPES env variable)
+
+## health/version/sentryPing
+
+TBD
 
 ## Docker
 
