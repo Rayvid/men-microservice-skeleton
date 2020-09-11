@@ -21,7 +21,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-      - /usr/src/app/logs # Some problems with this folder mapped to host - permission problems overriding folder, etc. If you need to test it badly - just remove this line, but generally better to keep it inside container
+      - /usr/src/app/logs # No need to keep logs coming to host in dev-mode
   mongodb:
     image: mongo:4.4
     # Uncomment to initiate replica set, if you know cleaner way to do this - please suggest
