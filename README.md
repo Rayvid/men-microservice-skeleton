@@ -93,7 +93,7 @@ Yes it does work, you can even start w/o having database up, thanks to lazy db c
 
 ## Configuration
 
-Configuration is set up in this order (later steps overwrites whats set in earlier set, so environment vars overwrites everyting else):
+Configuration is set up in this order (later ones superseeds earlier ones):
 - Default values comes from `config/default.json`
 - If `NODE_ENV` is not `production` - `dev.env` in project root gets loaded into environment
 - Attempts read environment file defined in `ENV_FILE` or `/run/secrets/env` if it's undefined
