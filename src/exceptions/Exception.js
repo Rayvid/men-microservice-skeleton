@@ -1,21 +1,42 @@
-const pkgJson = require('../../package.json');
+import path from 'path';
+import fs from 'fs';
+
+const pkgJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json')));
 
 // You are than welcome to extend this class to customize class name/default message/parameters
 // to more adequately reflect your error state
-class Exception extends Error {
+/**
+ * @export
+ * @class Exception
+ * @extends {Error}
+ */
+export default class Exception extends Error {
+  /**
+   * Creates an instance of Exception.
+   * @param {*} params
+   * @param {string} [defaultParams={
+   *       message: 'Exception occured',
+   *       description: undefined,
+   *       statusCode: 500,
+   *       innerError: undefined,
+   *       fields: undefined, // Server validation scenarios and similar, to display field specific issues
+   *       doNotaugmentStack: false, // True will save resources if you use throw instead return
+   *     }]
+   * @memberof Exception
+   */
   constructor(
-    // To support patterns new Exception(err)
-    // and new Exception({message: '...', innerError: err})
-    // we accept these two universally trough first parameter
-    params,
-    defaultParams = {
-      message: 'Exception occured',
-      description: undefined,
-      statusCode: 500,
-      innerError: undefined,
-      fields: undefined, // Server validation scenarios and similar, to show field specific issues
-      doNotaugmentStack: false, // True will save resources if you use throw instead return
-    },
+      // Supported patterns:
+      //   new Exception(err)
+      //   new Exception({message: '...', innerError: err})
+      params,
+      defaultParams = {
+        message: 'Exception occured',
+        description: undefined,
+        statusCode: 500,
+        innerError: undefined,
+        fields: undefined, // Server validation scenarios and similar, to display field specific issues
+        doNotaugmentStack: false, // True will save resources if you use throw instead return
+      },
   ) {
     let constructorParameters = defaultParams;
     if (params && !params.stack) {
@@ -60,13 +81,11 @@ class Exception extends Error {
     this.statusCode = constructorParameters.statusCode || defaultParams.statusCode;
 
     // To bubble description from originated exception
-    this.description = constructorParameters.description
-      || (constructorParameters.innerError && constructorParameters.innerError.description);
+    this.description = constructorParameters.description ||
+        (constructorParameters.innerError && constructorParameters.innerError.description);
 
     // To bubble fields too from originated exception
-    this.fields = constructorParameters.fields
-      || (constructorParameters.innerError && constructorParameters.innerError.fields);
+    this.fields = constructorParameters.fields ||
+        (constructorParameters.innerError && constructorParameters.innerError.fields);
   }
 }
-
-module.exports = Exception;

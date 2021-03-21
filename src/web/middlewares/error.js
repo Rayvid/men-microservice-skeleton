@@ -1,7 +1,7 @@
-const { logger: log } = require('../../util');
+import {logger as log} from '../../util/index.js';
 
 // eslint-disable-next-line no-unused-vars
-module.exports = (error, req, res, next) => {
+export default (error, req, res, next) => {
   const parseForwardedFor = (value) => {
     if (!value) {
       return undefined;
@@ -18,8 +18,8 @@ module.exports = (error, req, res, next) => {
     stack: process.env.NODE_ENV !== 'production' ? error.stack : undefined,
   };
 
-  const reqInfo = `${req.originalUrl} - ${req.method}`
-    + ` - ${parseForwardedFor(req.headers['x-forwarded-for']) || req.connection.remoteAddress}`;
+  const reqInfo = `${req.originalUrl} - ${req.method}` +
+      ` - ${parseForwardedFor(req.headers['x-forwarded-for']) || req.connection.remoteAddress}`;
   log.error({
     status: error.statusCode || 500,
     message: errorObj.message,

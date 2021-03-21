@@ -9,7 +9,6 @@
     "level": {
       "__comment__": "File level set to warn to not consume disk too much",
       "file": "warn",
-      "elastic": "info",
       "console": "info"
     }
   },

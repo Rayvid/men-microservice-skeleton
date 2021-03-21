@@ -1,15 +1,18 @@
 // This file is all about defining and running http server instance
-// Some infrastructure code leak there is ok, just try to keep it minimum
-const express = require('express');
-require('express-async-errors');
-const swaggerUi = require('swagger-ui-express');
-const middlewares = require('./middlewares');
-require('express-async-errors');
+// Some infrastructure code leak there is ok, just try to keep it at minimum
+import express from 'express';
+import 'express-async-errors';
+import swaggerUi from 'swagger-ui-express';
 
-const config = require('../../config');
-const { logger: log } = require('../util');
-const routes = require('./routes');
-const swaggerDoc = require('./swagger.json');
+import * as middlewares from './middlewares/index.js';
+import * as config from '../../config/index.js';
+import {logger as log} from '../util/index.js';
+import routes from './routes/index.js';
+
+import path from 'path';
+import fs from 'fs';
+
+const swaggerDoc = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/web/swagger.json')));
 
 const app = express();
 

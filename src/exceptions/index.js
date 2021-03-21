@@ -1,9 +1,7 @@
-const Exception = require('./Exception');
-const ModelException = require('./ModelException');
-const UnauthorizedException = require('./UnauthorizedException');
+import ExceptionImport from './Exception.js';
+import ModelExceptionImport from './ModelException.js';
+import UnauthorizedExceptionImport from './UnauthorizedException.js';
 
-module.exports = {
-  Exception,
-  ModelException,
-  UnauthorizedException,
-};
+export const Exception = ExceptionImport;
+export const ModelException = ModelExceptionImport;
+export const UnauthorizedException = UnauthorizedExceptionImport;

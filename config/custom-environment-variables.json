@@ -8,7 +8,6 @@
     "fileName": "LOG_FILE_NAME",
     "level": {
       "file": "LOG_LEVEL_FILE",
-      "elastic": "LOG_LEVEL_ELASTIC",
       "console": "LOG_LEVEL_CONSOLE"
     }
   },

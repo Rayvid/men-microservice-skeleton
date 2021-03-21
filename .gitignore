@@ -1,8 +1,5 @@
 nodemon.json
 
-# ElasticSearch
-esdata
-
 # Logs
 *.log*
 _ttd_log_/

@@ -1,1 +1,1 @@
-require('./web');
+import './web/index.js';

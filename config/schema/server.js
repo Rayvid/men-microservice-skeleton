@@ -1,9 +1,9 @@
-const joi = require('joi');
+import joi from 'joi';
 
-module.exports = joi.object({
+export default joi.object({
   envName: joi.string()
-    .allow(['development', 'test', 'production'])
-    .default('development'),
+      .allow(...['development', 'test', 'production'])
+      .default('development'),
   listenOnPort: joi.number()
-    .default(80),
+      .default(80),
 }).unknown().required();

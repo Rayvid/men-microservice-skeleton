@@ -1,7 +1,7 @@
-const healthCheckRoutes = require('./healthCheck');
-const versionCheck = require('./versionCheck');
+import * as healthCheckRoutes from './healthCheck.js';
+import versionCheck from './versionCheck.js';
 
-module.exports = {
+export default {
   healthCheckRoutes,
   versionCheck,
 };

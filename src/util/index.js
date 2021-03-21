@@ -1,5 +1,7 @@
-const logger = require('./logger')();
+import loggerModule from './logger/index.js';
+import * as dbModule from './db/index.js';
+import * as networkModule from './network/index.js';
 
-module.exports = {
-  logger,
-};
+export const logger = loggerModule();
+export const db = dbModule;
+export const network = networkModule;

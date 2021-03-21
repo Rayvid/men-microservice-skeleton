@@ -1,15 +1,15 @@
-const schema = require('../schema');
+import * as schema from '../schema/index.js';
 
-module.exports = (dbConnection) => ({
+export default (dbConnection) => ({
   getIntegration: async (integrationName, lean = true) => {
     const result = schema
-      .sportsAppIntegrationSchema.connect(dbConnection)
-      .findOne({ provider: integrationName });
+        .sportsAppIntegrationSchema.connect(dbConnection)
+        .findOne({provider: integrationName});
 
     return (lean) ? result.lean() : result;
   },
 
   createIntegration: async (integration) => schema
-    .sportsAppIntegrationSchema.connect(dbConnection)
-    .create(integration),
+      .sportsAppIntegrationSchema.connect(dbConnection)
+      .create(integration),
 });

@@ -1,8 +1,8 @@
 // Placeholder for global tests
-// it's good idea to have local tests folders inside src to do contextual unittesting
-require('../config/env'); // Ensure its invoked before everything else, otherwise it becomes sequence dependant
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
+// it's a good idea to have local tests folders inside src to do contextual unittesting
+import '../config/env.js'; // Ensure its invoked before everything else, otherwise it becomes sequence dependant
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
 
 chai.use(chaiAsPromised);
 chai.should();

@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
-const schema = require('../schema');
-const integrationRepoInitializer = require('./integration');
-const { ModelException } = require('../../exceptions');
+import mongoose from 'mongoose';
+import * as schema from '../schema/index.js';
+import integrationRepoInitializer from './integration.js';
+import {ModelException} from '../../exceptions/index.js';
 
-module.exports = (dbConnection) => {
+export default (dbConnection) => {
   // Using mongoose constructor is mandatory when constructing mongoose objects.
   // It ensures schema validation logic is performed
   const SportsAppUserIntegrationConstructor = schema
-    .sportsAppUserIntegrationSchema
-    .connect(dbConnection);
+      .sportsAppUserIntegrationSchema
+      .connect(dbConnection);
   const integrationRepo = integrationRepoInitializer(dbConnection);
 
   return {
@@ -19,22 +19,22 @@ module.exports = (dbConnection) => {
         const integration = await integrationRepo.getIntegration(integrationName);
 
         if (!integration) {
-          throw new ModelException({ message: `Non existent integration - '${integrationName}'` });
+          throw new ModelException({message: `Non existent integration - '${integrationName}'`});
         }
 
         const result = schema
-          .sportsAppUserIntegrationSchema
-          .connect(dbConnection)
-          // eslint-disable-next-line no-underscore-dangle
-          .findOne({ userId, integrationId: integration._id });
+            .sportsAppUserIntegrationSchema
+            .connect(dbConnection)
+            // eslint-disable-next-line no-underscore-dangle
+            .findOne({userId, integrationId: integration._id});
 
         return (lean) ? result.lean() : result;
       },
 
     saveOrUpdateUserIntegration:
-      async ({ userId, integrationId, accessToken, expiresIn, refreshToken, authPayload }) => {
+      async ({userId, integrationId, accessToken, expiresIn, refreshToken, authPayload}) => {
         // Keeping create and update separately you will save alot of code lines and complexity,
-        // just want to demonstrate thats possible usign mongoose to merge these two if badly needed
+        // just want to demonstrate thats possible usign mongoose to merge these two if badly needed - so called upsert
 
         const lastSyncTimestamp = Math.floor(new Date() / 1000);
         const sportsAppUserIntegration = new SportsAppUserIntegrationConstructor({
@@ -63,7 +63,7 @@ module.exports = (dbConnection) => {
         });
         await validationPromise;
 
-        // Deleting _id property, because it's enforced when you use mongoose model
+        // Delete _id property, set by mongoose in prev operation
         /* eslint-disable no-underscore-dangle */
         let objectToUpdate = {};
         objectToUpdate = Object.assign(objectToUpdate, sportsAppUserIntegration._doc);
@@ -71,11 +71,12 @@ module.exports = (dbConnection) => {
         /* eslint-enable no-underscore-dangle */
 
         return schema
-          .sportsAppUserIntegrationSchema.connect(dbConnection)
-          .findOneAndUpdate({
-            userId,
-            integrationId: mongoose.Types.ObjectId(integrationId.toString()),
-          }, objectToUpdate, { upsert: true });
+            .sportsAppUserIntegrationSchema.connect(dbConnection)
+            .findOneAndUpdate({
+              userId,
+              // eslint-disable-next-line new-cap
+              integrationId: mongoose.Types.ObjectId(integrationId.toString()),
+            }, objectToUpdate, {upsert: true});
       },
   };
 };

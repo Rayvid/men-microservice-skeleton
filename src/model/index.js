@@ -1,3 +1,2 @@
-const sportsAppRepositoryInitializer = require('./sportsAppRepository');
-
-module.exports = (dbConnection) => sportsAppRepositoryInitializer(dbConnection);
+import sportsAppRepository from './sportsAppRepository/index.js';
+export default sportsAppRepository;

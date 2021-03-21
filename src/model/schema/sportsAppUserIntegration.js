@@ -1,12 +1,12 @@
-const { Schema } = require('mongoose');
+import mongoose from 'mongoose';
 
-const schema = new Schema({
+const schema = new mongoose.Schema({
   userId: {
     type: String, // uuid
     required: true,
   },
   integrationId: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   accessToken: {
@@ -29,11 +29,7 @@ const schema = new Schema({
     type: Number,
     default: null,
   },
-}, { collection: 'sportsAppUserIntegrations' });
+},
+{collection: 'sportsAppUserIntegrations'});
 
-module.exports = {
-  schema,
-  // TODO wrap mongoose model with our own,
-  // to include more extensive logging, compatible Exceptions, etc
-  connect: (connection) => connection.model('sportsAppUserIntegrations', schema),
-};
+export const connect = (connection) => connection.model('sportsAppUserIntegrations', schema);

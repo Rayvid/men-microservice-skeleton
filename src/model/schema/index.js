@@ -1,7 +1,2 @@
-const sportsAppIntegrationSchema = require('./sportsAppIntegration');
-const sportsAppUserIntegrationSchema = require('./sportsAppUserIntegration');
-
-module.exports = {
-  sportsAppIntegrationSchema,
-  sportsAppUserIntegrationSchema,
-};
+export * as sportsAppIntegrationSchema from './sportsAppIntegration.js';
+export * as sportsAppUserIntegrationSchema from './sportsAppUserIntegration.js';

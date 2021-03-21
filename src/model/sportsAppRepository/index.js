@@ -1,7 +1,7 @@
-const integration = require('./integration');
-const userIntegration = require('./userIntegration');
+import integration from './integration.js';
+import userIntegration from './userIntegration.js';
 
-module.exports = (dbConnection) => {
+export default (dbConnection) => {
   const integrationModel = integration(dbConnection);
   const userIntegrationModel = userIntegration(dbConnection);
 

@@ -1,8 +1,8 @@
-const _ = require('underscore');
-const jwksClient = require('jwks-rsa');
-const jwt = require('jsonwebtoken');
-const { UnauthorizedException } = require('../../exceptions');
-const config = require('../../../config');
+import _ from 'underscore';
+import jwksClient from 'jwks-rsa';
+import jwt from 'jsonwebtoken';
+import {UnauthorizedException} from '../../exceptions/index.js';
+import * as config from '../../../config/index.js';
 
 const client = jwksClient({
   cache: true,
@@ -32,10 +32,10 @@ const readIdentityServerPubKey = async (header) => {
   return promise;
 };
 
-module.exports = async (tokenRaw, scope) => {
-  const token = jwt.decode(tokenRaw, { complete: true });
+export default async (tokenRaw, scope) => {
+  const token = jwt.decode(tokenRaw, {complete: true});
   if (!token) {
-    throw new UnauthorizedException({ message: 'Authorization failed', description: 'Invalid JWT' });
+    throw new UnauthorizedException({message: 'Authorization failed', description: 'Invalid JWT'});
   }
   token.raw = tokenRaw;
 
@@ -49,23 +49,27 @@ module.exports = async (tokenRaw, scope) => {
       rejectHook = reject;
     });
     jwt.verify(
-      token.raw,
-      publicKey,
-      { ignoreExpiration: false, ignoreNotBefore: false },
-      (err, decoded) => {
-        if (err) {
-          rejectHook(err);
-        } else {
-          resolveHook(decoded);
-        }
-      },
+        token.raw,
+        publicKey,
+        {ignoreExpiration: false, ignoreNotBefore: false},
+        (err, decoded) => {
+          if (err) {
+            rejectHook(err);
+          } else {
+            resolveHook(decoded);
+          }
+        },
     );
 
     await promise;
 
-    if (scope && (!token.payload.scope
-      || _.intersection(scope.split(' '), token.payload.scope.split(' ')).length === 0)) {
-      throw new UnauthorizedException({ message: 'Access denied', description: `No access to scope - '${scope}'`, statusCode: 403 });
+    if (scope && (!token.payload.scope ||
+        _.intersection(scope.split(' '), token.payload.scope.split(' ')).length === 0)) {
+      throw new UnauthorizedException({
+        message: 'Access denied',
+        description: `No access to scope - '${scope}'`,
+        statusCode: 403,
+      });
     }
 
     return token;

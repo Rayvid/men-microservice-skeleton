@@ -13,7 +13,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      NODE_ENV: "development" # To enable dev.env, stacktraces and scope bypass
+      NODE_ENV: "development" # To start nodemon, enable dev.env, stacktraces and scope bypass
       DEV_BYPASS_SCOPES: "confinements:read.all confinements:read.dev"
       DEV_ENFORCE_TOKEN_PAYLOAD: "{\"scope\": \"confinements:read.dev\" }"
     env_file:

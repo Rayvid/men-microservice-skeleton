@@ -1,4 +1,4 @@
-FROM node:12.18.3
+FROM node:14.16
 ARG ENV=production
 ENV NODE_ENV=$ENV
 
@@ -12,7 +12,7 @@ RUN npm install --unsafe-perm
 COPY . .
 
 # Start fresh from clean image and just transfers files build in prev step (to not expose registry token)
-FROM node:12.18.3
+FROM node:14.16
 WORKDIR /usr/src/app
 COPY --from=0 /usr/src/app .
 EXPOSE 3000
