@@ -49,9 +49,10 @@ it's a complicated topic, but I think the support of inner Exception's (wrapping
 
 Sentry will see entire exception path (nested exceptions too) when provided Exception classes, or inherited ones, are used.
 
-## Gitlab CI ready
+## CI ready
 
-Autobind mservice version to commit hash, lint, test. Push artifact to gitlab image repository.
+Gitlab - autobind mservice version to commit hash, lint, test. Push artifact to gitlab image repository.
+Github - just lint and test for now
 
 ## Logging built in
 
@@ -71,9 +72,9 @@ Middleware usage-cases:
 Token payload is transfered to res.locals.token.payload (in case you want to check claims manually)
 (note: theres way to bypass scopes check in dev mode, to speedup developement - check compose.dev.yml DEV_BYPASS_SCOPES env variable)
 
-## health/version/sentryPing
+## health/version/sentryPing endpoints
 
-TBD
+Some standard infrastructure endpoints example
 
 ## Docker
 
@@ -85,7 +86,7 @@ On windows you can install make for git-bash/MinGW using this instruction https:
 
 ### Debug locally
 
-Standard vscode Docker extension provided `Docker: Attach to Node` will work just fine out of the box.
+Standard vscode Docker extension provides `Docker: Attach to Node` debug mode, which work just fine out of the box.
 
 ### `npm start` w/o docker
 
