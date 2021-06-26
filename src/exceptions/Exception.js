@@ -3,8 +3,7 @@ import fs from 'fs';
 
 const pkgJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json')));
 
-// You are than welcome to extend this class to customize class name/default message/parameters
-// to more adequately reflect your error state
+// It's recommended to extend this class to better reflect your error context
 /**
  * @export
  * @class Exception
@@ -25,7 +24,7 @@ export default class Exception extends Error {
    * @memberof Exception
    */
   constructor(
-      // Supported patterns:
+      // Supported initialization patterns:
       //   new Exception(err)
       //   new Exception({message: '...', innerError: err})
       params,
@@ -48,21 +47,18 @@ export default class Exception extends Error {
 
     if (!constructorParameters.doNotaugmentStack) {
       // Capturing stack trace and excluding constructor call from it.
-      // This requires some explanation i believe:
-      // implementing exception bubbling trough async code is still
-      // painfull in Node. So we are using stacktrace concatenation to workaround that
+      // This could require some explanation:
+      // implementing exception bubbling in async code is still painfull in Node.
+      // it was somewhat resolved with --async-stack-traces
+      // but OO Exception approach (wrapping) is more versatile.
+      // So we are using dumb stacktrace concatenation to achieve that
       //
-      // So error handling pattern becomes like:
+      // In case you are not fimiliar what exception wrapping is:
       // try {
       //   await someAsyncCode...
       // } catch (err) {
       //   throw new Exception(err);
       // }
-      //
-      // It works with promises too:
-      // new Promise((success, failure) => {
-      //   originalPromise.then(_ => success(_)).catch(err => failure(new Exception(err)));
-      // });
       Error.captureStackTrace(this, this.constructor);
       if (constructorParameters.innerError) {
         this.stack += `\n${constructorParameters.innerError.stack}`;
@@ -70,10 +66,10 @@ export default class Exception extends Error {
     }
 
     if (constructorParameters.innerError) {
-      this.cause = constructorParameters.innerError; // 4 Sentry to see
+      this.cause = constructorParameters.innerError; // 4 Sentry to see original cause
     }
 
-    // Saving namespace for exception type checking scenarios (comparing types is tricky in Node)
+    // Add module name in case you will need to handle exception by exact source
     this.name = `${pkgJson.name.toUpperCase()}.${this.constructor.name}`;
 
     // Most commonly it will be HTTP status code,
@@ -84,7 +80,7 @@ export default class Exception extends Error {
     this.description = constructorParameters.description ||
         (constructorParameters.innerError && constructorParameters.innerError.description);
 
-    // To bubble fields too from originated exception
+    // To bubble fields from originated exception
     this.fields = constructorParameters.fields ||
         (constructorParameters.innerError && constructorParameters.innerError.fields);
   }
