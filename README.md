@@ -1,10 +1,8 @@
-# No transpiler (M)EN microservice skeleton - fastest way to kickoff your microservice
+# No transpiler (M)EN microservice project template - fastest way to kickoff your microservice
 
-Micro service project template based on Node 16.4 with strong focus on KISS principles. Really straightforward, just checkout and `docker compose -f compose.dev.yml up`. Mongo initialization is lazy, on first call, so can be launched w/o actual mongo server running.
+Micro service project template based on Node 16.4 with strong focus on KISS principles. Really straightforward, just checkout and `docker compose -f compose.dev.yml up`. Mongo initialization is lazy, on first call, so can be used w/o actual mongo server running.
 
-It slowly evolved as a result of my own experience of solving similar problems in multiple projects, with teams of very different skill level. So I am outsourcing it to shortcut others and hopefully to get some contributions we all will benefit from.
-
-(Migrating step by step from CommonJS, sorry for still some artifacts)
+It slowly evolved as a result of my own experience of solving similar problems in multiple projects, with teams of very different skill level. So keeping KISS principles is very important in this project. Well, you will probably find oauth2 stuff, model folder and exceptions not that simple, but at least you can find comments/readme explaining need for additional complexity there.
 
 ## Modules vs infrastructure code duplication
 
@@ -39,7 +37,7 @@ I know, not everybody loves semicolons, sorry about that ;)
 
 ## Mongo as data store
 
-Mongoose used as ORM, but connection initialization approach tweaked to support multidatabase in single microservice (yes i know, thats quite rare, but still - happens) and to be lazy - to microservice to start faster and this skeleton to be usefull when mongo isn't actually used.
+Mongoose used as ORM, but connection initialization approach tweaked to support multidatabase in single microservice (yes i know, thats quite rare, but still - happens) and to be lazy - to microservice to start faster and this project template to be usefull when mongo isn't actually used.
 
 ## Extending Error to become Exception
 
@@ -52,7 +50,8 @@ Sentry will see entire exception path (nested exceptions too) when provided Exce
 ## CI ready
 
 Gitlab - autobind mservice version to commit hash, lint, test. Push artifact to gitlab image repository.
-Github - just lint and test for now
+
+Github - just lint and test for now.
 
 ## Logging built in
 
@@ -69,8 +68,10 @@ Both middleware to validate JWT and utility to get access token using client cre
 Middleware usage-cases:
 * `validateAuth` - to just validate if JWT is issued by right authority, like `app.get('/version', middlewares.validateAuth, routes.versionCheck);`
 * `validateAuthScope(scope)` - for validating if JWT is issued by right authority and contains required scope (or multiple, space separated, scopes), like `app.get('/version', middlewares.validateAuthScope('tooling:version.read'), routes.versionCheck);`
-Token payload is transfered to res.locals.token.payload (in case you want to check claims manually)
-(note: theres way to bypass scopes check in dev mode, to speedup developement - check compose.dev.yml DEV_BYPASS_SCOPES env variable)
+
+Token payload is transfered to res.locals.token.payload - in case you want to check claims manually.
+
+<sub>note: theres way to bypass scopes check in dev mode, to speedup developement - check compose.dev.yml DEV_BYPASS_SCOPES env variable</sub>
 
 ## health/version/sentryPing endpoints
 
@@ -100,10 +101,11 @@ Configuration is set up in this order (later ones superseeds earlier ones):
 - Attempts read environment file defined in `ENV_FILE` or `/run/secrets/env` if it's undefined
 - Picks up environment vars (you can set those in compose or dev.env)
 - Command line arguments comes as highest priority https://github.com/lorenwest/node-config/wiki/Command-Line-Overrides
-(note: env vars are mapped to config scheme in `config/custom-environment-variables.json`)
+
+<sub>note: env vars are mapped to config scheme in `config/custom-environment-variables.json`</sub>
 
 Handling configuration this way allows developers to update configuration wo headache and let's override config during CI/CD using variety of DevOps methods.
 
 `dev.env` file is for **development**, so no production values allowed there.
 
-**Never push sensitive credentials to git**
+**Never push sensitive credentials to git!**
