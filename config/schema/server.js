@@ -6,4 +6,6 @@ export default joi.object({
       .default('development'),
   listenOnPort: joi.number()
       .default(80),
-}).unknown().required();
+  externalHostName: joi.string()
+      .default('localhost'),
+}).unknown();

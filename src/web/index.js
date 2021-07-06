@@ -12,7 +12,12 @@ import routes from './routes/index.js';
 import path from 'path';
 import fs from 'fs';
 
-const swaggerDoc = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/web/swagger.json')));
+const swaggerDoc = JSON.parse(fs.readFileSync(
+    path.join(process.cwd(), 'src/web/swagger.json').replace(
+        'HOST_AND_PORT',
+        config.server.externalHostName + (config.server.listenOnPort != 80 ?
+          config.server.listenOnPort.toString() :
+          ''))));
 
 const app = express();
 

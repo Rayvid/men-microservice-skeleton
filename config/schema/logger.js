@@ -12,5 +12,5 @@ export default joi.object({
     console: joi.string()
         .allow(...['error', 'warn', 'info', 'verbose', 'debug', 'silly'])
         .default('info'),
-  }).unknown().required(),
-}).unknown().required();
+  }).unknown(),
+}).unknown();

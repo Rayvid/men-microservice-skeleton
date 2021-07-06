@@ -1,7 +1,8 @@
 {
   "server": {
     "envName": "NODE_ENV",
-    "listenOnPort": "LISTEN_ON_PORT"
+    "listenOnPort": "LISTEN_ON_PORT",
+    "externalHostname": "EXTERNAL_HOST_NAME"
   },
   "logger": {
     "dir": "LOG_DIR",

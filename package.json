@@ -1,12 +1,12 @@
 {
   "name": "men-microservice-skeleton",
   "version": "1.0.0-git-commit-hash",
-  "description": "MEN Microservice skeleton",
+  "description": "MEN Microservice project templace - fastest way to kickoff your NodeJS + MongoDB microservice",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "__comment__": "Delay is needed to not crash each second time because 9229 busy",
+    "__comment__": "Delay is needed to nodemon not to crash each second time because 9229 busy",
     "__window_specifics__": "If nodemon doesnt pickup changes automatically -L flag might help",
     "dev": "npx nodemon --delay 2 --inspect=0.0.0.0:9229 index.js",
     "docker:production": "npx cross-env NODE_ENV=production npm start",
@@ -28,29 +28,30 @@
   "license": "SEE LICENSE IN JUSTTAKEANDUSEIT",
   "homepage": "https://github.com/Rayvid/men-microservice-skeleton",
   "dependencies": {
-    "@sentry/node": "^6.2.3",
+    "@sentry/node": "^6.7.2",
     "config": "^3.3.6",
     "cross-env": "^7.0.3",
-    "dotenv": "^8.2.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-async-error": "0.0.2",
     "express-async-errors": "^3.1.1",
     "express-winston": "^4.1.0",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
-    "jwks-rsa": "^2.0.1",
-    "mongoose": "^5.12.1",
+    "jwks-rsa": "^2.0.3",
+    "mongoose": "^5.12.14",
     "simple-oauth2": "^4.2.0",
     "swagger-ui-express": "^4.1.6",
-    "underscore": "^1.12.1",
+    "underscore": "^1.13.1",
     "winston": "^3.3.3",
-    "winston-daily-rotate-file": "^4.5.1"
+    "winston-daily-rotate-file": "^4.5.5"
   },
   "devDependencies": {
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^7.22.0",
+    "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
-    "mocha": "^8.3.2",
+    "mocha": "^9.0.1",
     "nodemon": "^2.0.7"
   }
 }

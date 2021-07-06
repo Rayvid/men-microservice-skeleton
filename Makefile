@@ -14,7 +14,7 @@ login:
 clean:
 	-docker system prune -f
 
-destroy:
+reset-local-docker-system: # Use with care! 
 	-docker kill $(shell docker ps -q)
 	-docker rm $(shell docker ps -a -q)
 	-docker rmi -f $(shell docker images -q -f dangling=true)
@@ -22,5 +22,5 @@ destroy:
 	-docker volume prune -f
 	-docker system prune -f
 
-kill:
+kill-all:
 	-docker kill $(shell docker ps -q)

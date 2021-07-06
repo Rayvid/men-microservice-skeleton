@@ -1,7 +1,8 @@
 {
   "server": {
     "envName": "development",
-    "listenOnPort": 3000
+    "listenOnPort": 3000,
+    "externalHostname": "localhost"
   },
   "logger": {
     "dir": "logs",

@@ -5,7 +5,7 @@
     "version": "1.0",
     "title": "men-skeleton"
   },
-  "host": "localhost:3000",
+  "host": "${HOST_AND_PORT}",
   "basePath": "/",
   "consumes": [
     "application/json"
