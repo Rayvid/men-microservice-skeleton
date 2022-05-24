@@ -7,7 +7,7 @@ export default joi.object({
       .default('combined.log'),
   level: joi.object({
     file: joi.string()
-        .allow(...['error', 'warn', 'info', 'verbose', 'debug', 'silly'])
+        .allow(...[null, 'error', 'warn', 'info', 'verbose', 'debug', 'silly'])
         .default('info'),
     console: joi.string()
         .allow(...['error', 'warn', 'info', 'verbose', 'debug', 'silly'])

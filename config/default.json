@@ -8,8 +8,8 @@
     "dir": "logs",
     "fileName": "combined.log",
     "level": {
-      "__comment__": "File level set to warn to not consume disk too much",
-      "file": "warn",
+      "__comment__": "Set to null to remove file transport alltogether, its not really needed when in microservice mode, set it to warn or other value if you want it anyway",
+      "file": null,
       "console": "info"
     }
   },

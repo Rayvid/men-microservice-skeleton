@@ -8,14 +8,14 @@ if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
 
-export const file = {
+export const file = config.logger.level.file ? {
   level: config.logger.level.file,
   filename: path.join(logDir, config.logger.fileName),
   handleExceptions: true,
   datePattern: 'YYYY-MM-DD',
   maxSize: '5m',
   maxFiles: '5d',
-};
+} : undefined;
 
 export const console = {
   level: config.logger.level.console,

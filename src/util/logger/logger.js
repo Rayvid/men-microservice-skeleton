@@ -4,9 +4,11 @@ import * as defaultOptions from './options.js';
 
 export default (options = defaultOptions) => {
   const transports = [
-    new DailyRotateFile(options.file),
     new winston.transports.Console(options.console),
   ];
+  if (options.file) {
+    transports.push(new DailyRotateFile(options.file));
+  }
   const logger = winston.createLogger({
     transports,
     format: winston.format.combine(

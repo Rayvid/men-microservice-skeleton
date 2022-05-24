@@ -6,7 +6,7 @@ import {ModelException} from '../../exceptions/index.js';
 export default (dbConnection) => {
   // Using mongoose constructor is mandatory when constructing mongoose objects.
   // It ensures schema validation logic is performed
-  const SportsAppUserIntegrationConstructor = schema
+  const SportsAppUserIntegrationFactory = schema
       .sportsAppUserIntegrationSchema
       .connect(dbConnection);
   const integrationRepo = integrationRepoInitializer(dbConnection);
@@ -34,10 +34,10 @@ export default (dbConnection) => {
     saveOrUpdateUserIntegration:
       async ({userId, integrationId, accessToken, expiresIn, refreshToken, authPayload}) => {
         // Keeping create and update separately you will save alot of code lines and complexity,
-        // just want to demonstrate thats possible usign mongoose to merge these two if badly needed - so called upsert
+        // just want to demonstrate thats possible using mongoose to merge these two if badly needed - so called upsert
 
         const lastSyncTimestamp = Math.floor(new Date() / 1000);
-        const sportsAppUserIntegration = new SportsAppUserIntegrationConstructor({
+        const sportsAppUserIntegration = new SportsAppUserIntegrationFactory({
           userId,
           integrationId,
           accessToken,
