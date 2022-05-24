@@ -3,7 +3,6 @@ import {logger as log} from '../../util/index.js';
 
 // eslint-disable-next-line no-unused-vars
 export const healthCheck = async (req, res) => {
-  // eslint-disable-next-line prefer-const
   let result = {status: 'healthy'};
   const models = await res.locals.getModels();
   try {

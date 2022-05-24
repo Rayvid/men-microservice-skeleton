@@ -15,6 +15,5 @@ COPY . .
 FROM bitnami/node:16-prod
 WORKDIR /usr/src/app
 COPY --from=0 /usr/src/app .
-# Thats default port, but to change it you need to do it in multiple places. TODO figure out how to make it DRY
 EXPOSE 3000
 CMD ["sh", "-c", "npm run docker:${NODE_ENV:-production}"]

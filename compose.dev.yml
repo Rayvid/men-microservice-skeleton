@@ -14,16 +14,16 @@ services:
       - mongodb
     environment:
       NODE_ENV: "development" # To start nodemon, enable dev.env, stacktraces and scope bypass
-      DEV_BYPASS_SCOPES: "confinements:read.all confinements:read.dev"
-      DEV_ENFORCE_TOKEN_PAYLOAD: "{\"scope\": \"confinements:read.dev\" }"
+      DEV_BYPASS_SCOPES: "your_scope:read.all your_scope:read.dev"
+      DEV_ENFORCE_TOKEN_PAYLOAD: "{\"scope\": \"your_scope:read.dev\" }"
     env_file:
       - ./dev.env
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-      - /usr/src/app/logs # No need to keep logs coming to host in dev-mode
+      - /usr/src/app/logs # Consider redirecting to /tmp:... if you have permission issues when writing to logs on linux
   mongodb:
-    image: mongo:4.4
+    image: mongo:5.0
     # Uncomment to initiate replica set, if you know cleaner way to do this - please suggest
     # healthcheck:
     #     test: echo 'rs.initiate();cfg=rs.conf();cfg.members[0].host="mongodb:27017";rs.reconfig(cfg,{force:true})' | mongo --quiet || echo ok

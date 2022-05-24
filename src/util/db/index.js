@@ -25,10 +25,9 @@ const generateConnectionUrl = (dbName) => {
 const options = {
   keepAlive: true,
   keepAliveInitialDelay: 30000,
-  poolSize: (mongoConfig.poolSize && parseInt(mongoConfig.poolSize, 10)) || 5,
+  maxPoolSize: (mongoConfig.poolSize && parseInt(mongoConfig.poolSize, 10)) || 5,
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
 };
 
 // Mongoose connection management - default one does not support multidatabase
