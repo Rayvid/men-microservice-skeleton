@@ -17,9 +17,9 @@ export const beforeHandler = [
     app.use((req, res, next) => {
       // Shortcut for common scenarious to not consume cycles and not spam log
       if (req.method === 'OPTIONS') {
-        res.send(200);
+        res.sendStatus(204);
       } else if (req.url === '/favicon.ico' || req.url === '/robots.txt') {
-        res.send(404);
+        res.sendStatus(404);
       } else {
         next();
       }
