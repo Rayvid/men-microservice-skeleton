@@ -1,9 +1,10 @@
 import * as healthCheckRoutes from './healthCheck.js';
 import versionCheck from './versionCheck.js';
-import getPriceAndWalletsByDiscount from './priceByDiscount.js';
+import {getPricesByDiscount, createDiscount} from './discount.js';
 
 export default {
   healthCheckRoutes,
   versionCheck,
-  getPriceAndWalletsByDiscount,
+  getPricesByDiscount,
+  createDiscount,
 };

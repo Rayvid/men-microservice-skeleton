@@ -31,7 +31,8 @@ app.get('/health', routes.healthCheckRoutes.healthCheck);
 app.get('/health/sentry', routes.healthCheckRoutes.sentryPing);
 app.get('/version', routes.versionCheck);
 
-app.get('/getPriceAndWalletsByDiscount', routes.getPriceAndWalletsByDiscount);
+app.get('/getPriceAndWalletsByDiscount', routes.getPricesByDiscount);
+app.post('/createDiscount', middlewares.validateAuthScope('discounts:write.all'), routes.createDiscount);
 
 middlewares.afterHandler.forEach((_) => _(app));
 

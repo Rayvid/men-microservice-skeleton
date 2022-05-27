@@ -18,8 +18,8 @@ describe('Oauth2', () => {
       await (validateAuthHeader(`bearer ${await oauth2ClientGetAccessToken(
           '2isgefBsD9SJ1o7vJZn1x6iC1tmRMwcA',
           'mdNv5pjLD6pFi6HzIDJbt8UgQf0vwCCWvKJ-3BDRdrs7lVI0-hvMWXbTSMtaKJmC',
-          'test',
-      )}`, 'test'));
+          'discounts:write.all',
+      )}`, 'discounts:write.all'));
     });
 
     it('it should throw on invalid scope', async () => {

@@ -1,7 +1,9 @@
-import * as exceptions from '../../exceptions/index.js';
 import {logger as log} from '../../util/index.js';
 
-export default async (req, res) => {
+export const getPricesByDiscount = async (req, res) => {
+  const models = await res.locals.getModels();
+  log.info(await models.discount.getDiscount('boo'));
+
   if (req.query.code == 'DIS1979') {
     res.status(200).json({
       'wallets': {
@@ -37,25 +39,12 @@ export default async (req, res) => {
       },
     });
   }
-  // eslint-disable-next-line prefer-const
-  let result = {status: 'healthy'};
-  const models = await res.locals.getModels();
-  try {
-    try {
-      await models.createIntegration({provider: 'strava', connectionParams: {param1: '1', param2: '2'}});
-    } catch (err) {
-      // It can fail if run multiple times due uniqueness - it is fine
-      log.warn(err);
-    }
-
-    result = {
-      status: 'healthy',
-      // eslint-disable-next-line no-underscore-dangle
-      stravaId: (await models.getStravaIntegration())._id,
-    };
-  } catch (err) {
-    throw new exceptions.Exception({message: 'Health check failed', innerError: err});
-  }
-
-  res.status(200).json(result);
 };
+
+
+export const createDiscount = async (req, res) => {
+  // const models = await res.locals.getModels();
+
+  res.status(200).json({});
+};
+

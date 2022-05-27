@@ -7,7 +7,7 @@ export const healthCheck = async (req, res) => {
   const models = await res.locals.getModels();
   try {
     try {
-      await models.createIntegration({provider: 'strava', connectionParams: {param1: '1', param2: '2'}});
+      await models.sportsApp.createIntegration({provider: 'strava', connectionParams: {param1: '1', param2: '2'}});
     } catch (err) {
       // It can fail if run multiple times due uniqueness - it is fine
       log.warn(err);
@@ -16,7 +16,7 @@ export const healthCheck = async (req, res) => {
     result = {
       status: 'healthy',
       // eslint-disable-next-line no-underscore-dangle
-      stravaId: (await models.getStravaIntegration())._id,
+      stravaId: (await models.sportsApp.getStravaIntegration())._id,
     };
   } catch (err) {
     throw new exceptions.Exception({message: 'Health check failed', innerError: err});
