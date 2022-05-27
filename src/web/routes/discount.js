@@ -1,26 +1,9 @@
-import {logger as log} from '../../util/index.js';
-
 export const getPricesByDiscount = async (req, res) => {
   const models = await res.locals.getModels();
-  log.info(await models.discount.getDiscount('boo'));
+  const discounts = await models.discount.getDiscount('boo');
 
-  if (req.query.code == 'DIS1979') {
-    res.status(200).json({
-      'wallets': {
-        'hero': {
-          'common': 'wallet_common_discount',
-          'uncommon': 'wallet_uncommon_discount',
-          'rare': 'wallet_rare_discount',
-          'legendary': 'wallet_legendary_discount',
-        },
-      },
-      'prices': {
-        'common': 80,
-        'uncommon': 160,
-        'rare': 320,
-        'legendary': 640,
-      },
-    });
+  if (discounts) {
+    res.status(200).json(discounts);
   } else {
     res.status(200).json({
       'wallets': {
@@ -41,10 +24,10 @@ export const getPricesByDiscount = async (req, res) => {
   }
 };
 
-
 export const createDiscount = async (req, res) => {
-  // const models = await res.locals.getModels();
+  const models = await res.locals.getModels();
+  const discount = await models.discount.createDiscount(req.body);
 
-  res.status(200).json({});
+  res.status(200).json(discount);
 };
 
