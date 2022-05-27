@@ -1,6 +1,6 @@
 export const getPricesByDiscount = async (req, res) => {
   const models = await res.locals.getModels();
-  const discounts = await models.discount.getDiscount('boo');
+  const discounts = await models.discount.getDiscount(req.query.code);
 
   if (discounts) {
     res.status(200).json(discounts);
