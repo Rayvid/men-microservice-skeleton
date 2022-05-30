@@ -34,6 +34,8 @@ app.get('/version', routes.versionCheck);
 app.get('/getPriceAndWalletsByDiscount', routes.getPricesByDiscount);
 app.post('/createDiscount', middlewares.validateAuthScope('discounts:write.all'), routes.createDiscount);
 
+app.get('/transaction/:address', routes.getTransactions);
+
 middlewares.afterHandler.forEach((_) => _(app));
 
 app.listen(config.server.listenOnPort, () => {
