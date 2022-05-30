@@ -15,3 +15,5 @@ export const logger = joi.attempt(config.get('logger'), loggerSchema);
 export const sentry = sentryConfig;
 export const mongo = config.get('db.mongo');
 export const oauth2 = config.get('oauth2');
+
+export const wallets = config.get('wallets');

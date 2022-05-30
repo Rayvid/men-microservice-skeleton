@@ -36,5 +36,9 @@
     "audience": "https://github.com/Rayvid/men-microservice-skeleton",
     "__": "To verify incomnig requests",
     "jwksURI": "https://auth.yourhost/jwks"
-  }
+  },
+  "wallets": [
+    "CYPyT9aieKSeasBgkfRCRLqgeRPYsFWk1xTgUYurhmqg",
+    "6W7FHyYLzFg8XFxU5AoAnhjYjLQcRGHMNLrgf91ack1f"
+  ]
 }
