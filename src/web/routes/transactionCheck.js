@@ -2,85 +2,89 @@ import * as exceptions from '../../exceptions/index.js';
 import { Connection, PublicKey } from '@solana/web3.js';
 
 export const getTransactions = async (req, res) => {
-    let options = { limit: 10 };
+    const models = await res.locals.getModels();
+    let limit = 10
 
-    if(req.query.limit ) {
-        if (!isFinite(req.query.limit)){
-            throw new exceptions.Exception({message: "limit query can only be numeric", innerError: null});
+    if(req.query.last) {
+        if (!isFinite(req.query.last)){
+            throw new exceptions.Exception({message: "last query can only be numeric", innerError: null});
         }
-
-        options = { limit: req.query.limit };
+        limit = parseInt(req.query.last);
     }
 
-    const network = "https://api.mainnet-beta.solana.com";
-    const connection = new Connection(network);
-
     try {
-        let transactions = await getTransactionsOfUser(req.params.address, options, connection);
-        res.status(200).json(transactions)
+        let transactions = await models.transaction.getTransaction(req.params.address);
+        let result = []
+
+        for (let i = 0; i < limit; i++) {
+            if(!transactions[i]) {
+                break;
+            }
+            result.push(transactions[i]);
+        }
+
+        res.status(200).json(result)
     } catch (err) {
         throw new exceptions.Exception({message: "transaction query failed", innerError: err});
     }
-    
-
-
-    
 };
 
-async function getTransactionsOfUser(address, options, connection){
+
+async function getTransactionsOfUser(walletAddress, options, connection){
     const USDCmint = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
     const USDTmint = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";
 
     try {
-    const publicKey = new PublicKey(address);
-    const transSignatures =
-        await connection.getConfirmedSignaturesForAddress2(publicKey, options);
-    // console.log({ transSignatures });
-    const transactions = [];
-    for (let i = 0; i < transSignatures.length; i++) {
-        const signature = transSignatures[i].signature;
-        const confirmedTransaction = await connection.getConfirmedTransaction(
-        signature,
-        );
-        if (confirmedTransaction) {
-        // console.log(confirmedTransaction);
-        const { meta } = confirmedTransaction;
-        if (meta) {
+        const publicKey = new PublicKey(walletAddress);
+        const transSignatures = await connection.getConfirmedSignaturesForAddress2(publicKey, options);
+        const transactions = [];
+
+        for (let i = 0; i < transSignatures.length; i++) {
+            const signature = transSignatures[i].signature;
+            const confirmedTransaction = await connection.getConfirmedTransaction(signature);
+
+            if(!confirmedTransaction) {
+                continue;
+            }
+
+            const { meta } = confirmedTransaction;
+
+            if (!meta){
+                continue;
+            }
+            
             let solChange = 0;
             let usdcChange = 0;
             let usdtChange = 0;
+
             if (meta.postTokenBalances.length === 0){
-            //console.log('SOL balance change')
-            const oldBalance = meta.preBalances;
-            const newBalance = meta.postBalances;
-            solChange = oldBalance[0] - newBalance[0];
-            } else {
-            if(meta.preTokenBalances[0] != undefined) {
+                const oldBalance = meta.preBalances;
+                const newBalance = meta.postBalances;
+                solChange = oldBalance[0] - newBalance[0];
+            } else if (meta.preTokenBalances[0] != undefined) {
                 if(meta.preTokenBalances[0].mint === USDCmint) {
-                //console.log('USDC balance change');
-                usdcChange = meta.preTokenBalances[0].uiTokenAmount.uiAmount - meta.postTokenBalances[0].uiTokenAmount.uiAmount;
+                    usdcChange = meta.preTokenBalances[0].uiTokenAmount.uiAmount - meta.postTokenBalances[0].uiTokenAmount.uiAmount;
                 }
                 if(meta.preTokenBalances[0].mint === USDTmint) {
-                //console.log('USDT balance change');
-                usdcChange = meta.preTokenBalances[0].uiTokenAmount.uiAmount - meta.postTokenBalances[0].uiTokenAmount.uiAmount;
+                    usdcChange = meta.preTokenBalances[0].uiTokenAmount.uiAmount - meta.postTokenBalances[0].uiTokenAmount.uiAmount;
                 }
             }
-            }
+
             const transWithSignature = {
-            signature,
-            blockTime: confirmedTransaction.blockTime,
-            // ...confirmedTransaction,
-            // fees: meta?.fee,
-            solChange,
-            usdcChange,
-            usdtChange
-            };
-            transactions.push(transWithSignature);
+                signature,
+                walletAddress,
+                authority: "",
+                blockTime: confirmedTransaction.blockTime,
+                solChange,
+                usdcChange,
+                usdtChange
+                };
+                transactions.push(transWithSignature);
         }
-        }
-    }
-    return transactions;
+
+        return transactions;
+
     } catch (err) {
-    throw err;
+        throw (err);
     }
 };
