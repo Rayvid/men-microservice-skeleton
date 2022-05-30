@@ -5,7 +5,7 @@ import {getModels} from './middlewares/modelInitializer.js';
 import { Connection, PublicKey } from '@solana/web3.js';
 
 export default new CronJob.CronJob(
-	'*/10 * * * * *',
+	'* */10 * * * *',
 	main,
 	null,
 	false,

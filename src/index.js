@@ -7,7 +7,6 @@ process.on('uncaughtException', (err) => {
 
 import crons from './cron/index.js';
 crons.searchTransactions.start();
-console.log("AAAAAAAAAAAAAAAAAAAAAA");
 
 import './web/index.js';
 
