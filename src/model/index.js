@@ -1,2 +1,6 @@
 import sportsAppRepository from './sportsAppRepository/index.js';
-export default sportsAppRepository;
+import discountRepository from './discountRepository.js';
+export default {
+  sportsAppRepository,
+  discountRepository,
+};

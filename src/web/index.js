@@ -31,6 +31,11 @@ app.get('/health', routes.healthCheckRoutes.healthCheck);
 app.get('/health/sentry', routes.healthCheckRoutes.sentryPing);
 app.get('/version', routes.versionCheck);
 
+app.get('/getPriceAndWalletsByDiscount', routes.getPricesByDiscount);
+app.post('/createDiscount', middlewares.validateAuthScope('discounts:write.all'), routes.createDiscount);
+
+app.get('/getProgress', routes.getProgress);
+
 middlewares.afterHandler.forEach((_) => _(app));
 
 app.listen(config.server.listenOnPort, () => {

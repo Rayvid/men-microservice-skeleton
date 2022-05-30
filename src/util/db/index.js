@@ -18,7 +18,7 @@ const generateConnectionUrl = (dbName) => {
       `:${mongoConfig.port}` :
       '';
   const database = `/${dbName || mongoConfig.database}`;
-  const params = (mongoConfig.params && mongoConfig.params !== '') ? `?${mongoConfig.params}` : '';
+  const params = (mongoConfig.params) ? `?${mongoConfig.params}` : '';
   return `${mongoConfig.schema}://${auth}${mongoConfig.host}${port}${database}${params}`;
 };
 
