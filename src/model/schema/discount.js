@@ -11,7 +11,7 @@ export const schema = new mongoose.Schema({
       type: Map,
       of: String,
       required: true,
-    }
+    },
   }),
   prices: {
     type: Map,
