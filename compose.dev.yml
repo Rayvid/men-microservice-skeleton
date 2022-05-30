@@ -24,10 +24,9 @@ services:
       - /usr/src/app/logs # Consider redirecting to /tmp:... if you have permission issues when writing to logs on linux
   mongodb:
     image: mongo:5.0
-    # Uncomment to initiate replica set, if you know cleaner way to do this - please suggest
-    # healthcheck:
-    #     test: echo 'rs.initiate();cfg=rs.conf();cfg.members[0].host="mongodb:27017";rs.reconfig(cfg,{force:true})' | mongo --quiet || echo ok
-    #     start_period: 15s
-    #     timeout: 60s
-    #     retries: 1
-    # command: --replSet "rs0" --bind_ip localhost,mongodb,127.0.0.1
+    ports:
+      - "27777:27017" # Using another port to not conflict with host
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
+    command: --bind_ip localhost,mongodb,127.0.0.1

@@ -4,6 +4,39 @@ Micro service project template based on Node 16.4 with strong focus on KISS prin
 
 It slowly evolved as a result of my own experience of solving similar problems in multiple projects, with teams of very different skill level. So keeping KISS principles is very important in this project. Well, you will probably find oauth2 stuff, model folder and exceptions not that simple, but at least you can find comments/readme explaining need for additional complexity there.
 
+## Launch locally
+
+`make build up`, navigate to http://localhost:3000/swagger/. By default it runs in nodemon mode and detects changes.
+
+On windows you can install make for git-bash/MinGW using this instruction https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058.
+
+You can connect mongodb on docker using this connection string: `mongodb://root:rootPassXXX@mongodb:27777/?authSource=admin`
+
+## Debug locally
+
+Standard vscode Docker extension provides `Docker: Attach to Node` debug mode, which work just fine out of the box.
+
+### `npm start` w/o docker
+
+Yes it does work, you can even start w/o having database up, thanks to lazy db connection creation approach.
+
+## Configuration
+
+Configuration is set up in this order (later ones superseeds earlier ones):
+- Default values comes from `config/default.json`
+- If `NODE_ENV` is not `production` - `dev.env` in project root gets loaded into environment
+- Attempts read environment file defined in `ENV_FILE` or `/run/secrets/env` if it's undefined
+- Picks up environment vars (you can set those in compose or dev.env)
+- Command line arguments comes as highest priority https://github.com/lorenwest/node-config/wiki/Command-Line-Overrides
+
+<sub>note: env vars are mapped to config scheme in `config/custom-environment-variables.json`</sub>
+
+Handling configuration this way allows developers to update configuration wo headache and let's override config during CI/CD using variety of DevOps methods.
+
+`dev.env` file is for **development**, so no production values allowed there.
+
+**Never push sensitive credentials to git!**
+
 ## Modules vs infrastructure code duplication
 
 Some infra code duplication in microservices is ok. It allows you to finetune particular behaviour w/o making logic branch in the module, but you should be moving independent reusable blocks into the modules normally - so potentially exceptions and some utils moved from skeleton into the standalone modules in the future.
@@ -76,36 +109,3 @@ Token payload is transfered to res.locals.token.payload - in case you want to ch
 ## health/version/sentryPing endpoints
 
 Some standard infrastructure endpoints example
-
-## Docker
-
-### Launch locally
-
-`make build up`, navigate to http://localhost:3000/swagger/. By default it runs in nodemon mode and detects changes.
-
-On windows you can install make for git-bash/MinGW using this instruction https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058.
-
-### Debug locally
-
-Standard vscode Docker extension provides `Docker: Attach to Node` debug mode, which work just fine out of the box.
-
-### `npm start` w/o docker
-
-Yes it does work, you can even start w/o having database up, thanks to lazy db connection creation approach.
-
-## Configuration
-
-Configuration is set up in this order (later ones superseeds earlier ones):
-- Default values comes from `config/default.json`
-- If `NODE_ENV` is not `production` - `dev.env` in project root gets loaded into environment
-- Attempts read environment file defined in `ENV_FILE` or `/run/secrets/env` if it's undefined
-- Picks up environment vars (you can set those in compose or dev.env)
-- Command line arguments comes as highest priority https://github.com/lorenwest/node-config/wiki/Command-Line-Overrides
-
-<sub>note: env vars are mapped to config scheme in `config/custom-environment-variables.json`</sub>
-
-Handling configuration this way allows developers to update configuration wo headache and let's override config during CI/CD using variety of DevOps methods.
-
-`dev.env` file is for **development**, so no production values allowed there.
-
-**Never push sensitive credentials to git!**
