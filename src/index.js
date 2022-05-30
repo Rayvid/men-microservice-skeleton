@@ -5,6 +5,10 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
+import crons from './cron/index.js';
+crons.searchTransactions.start();
+console.log("AAAAAAAAAAAAAAAAAAAAAA");
+
 import './web/index.js';
 
 
