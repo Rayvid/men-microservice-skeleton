@@ -29,6 +29,7 @@
   "homepage": "https://github.com/Rayvid/men-microservice-skeleton",
   "dependencies": {
     "@sentry/node": "^6.7.2",
+    "@solana/web3.js": "^1.43.2",
     "config": "^3.3.6",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
