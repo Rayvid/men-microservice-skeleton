@@ -9,6 +9,7 @@ export default cron.schedule("* */10 * * *", main, {scheduled: false});
 
 async function main() {
     //TODO: add network in config?
+    //!TODO: change network node to something that can handle the amount of requests!
     const network = "https://api.devnet.solana.com";
     
     const connConfig = {httpHeaders: {'referer': "https://edensol.net"}};
