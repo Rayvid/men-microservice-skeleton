@@ -1,16 +1,12 @@
-import CronJob from 'cron';
+import cron from 'node-cron';
 import {wallets as walletsConfig} from '../../config/index.js';
 import {getModels} from './middlewares/modelInitializer.js';
 
 import { Connection, PublicKey } from '@solana/web3.js';
 
-export default new CronJob.CronJob(
-	'* */10 * * * *',
-	main,
-	null,
-	false,
-	'America/Los_Angeles',
-);
+// cron runs every 10 mins, check https://crontab.guru/ for more
+// info on cron expressions
+export default cron.schedule("* */10 * * *", main, {scheduled: false});
 
 async function main() {
     // const network = "https://api.devnet.solana.com";
