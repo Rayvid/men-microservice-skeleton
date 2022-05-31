@@ -1,7 +1,6 @@
 import cron from 'node-cron';
 import {wallets as walletsConfig} from '../../config/index.js';
 import {getModels} from './middlewares/modelInitializer.js';
-
 import { Connection, PublicKey } from '@solana/web3.js';
 
 // cron runs every 10 mins, check https://crontab.guru/ for more
@@ -9,10 +8,13 @@ import { Connection, PublicKey } from '@solana/web3.js';
 export default cron.schedule("* */10 * * *", main, {scheduled: false});
 
 async function main() {
-    // const network = "https://api.devnet.solana.com";
-    const network = "https://api.mainnet-beta.solana.com";
-    const connection = new Connection(network);
-    const models = getModels;
+    //TODO: add network in config?
+    const network = "https://api.devnet.solana.com";
+    
+    const connConfig = {httpHeaders: {'referer': "https://edensol.net"}};
+    let connection = new Connection(network, connConfig);
+
+    const models = getModels;//test
 
     await firstRun(models, connection);
     await addLatestTransactions(models, connection);
@@ -20,18 +22,18 @@ async function main() {
 
 /*
 finds all wallets that have to be searched and ensures that there is at least
-1 entry in db with transaction from or to each wallet
+1 entry in db with transaction from or to this wallet, if there are none adds the
+latest 50 transaction history of this wallet to db
 */
 async function firstRun(models, connection) {
     for (let i = 0; i < walletsConfig.length; i++) {
-        const savedTransactions = await models.transaction.getTransaction(walletsConfig[i]);
-        
+        let savedTransactions = await models.transaction.getTransaction(walletsConfig[i]);
         // skip search for wallets that have at least 1 transaction already saved
         if (savedTransactions.length != 0) {
             continue;
         }
 
-        let scrapedTransactions = await getTransactionsOfUser(walletsConfig[i], {limit: 1}, connection);
+        let scrapedTransactions = await getTransactionsOfUser(walletsConfig[i], {limit: 50}, connection);
         for (let j = 0; j < scrapedTransactions.length; j++) {
             await models.transaction.createTransaction(scrapedTransactions[j]);
         }
@@ -41,11 +43,10 @@ async function firstRun(models, connection) {
 /*
 finds all wallets that have to be searched and looks up newest transaction on
 blockchain to sync them with local db
-TODO: fix rate limit errors and increase search limit to more than 3
 */
 async function addLatestTransactions(models, connection) {
     for (let i = 0; i < walletsConfig.length; i++) {
-        const savedTransactions = await models.transaction.getTransaction(walletsConfig[i]);
+        let savedTransactions = await models.transaction.getTransaction(walletsConfig[i]);
         let latestBlockTime = 0;
         for (let j = 0; j < savedTransactions.length; j++) {
             if (savedTransactions[j].blockTime > latestBlockTime) {
@@ -53,7 +54,7 @@ async function addLatestTransactions(models, connection) {
             }
         }
 
-        let scrapedTransactions = await getTransactionsOfUser(walletsConfig[i], {limit: 3}, connection);
+        let scrapedTransactions = await getTransactionsOfUser(walletsConfig[i], {limit: 20}, connection);
         for (let j = 0; j < scrapedTransactions.length; j++) {
             if (scrapedTransactions[j].blockTime > latestBlockTime){
                 await models.transaction.createTransaction(scrapedTransactions[j]);
