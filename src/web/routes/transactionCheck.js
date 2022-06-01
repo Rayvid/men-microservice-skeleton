@@ -6,6 +6,8 @@ export const getTransactions = async (req, res) => {
 
     if(req.query.last) {
         if (!isFinite(req.query.last)){
+            // TODO: does this need to throw an error, or just continue execution with
+            // the default limit = 10
             throw new exceptions.Exception({message: "last query can only be numeric", innerError: null});
         }
         limit = parseInt(req.query.last);
@@ -13,7 +15,6 @@ export const getTransactions = async (req, res) => {
 
     try {
         const transactions = await models.transaction.getTransaction(req.params.address, limit);
-
         res.status(200).json(transactions)
     } catch (err) {
         throw new exceptions.Exception({message: "transaction query failed", innerError: err});
