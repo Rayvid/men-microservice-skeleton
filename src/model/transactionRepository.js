@@ -1,9 +1,9 @@
 import * as schema from './schema/index.js';
 
 export default (dbConnection) => ({
-    getTransaction: async (walletAddress, lean = true) => {
+    getTransaction: async (walletAddress, limitNum = 10, lean = true) => {
         const result = schema.transaction
-            .connect(dbConnection).find({ walletAddress: walletAddress });
+            .connect(dbConnection).find({ walletAddress: walletAddress }).limit(limitNum);
 
         return (lean) ? result.lean() : result;
     },

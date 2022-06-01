@@ -12,17 +12,9 @@ export const getTransactions = async (req, res) => {
     }
 
     try {
-        let transactions = await models.transaction.getTransaction(req.params.address);
-        let result = []
+        const transactions = await models.transaction.getTransaction(req.params.address, limit);
 
-        for (let i = 0; i < limit; i++) {
-            if(!transactions[i]) {
-                break;
-            }
-            result.push(transactions[i]);
-        }
-
-        res.status(200).json(result)
+        res.status(200).json(transactions)
     } catch (err) {
         throw new exceptions.Exception({message: "transaction query failed", innerError: err});
     }
