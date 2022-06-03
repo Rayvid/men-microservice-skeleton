@@ -56,6 +56,7 @@ const addLatestTransactions = async (transactionRepository, connection) => {
     const scrapedTransactions = await getTransactionsOfUser(wallets[i], {limit: 20}, connection);
     for (let j = 0; j < scrapedTransactions.length; j++) {
       if (scrapedTransactions[j].blockTime > latestBlockTime) {
+        log.info(`WALLETS-MONITOR: found new transaction! ${JSON.stringify(scrapedTransactions[j])}`);
         await transactionRepository.createTransaction(scrapedTransactions[j]);
       }
     }
@@ -104,13 +105,12 @@ const getTransactionsOfUser = async (walletAddress, options, connection) => {
     const transWithSignature = {
       signature,
       walletAddress,
-      authority: '',
+      authority: confirmedTransaction.transaction.feePayer.toBase58(),
       blockTime: confirmedTransaction.blockTime,
       solChange,
       usdcChange,
       usdtChange,
     };
-    log.info(`WALLETS-MONITOR: found transaction! ${JSON.stringify(transWithSignature)}`);
     transactions.push(transWithSignature);
   }
 
