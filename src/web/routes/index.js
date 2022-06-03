@@ -2,6 +2,7 @@ import * as healthCheckRoutes from './healthCheck.js';
 import versionCheck from './versionCheck.js';
 import {getPricesByDiscount, createDiscount} from './discount.js';
 import {getTransactions} from './transactionCheck.js';
+import {getNfts, setNftTransfered} from './nfts.js';
 
 export default {
   healthCheckRoutes,
@@ -9,4 +10,6 @@ export default {
   getPricesByDiscount,
   createDiscount,
   getTransactions,
+  getNfts,
+  setNftTransfered,
 };

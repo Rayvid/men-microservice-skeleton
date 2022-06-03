@@ -10,6 +10,8 @@ export default (app) => {
         sportsApp: await model.sportsAppRepository(await db.getConnection('SportsApp')),
 
         transaction: await model.transactionRepository(await db.getConnection('Transaction')),
+
+        nfts: await model.nftsRepository(await db.getConnection('Nfts')),
       });
       return res.locals.getModels();
     };

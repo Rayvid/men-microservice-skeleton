@@ -36,6 +36,9 @@ app.post('/createDiscount', middlewares.validateAuthScope('discounts:write.all')
 
 app.get('/transaction/:address', routes.getTransactions);
 
+app.get('/nfts', routes.getNfts);
+app.post('/setNftTransfered', middlewares.validateAuthScope('nfts:write.all'), routes.setNftTransfered);
+
 middlewares.afterHandler.forEach((_) => _(app));
 
 app.listen(config.server.listenOnPort, () => {

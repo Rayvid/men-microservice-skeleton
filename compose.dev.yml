@@ -14,8 +14,8 @@ services:
       - mongodb
     environment:
       NODE_ENV: "development" # To start nodemon, enable dev.env, stacktraces and scope bypass
-      DEV_BYPASS_SCOPES: "discounts:write.all" # To debug wo having to do authentication, only for DEV
-      DEV_ENFORCE_TOKEN_PAYLOAD: "{\"scope\": \"discounts:write.all\" }" # Thats for handlers checking token payload, only for DEV
+      DEV_BYPASS_SCOPES: "discounts:write.all nfts:write.all" # To debug wo having to do authentication, only for DEV
+      DEV_ENFORCE_TOKEN_PAYLOAD: "{\"scope\": \"discounts:write.all nfts:write.all\" }" # Thats for handlers checking token payload, only for DEV
     env_file:
       - ./dev.env
     volumes:

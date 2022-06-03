@@ -30,4 +30,3 @@ export const createDiscount = async (req, res) => {
 
   res.status(200).json(discount);
 };
-
