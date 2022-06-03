@@ -7,9 +7,8 @@ const pkgJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.jso
 /**
  * @export
  * @class Exception
- * @extends {Error}
  */
-export default class Exception extends Error {
+export default class Exception {
   /**
    * Creates an instance of Exception.
    * @param {*} params
@@ -43,7 +42,7 @@ export default class Exception extends Error {
     } else if (params.stack) {
       constructorParameters.innerError = params; // If constructed from exception alone
     }
-    super(constructorParameters.message || defaultParams.message);
+    this.errorMessage = (constructorParameters.message || defaultParams.message);
 
     if (!constructorParameters.doNotaugmentStack) {
       // Capturing stack trace and excluding constructor call from it.
@@ -61,7 +60,7 @@ export default class Exception extends Error {
       // }
       Error.captureStackTrace(this, this.constructor);
       if (constructorParameters.innerError) {
-        this.stack += `\n${constructorParameters.innerError.stack}`;
+        this.capturedStack = this.capturedStack ? this.capturedStack +`\n${constructorParameters.innerError.stack}` : constructorParameters.innerError.stack;
       }
     }
 

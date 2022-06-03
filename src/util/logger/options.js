@@ -37,7 +37,7 @@ export const console = {
         return `${timestamp} ${level}: ${(info.message && typeof info.message !== 'string') ?
           // Not sure if it can happen, but handle objects inside message too
           JSON.stringify(info.message).replace(/\\n/g, '\n') :
-          !info.message || info.stack ?
+          !info.message || info.capturedStack ?
             JSON.stringify(info).replace(/\\n/g, '\n') :
             info.message}`;
       }),

@@ -34,6 +34,8 @@ app.get('/version', routes.versionCheck);
 app.get('/getPriceAndWalletsByDiscount', routes.getPricesByDiscount);
 app.post('/createDiscount', middlewares.validateAuthScope('discounts:write.all'), routes.createDiscount);
 
+app.get('/getProgress', routes.getProgress);
+
 app.get('/transaction/:address', routes.getTransactions);
 
 app.get('/nfts', routes.getNfts);

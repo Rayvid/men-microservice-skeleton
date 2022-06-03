@@ -3,19 +3,20 @@ import {wallets as walletsConfig} from '../../config/index.js';
 import {Connection, PublicKey} from '@solana/web3.js';
 import {logger as log, db} from '../util/index.js';
 import model from '../model/index.js';
+import {Exception} from '../exceptions/index.js'
+import _ from 'underscore';
 
 let isJobInProgress = false;
 
 const main = () => {
   if (isJobInProgress) {
-    log.info('WALLETS-MONITOR: job already in progress...');
+    log.info('WALLETS-MONITOR: prev job instance still in progress...');
   }
   log.info('WALLETS-MONITOR: job starting...');
   isJobInProgress = true;
 
   // TODO: add network in config?
-  // !TODO: change network node to something that can handle the amount of requests!
-  const network = 'https://api.devnet.solana.com';
+  const network = 'https://holy-wandering-mountain.solana-mainnet.quiknode.pro/407f5a6819971fa5727ca1529bf37c5700ff6a3b/';
 
   const connConfig = {httpHeaders: {'referer': 'https://edensol.net'}};
   const connection = new Connection(network, connConfig);
@@ -25,40 +26,14 @@ const main = () => {
     const repo = model.transactionRepository(conn);
 
     // Fire and forget
-    firstRun(repo, connection).then((_) => {
-      addLatestTransactions(repo, connection).then((_) => {
-        isJobInProgress = false; log.info('WALLETS-MONITOR: job ended');
-      }).catch((err) => {
-        isJobInProgress = false; log.error(err);
-      });
+    addLatestTransactions(repo, connection).then((_) => {
+      isJobInProgress = false; log.info('WALLETS-MONITOR: job ended');
     }).catch((err) => {
-      isJobInProgress = false; log.error(err);
+      isJobInProgress = false; log.error(new Exception({message: 'WALLETS-MONITOR: job error', innerError: err}));
     });
   }).catch((err) => {
-    isJobInProgress = false; log.error(err);
+    isJobInProgress = false; log.error(new Exception({message: 'WALLETS-MONITOR: job error', innerError: err}));
   });
-};
-
-/*
-finds all wallets that have to be searched and ensures that there is at least
-1 entry in db with transaction from or to this wallet, if there are none adds the
-latest 50 transaction history of this wallet to db
-*/
-const firstRun = async (transactionRepository, connection) => {
-  log.silly('WALLETS-MONITOR: triggering first run');
-
-  for (let i = 0; i < walletsConfig.length; i++) {
-    const savedTransactions = await transactionRepository.getTransaction(walletsConfig[i]);
-    // skip search for wallets that have at least 1 transaction already saved
-    if (savedTransactions.length != 0) {
-      continue;
-    }
-
-    const scrapedTransactions = await getTransactionsOfUser(walletsConfig[i], {limit: 50}, connection);
-    for (let j = 0; j < scrapedTransactions.length; j++) {
-      await transactionRepository.createTransaction(scrapedTransactions[j]);
-    }
-  }
 };
 
 /*
@@ -68,8 +43,9 @@ blockchain to sync them with local db
 const addLatestTransactions = async (transactionRepository, connection) => {
   log.silly('WALLETS-MONITOR: triggering add latest transactions');
 
-  for (let i = 0; i < walletsConfig.length; i++) {
-    const savedTransactions = await transactionRepository.getTransaction(walletsConfig[i]);
+  let wallets = _.uniq(_.values(walletsConfig.hero));
+  for (let i = 0; i < wallets.length; i++) {
+    const savedTransactions = await transactionRepository.getTransaction(wallets[i]);
     let latestBlockTime = 0;
     for (let j = 0; j < savedTransactions.length; j++) {
       if (savedTransactions[j].blockTime > latestBlockTime) {
@@ -77,7 +53,7 @@ const addLatestTransactions = async (transactionRepository, connection) => {
       }
     }
 
-    const scrapedTransactions = await getTransactionsOfUser(walletsConfig[i], {limit: 20}, connection);
+    const scrapedTransactions = await getTransactionsOfUser(wallets[i], {limit: 20}, connection);
     for (let j = 0; j < scrapedTransactions.length; j++) {
       if (scrapedTransactions[j].blockTime > latestBlockTime) {
         await transactionRepository.createTransaction(scrapedTransactions[j]);
@@ -134,7 +110,7 @@ const getTransactionsOfUser = async (walletAddress, options, connection) => {
       usdcChange,
       usdtChange,
     };
-    log.silly(`WALLETS-MONITOR: found transaction! ${JSON.stringify(transWithSignature)}`);
+    log.info(`WALLETS-MONITOR: found transaction! ${JSON.stringify(transWithSignature)}`);
     transactions.push(transWithSignature);
   }
 

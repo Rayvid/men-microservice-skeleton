@@ -29,16 +29,20 @@
   "sentry": {
     "dsn": ""
   },
-  "oauth2" : {
+  "oauth2": {
     "_": "To login to remote server",
     "tokenHost": "https://auth.yourhost",
     "tokenPath": "/oauth/token",
     "audience": "https://github.com/Rayvid/men-microservice-skeleton",
-    "__": "To verify incomnig requests",
+    "__": "To verify incoming requests",
     "jwksURI": "https://auth.yourhost/jwks"
   },
-  "wallets": [
-    "CYPyT9aieKSeasBgkfRCRLqgeRPYsFWk1xTgUYurhmqg",
-    "6W7FHyYLzFg8XFxU5AoAnhjYjLQcRGHMNLrgf91ack1f"
-  ]
+  "wallets": {
+    "hero": {
+      "common": "D5nns7m696vov2sjMGfJbbP5ZdGkjsxC8Y6ZeaAYpjgh",
+      "uncommon": "D5nns7m696vov2sjMGfJbbP5ZdGkjsxC8Y6ZeaAYpjgh",
+      "rare": "D5nns7m696vov2sjMGfJbbP5ZdGkjsxC8Y6ZeaAYpjgh",
+      "legendary": "D5nns7m696vov2sjMGfJbbP5ZdGkjsxC8Y6ZeaAYpjgh"
+    }
+  }
 }

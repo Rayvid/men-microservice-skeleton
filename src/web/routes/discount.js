@@ -1,3 +1,5 @@
+import { wallets } from "../../../config/index.js";
+
 export const getPricesByDiscount = async (req, res) => {
   const models = await res.locals.getModels();
   const discounts = await models.discount.getDiscount(req.query.code);
@@ -8,17 +10,17 @@ export const getPricesByDiscount = async (req, res) => {
     res.status(200).json({
       'wallets': {
         'hero': {
-          'common': 'wallet_common_no_discount',
-          'uncommon': 'wallet_uncommon_no_discount',
-          'rare': 'wallet_rare_no_discount',
-          'legendary': 'wallet_legendary_no_discount',
+          'common': wallets.hero.common,
+          'uncommon': wallets.hero.uncommon,
+          'rare': wallets.hero.rare,
+          'legendary': wallets.hero.legendary,
         },
       },
       'prices': {
-        'common': 100,
-        'uncommon': 200,
-        'rare': 400,
-        'legendary': 800,
+        'common': 80,
+        'uncommon': 125,
+        'rare': 185,
+        'legendary': 375,
       },
     });
   }
@@ -30,3 +32,4 @@ export const createDiscount = async (req, res) => {
 
   res.status(200).json(discount);
 };
+

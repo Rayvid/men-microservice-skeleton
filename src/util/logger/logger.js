@@ -16,10 +16,10 @@ export default (options = defaultOptions) => {
         winston.format.printf((info) =>
           /* If not string - look for inspect, otherwise just stringify  */
           // eslint-disable-next-line no-nested-ternary, implicit-arrow-linebreak
-          `${info.imestamp} ${info.level}: ${(info.message && typeof info.message !== 'string') ?
+          `${info.timestamp} ${info.level}: ${(info.message && typeof info.message !== 'string') ?
               // Not sure if it can happen, but handle objects inside message too
               JSON.stringify(info.message) :
-              !info.message || info.stack ?
+              !info.message || info.capturedStack ?
                   JSON.stringify(info) :
                   info.message}`),
     ),
