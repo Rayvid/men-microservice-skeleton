@@ -3,7 +3,7 @@ import {wallets as walletsConfig} from '../../config/index.js';
 import {Connection, PublicKey} from '@solana/web3.js';
 import {logger as log, db} from '../util/index.js';
 import model from '../model/index.js';
-import {Exception} from '../exceptions/index.js'
+import {Exception} from '../exceptions/index.js';
 import _ from 'underscore';
 
 let isJobInProgress = false;
@@ -43,7 +43,7 @@ blockchain to sync them with local db
 const addLatestTransactions = async (transactionRepository, connection) => {
   log.silly('WALLETS-MONITOR: triggering add latest transactions');
 
-  let wallets = _.uniq(_.values(walletsConfig.hero));
+  const wallets = _.uniq(_.values(walletsConfig.hero));
   for (let i = 0; i < wallets.length; i++) {
     const savedTransactions = await transactionRepository.getTransaction(wallets[i]);
     let latestBlockTime = 0;

@@ -60,7 +60,9 @@ export default class Exception {
       // }
       Error.captureStackTrace(this, this.constructor);
       if (constructorParameters.innerError) {
-        this.capturedStack = this.capturedStack ? this.capturedStack +`\n${constructorParameters.innerError.stack}` : constructorParameters.innerError.stack;
+        this.capturedStack = this.capturedStack ?
+          `${this.capturedStack}\n${constructorParameters.innerError.stack}` :
+          constructorParameters.innerError.stack;
       }
     }
 

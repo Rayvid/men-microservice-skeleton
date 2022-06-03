@@ -1,4 +1,4 @@
-import { wallets } from "../../../config/index.js";
+import {wallets} from '../../../config/index.js';
 
 export const getPricesByDiscount = async (req, res) => {
   const models = await res.locals.getModels();
