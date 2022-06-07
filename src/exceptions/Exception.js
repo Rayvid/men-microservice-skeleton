@@ -3,12 +3,13 @@ import fs from 'fs';
 
 const pkgJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json')));
 
-// It's recommended to extend this class to better reflect your error context
+// It's recommended to extend this class to be able to pass trough it to callbacks, etc.
 /**
  * @export
  * @class Exception
+ * @extends {Error}
  */
-export default class Exception {
+export default class Exception extends Error {
   /**
    * Creates an instance of Exception.
    * @param {*} params
@@ -42,6 +43,7 @@ export default class Exception {
     } else if (params.stack) {
       constructorParameters.innerError = params; // If constructed from exception alone
     }
+    super(constructorParameters.message || defaultParams.message);
     this.errorMessage = (constructorParameters.message || defaultParams.message);
 
     if (!constructorParameters.doNotaugmentStack) {

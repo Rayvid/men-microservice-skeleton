@@ -5,6 +5,7 @@ import {logger as log, db} from '../util/index.js';
 import model from '../model/index.js';
 import {Exception} from '../exceptions/index.js';
 import _ from 'underscore';
+import axios from 'axios';
 
 let isJobInProgress = false;
 
@@ -53,10 +54,16 @@ const addLatestTransactions = async (transactionRepository, connection) => {
       }
     }
 
+    const solPrice = (await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd')).data.solana.usd;
+
     const scrapedTransactions = await getTransactionsOfUser(wallets[i], {limit: 20}, connection);
     for (let j = 0; j < scrapedTransactions.length; j++) {
-      if (scrapedTransactions[j].blockTime > latestBlockTime) {
+      if (scrapedTransactions[j].blockTime > latestBlockTime &&
+          (scrapedTransactions[j].solChange > 0 ||
+            scrapedTransactions[j].usdcChange > 0 ||
+            scrapedTransactions[j].usdtChange > 0)) {
         log.info(`WALLETS-MONITOR: found new transaction! ${JSON.stringify(scrapedTransactions[j])}`);
+        scrapedTransactions[j].solRate = solPrice;
         await transactionRepository.createTransaction(scrapedTransactions[j]);
       }
     }
@@ -107,9 +114,9 @@ const getTransactionsOfUser = async (walletAddress, options, connection) => {
       walletAddress,
       authority: confirmedTransaction.transaction.feePayer.toBase58(),
       blockTime: confirmedTransaction.blockTime,
-      solChange,
-      usdcChange,
-      usdtChange,
+      solChange: (solChange > 0) ? solChange / 1000000000 : 0,
+      usdcChange: (usdcChange > 0) ? usdcChange : 0,
+      usdtChange: (usdtChange > 0) ? usdtChange : 0,
     };
     transactions.push(transWithSignature);
   }

@@ -11,7 +11,7 @@ export const schema = new mongoose.Schema({
   },
   authority: {
     type: String,
-    default: '',
+    required: true,
   },
   blockTime: {
     type: Number,
@@ -29,7 +29,10 @@ export const schema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-
+  solRate: {
+    type: Number,
+    default: 0,
+  },
 },
 {collection: 'transactions'});
 
