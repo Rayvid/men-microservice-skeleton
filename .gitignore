@@ -4,6 +4,7 @@ nodemon.json
 *.log*
 _ttd_log_/
 logs/
+wallets/
 
 # Runtime data
 pids

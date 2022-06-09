@@ -8,6 +8,7 @@ process.on('uncaughtException', (err) => {
 
 import cron from './cron/index.js';
 cron.searchTransactions.start();
+cron.transferNfts.start();
 
 import './web/index.js';
 

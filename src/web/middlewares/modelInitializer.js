@@ -8,10 +8,9 @@ export default (app) => {
       res.locals.getModels = async () => ({
         discount: await model.discountRepository(await db.getConnection('Discount')),
         sportsApp: await model.sportsAppRepository(await db.getConnection('SportsApp')),
-
         transaction: await model.transactionRepository(await db.getConnection('Transaction')),
-
         nfts: await model.nftsRepository(await db.getConnection('Nfts')),
+        processing: await model.processingRepository(await db.getConnection('Processing')),
       });
       return res.locals.getModels();
     };

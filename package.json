@@ -28,7 +28,9 @@
   "license": "SEE LICENSE IN JUSTTAKEANDUSEIT",
   "homepage": "https://github.com/Rayvid/men-microservice-skeleton",
   "dependencies": {
+    "@project-serum/anchor": "^0.25.0-beta.1",
     "@sentry/node": "^6.7.2",
+    "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.43.4",
     "axios": "^0.27.2",
     "config": "^3.3.6",
