@@ -28,7 +28,7 @@
   "sentry": {
     "dsn": "SENTRY_DSN"
   },
-  "oauth2" : {
+  "oauth2": {
     "tokenHost": "APP_OAUTH2_TOKEN_HOST",
     "tokenPath": "APP_OAUTH2_TOKEN_PATH",
     "audience": "APP_OAUTH2_AUDIENCE",

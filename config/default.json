@@ -29,7 +29,7 @@
   "sentry": {
     "dsn": ""
   },
-  "oauth2" : {
+  "oauth2": {
     "_": "To login to remote server",
     "tokenHost": "https://auth.yourhost",
     "tokenPath": "/oauth/token",
