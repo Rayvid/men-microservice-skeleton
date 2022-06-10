@@ -10,7 +10,7 @@ It slowly evolved as a result of my own experience of solving similar problems i
 
 On windows you can install make for git-bash/MinGW using this instruction https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058.
 
-You can connect mongodb on docker using this connection string: `mongodb://root:rootPassXXX@mongodb:27777/?authSource=admin`
+You can connect mongodb on docker using this connection string: `mongodb://root:rootPassXXX@127.0.0.1:27777/?authSource=admin`
 
 ## Debug locally
 
