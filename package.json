@@ -8,7 +8,7 @@
     "start": "node index.js",
     "__comment__": "Delay is needed to nodemon not to crash each second time because 9229 busy",
     "__window_specifics__": "If nodemon doesnt pickup changes automatically -L flag might help",
-    "dev": "npx cross-env NODE_ENV=development npx nodemon --delay 2 --inspect=0.0.0.0:9229 index.js -L",
+    "dev": "npx cross-env NODE_ENV=development npx nodemon --delay 2 --inspect=0.0.0.0:9229 index.js",
     "docker:production": "npx cross-env NODE_ENV=production npm start",
     "docker:development": "npx cross-env NODE_ENV=development npm run dev",
     "lint": "npx eslint .",
