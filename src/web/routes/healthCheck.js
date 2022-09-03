@@ -10,7 +10,10 @@ export const healthCheck = async (req, res) => {
       await models.sportsApp.createIntegration({provider: 'strava', connectionParams: {param1: '1', param2: '2'}});
     } catch (err) {
       // It can fail if run multiple times due uniqueness - it is fine
-      log.warn(new exceptions.Exception({message: 'Create integration failed (because of duplicate record?)', innerError: err}));
+      log.warn(new exceptions.Exception(
+          {
+            message: 'Create integration failed (because of duplicate record?)', innerError: err,
+          }));
     }
 
     result = {
