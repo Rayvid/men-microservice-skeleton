@@ -5,9 +5,11 @@ export default (app) => {
   // To not even initialize db where its not needed, models are lazy, populated by getModels
   app.use(async (req, res, next) => {
     res.locals.getModels = async () => {
+      const discoutRepo = await model.discountRepository(await db.getConnection('Discount'));
+      const sportsAppRepo = await model.sportsAppRepository(await db.getConnection('SportsApp'));
       res.locals.getModels = async () => ({
-        discount: await model.discountRepository(await db.getConnection('Discount')),
-        sportsApp: await model.sportsAppRepository(await db.getConnection('SportsApp')),
+        discount: discoutRepo,
+        sportsApp: sportsAppRepo,
       });
       return res.locals.getModels();
     };
